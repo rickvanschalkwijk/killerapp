@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Start Main Activity -->
+    
     <string name="app_name">KillerApp</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="action_exit">Exit</string>
+    <string name="hello_world">Main Activity!</string>
 
+    <!-- End Main Activity -->
+    
+    <!-- Start settings Activity -->
+    
+    <string name="settings">Settings activity</string>
+    
+    
+    <!-- End Settings Activity -->
 </resources>
