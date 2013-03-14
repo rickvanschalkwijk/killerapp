@@ -1,8 +1,7 @@
 Killerapp
 =========
-Test 1.2.3...
 
-A native Android application for the city of Amsterdam
+A native Android application for the city of Amsterdam.
 
 
 Most important classes and files
