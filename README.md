@@ -8,7 +8,7 @@ Most important classes and files
 ----------------------
 	* MainActivity.java
 	* AndroidManifest.xml
-
+Gegroet mensen
 
 Install
 -------
