@@ -13,27 +13,34 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.app.killerapp.MainActivity"
-            android:label="@string/app_name" >
+        <activity 
+            android:name=".LoginActivity"
+            android:label="Login to your Account">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity 
+            android:name=".RegistrationActivity"
+            android:label="Register New Account"></activity>
+        
+        <activity
+            android:name="com.app.killerapp.MainActivity"
+            android:label="@string/app_name" ></activity>
+        
         <activity
             android:name="com.app.killerapp.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
+            android:label="@string/title_activity_settings" ></activity>
+        
         <activity
             android:name="com.app.killerapp.util.MenuActivity"
-            android:label="@string/title_activity_menu" >
-        </activity>
+            android:label="@string/title_activity_menu" ></activity>
+        
         <activity
             android:name="com.app.killerapp.MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
+            android:label="@string/title_activity_map" ></activity>
     </application>
 
 </manifest>

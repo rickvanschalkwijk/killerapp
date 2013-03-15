@@ -17,5 +17,20 @@
 
     <!-- End Settings Activity -->
     <string name="title_activity_map">MapActivity</string>
-
+	
+	<!-- Start Login -->
+	<string name="username">Email</string>
+	<string name="password">Password</string>
+	<string name="btn_login">Login</string>
+	<string name="register_link">No KillerApp account yet? Register here</string>
+	<!-- End Login -->
+	
+	<!-- Start Register -->
+	<string name="name">Full name</string>
+	<string name="email">Email</string>
+	<string name="password_reg">Password</string>
+	<string name="password_reg2">Repeat password</string>
+	<string name="btn_register">Register account</string>
+	<string name="login_link">Already have an account? Login here</string>
+	<!-- End Register -->
 </resources>
