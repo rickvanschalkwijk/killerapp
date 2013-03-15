@@ -24,14 +24,13 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		
-		mMapView = (MapView) findViewById(R.id.mapview);
-        mMapView.setTileSource(TileSourceFactory.MAPNIK);
-        mMapView.setBuiltInZoomControls(true);
-        mMapController = mMapView.getController();
-        mMapController.setZoom(13);
-        GeoPoint gPt = new GeoPoint(51500000, -150000);
-        //Centre map near to Hyde Park Corner, London
-        mMapController.setCenter(gPt);
+		MapView mapView = new MapView(this, 256); //constructor
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        setContentView(mapView); //displaying the MapView
+        mapView.getController().setZoom(15); //set initial zoom-level, depends on your need
+        mapView.getController().setCenter(new GeoPoint(52.378003, 4.899709)); //This point is in Amsterdam Centraal Station, Netherlands. You should select a point in your map or get it from user's location.
+        mapView.setUseDataConnection(false); //keeps the mapView from loading online tiles using network connection.
 	}
 
 	@Override
