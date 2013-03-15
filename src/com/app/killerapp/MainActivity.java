@@ -16,6 +16,7 @@
 
 package com.app.killerapp;
 
+import map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -3,6 +3,13 @@
     package="com.app.killerapp"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -13,6 +20,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.app.killerapp.MainActivity"
             android:label="@string/app_name" >
@@ -31,7 +39,7 @@
             android:label="@string/title_activity_menu" >
         </activity>
         <activity
-            android:name="com.app.killerapp.MapActivity"
+            android:name="map.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
     </application>
