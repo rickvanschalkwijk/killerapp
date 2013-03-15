@@ -1,14 +1,13 @@
 Killerapp
 =========
 
-A native Android application for the city of Amsterdam
+A native Android application for the city of Amsterdam.
 
 
 Most important classes and files
 ----------------------
 	* MainActivity.java
 	* AndroidManifest.xml
-
 
 Install
 -------
@@ -25,7 +24,6 @@ Contribute
 	5. Open a [Pull Request][1]
 	6. Enjoy a refreshing Diet Coke and wait
 
-BAZINGA!
 
 Beware:
 	Because this project is due at April 30, we will not accept pull requests
