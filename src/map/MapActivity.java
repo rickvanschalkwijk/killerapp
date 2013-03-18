@@ -1,36 +1,52 @@
 package map;
 
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import java.io.File;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
-import com.app.killerapp.R;
-import com.app.killerapp.R.id;
-import com.app.killerapp.R.layout;
-import com.app.killerapp.R.menu;
-
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 
-public class MapActivity extends Activity {
-	
-	private MapView         mMapView;
-    private MapController   mMapController;
+import com.app.killerapp.R;
 
+public class MapActivity extends Activity implements IRegisterReceiver{
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_map);
+		//setContentView(R.layout.activity_map);
 		
-		MapView mapView = new MapView(this, 256); //constructor
-        mapView.setClickable(true);
+		// Create the mapView with an MBTileProvider
+        DefaultResourceProxyImpl resProxy;
+        resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
+ 
+        //String packageDir = "/com.app.killerapp";
+        //TODO: change to other path
+        String path = "/mnt/sdcard/osmdroid/";
+        File file = new File(path, "amsterdam.mbtiles");
+ 
+        MBTileProvider provider = new MBTileProvider(this, file);
+        MapView mapView = new MapView(this,
+                                      provider.getTileSource()
+                                              .getTileSizePixels(),
+                                      resProxy,
+                                      provider);
+ 
         mapView.setBuiltInZoomControls(true);
-        setContentView(mapView); //displaying the MapView
-        mapView.getController().setZoom(15); //set initial zoom-level, depends on your need
-        mapView.getController().setCenter(new GeoPoint(52.378003, 4.899709)); //This point is in Amsterdam Centraal Station, Netherlands. You should select a point in your map or get it from user's location.
-        mapView.setUseDataConnection(false); //keeps the mapView from loading online tiles using network connection.
+ 
+        // Zoom in and go to Amsterdam
+        MapController controller = mapView.getController();
+        controller.setZoom(12);
+        controller.animateTo(new GeoPoint(52.378003, 4.899709));
+ 
+        // Set the MapView as the root View for this Activity; done!
+        setContentView(mapView);
 	}
 
 	@Override
