@@ -1,4 +1,4 @@
-package map;
+package core.map.osmdroid;
 
 /**
  * Created on August 12, 2012

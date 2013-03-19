@@ -48,7 +48,7 @@
             android:label="@string/title_activity_menu" ></activity>
         
         <activity
-            android:name="map.MapActivity"
+            android:name="core.map.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
 

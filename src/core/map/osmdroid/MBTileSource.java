@@ -3,7 +3,7 @@
  *
  * @author Melle Sieswerda
  */
-package map;
+package core.map.osmdroid;
  
 import java.io.ByteArrayInputStream;
 import java.io.File;

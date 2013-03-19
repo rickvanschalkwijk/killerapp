@@ -1,4 +1,4 @@
-package map;
+package core.map.osmdroid;
 
 import microsoft.mappoint.TileSystem;
 

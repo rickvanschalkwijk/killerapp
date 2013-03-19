@@ -16,7 +16,7 @@
 
 package com.app.killerapp;
 
-import map.MapActivity;
+import core.map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,6 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Log.d("Blaat", Environment.getExternalStorageDirectory().getAbsolutePath() );
 	}
 	
 	public void openMap(View view){

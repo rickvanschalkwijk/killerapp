@@ -1,4 +1,4 @@
-package map;
+package core.map;
 
 import java.io.File;
 
@@ -10,10 +10,11 @@ import org.osmdroid.views.MapView;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 
 import com.app.killerapp.R;
+
+import core.map.osmdroid.MBTileProvider;
 
 public class MapActivity extends Activity implements IRegisterReceiver{
 	
