@@ -21,6 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 
 import com.app.killerapp.R;
@@ -97,7 +98,8 @@ public class MapActivity extends Activity implements IRegisterReceiver{
         @Override
         public void onLocationChanged(Location location) {
             // the location update.
-            //updateUILocation(location);
+        	Log.i("Device Latitude" + location.getLatitude(), null);
+        	Log.i("Device Longitude" + location.getLongitude(), null);
         }
 
         @Override
