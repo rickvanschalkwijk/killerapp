@@ -8,16 +8,31 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
+import android.R.bool;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 
 import com.app.killerapp.R;
 
 import core.map.osmdroid.MBTileProvider;
 
+@SuppressLint({ "NewApi", "ValidFragment" })
 public class MapActivity extends Activity implements IRegisterReceiver{
 	
+	private LocationManager mLocationManager;
+	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,9 +60,28 @@ public class MapActivity extends Activity implements IRegisterReceiver{
         MapController controller = mapView.getController();
         controller.setZoom(12);
         controller.animateTo(new GeoPoint(52.378003, 4.899709));
+        
+        // Get a reference to the LocationManager object.
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
  
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
+	}
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if(!gpsEnabled){
+			new EnableGpsDialogFragment().show(getFragmentManager(), "enableGpsDialog");
+		}
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	    mLocationManager.removeUpdates(listener);
 	}
 
 	@Override
@@ -57,5 +91,49 @@ public class MapActivity extends Activity implements IRegisterReceiver{
 		
 		return true;
 	}
+	
+	private final LocationListener listener = new LocationListener() {
 
+        @Override
+        public void onLocationChanged(Location location) {
+            // the location update.
+            //updateUILocation(location);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+	
+	
+	 // Method to launch Settings
+    private void enableLocationSettings() {
+        Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(settingsIntent);
+    }
+	
+    private class EnableGpsDialogFragment extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.enable_gps)
+                    .setMessage(R.string.enable_gps_dialog)
+                    .setPositiveButton(R.string.enable_gps, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            enableLocationSettings();
+                        }
+                    })
+                    .create();
+        }
+    }
 }

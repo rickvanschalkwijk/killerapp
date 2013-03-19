@@ -35,4 +35,10 @@
 	<string name="btn_register">Register account</string>
 	<string name="login_link">Already have an account? Login here</string>
 	<!-- End Register -->
+	
+	<!-- Start MapActvity -->
+	<string name="enable_gps">Enable GPS</string>
+	<string name="enable_gps_dialog">GPS provider not enabled. Would you like to enable it?</string>
+	<!-- End MapActivity -->
+	
 </resources>
