@@ -23,7 +23,3 @@ Contribute
 	4. Push to the branch (`git push origin my_markup`)
 	5. Open a [Pull Request][1]
 	6. Enjoy a refreshing Diet Coke and wait
-
-
-Beware:
-	Because this project is due at April 30, we will not accept pull requests
