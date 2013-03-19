@@ -8,7 +8,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
-import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,6 +28,7 @@ import com.app.killerapp.R;
 import core.map.osmdroid.MBTileProvider;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
+
 public class MapActivity extends Activity implements IRegisterReceiver{
 	
 	private LocationManager mLocationManager;
