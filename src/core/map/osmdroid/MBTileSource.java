@@ -90,8 +90,8 @@ public class MBTileSource extends BitmapTileSourceBase {
  
         // Get the minimum zoomlevel from the MBTiles file
         value = getInt(db, "SELECT MIN(zoom_level) FROM tiles;");
-        //minZoomLevel = value > -1 ? value : minZoom;
-        minZoomLevel = 12;
+        minZoomLevel = value > -1 ? value : minZoom;
+        
  
         // Get the maximum zoomlevel from the MBTiles file
         value = getInt(db, "SELECT MAX(zoom_level) FROM tiles;");
