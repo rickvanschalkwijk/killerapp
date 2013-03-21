@@ -5,10 +5,12 @@
 
     <string name="app_name">KillerApp</string>
     <string name="action_exit">Exit</string>
-    <string name="hello_world">Main Activity!</string>
+    <string name="menu_title">Menu</string>
     <string name="title_activity_menu">Killer App</string>
     <string name="button_map">Open map</string>
     <string name="map">Dit is een map</string>
+    <string name="map_button">Map</string>
+    <string name="companion_button">Travel companions</string>
     <!-- End Main Activity -->
 
 
