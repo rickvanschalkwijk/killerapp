@@ -39,6 +39,8 @@ public class MainActivity extends Activity{
 		{
 	   	SharedPreferences.Editor editor = settings.edit();
 	    editor.putBoolean("loggedIn", false);
+	    editor.putString("userName", "");
+	    editor.putString("passWord", "");
 	    editor.commit();
 	    startUp = false;
 		}
