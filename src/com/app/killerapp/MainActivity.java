@@ -19,18 +19,34 @@ package com.app.killerapp;
 import core.map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends Activity{
+	
+	public static final String PREFS_NAME = "LocalPrefs";
+	public static boolean startUp = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		if(startUp)
+		{
+	   	SharedPreferences.Editor editor = settings.edit();
+	    editor.putBoolean("loggedIn", false);
+	    editor.commit();
+	    startUp = false;
+		}
+		if(!settings.getBoolean("loggedIn", false))
+		{
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+		}	
 	}
 	
 	public void openMap(View view){
