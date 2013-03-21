@@ -4,9 +4,9 @@ import java.io.File;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
-import org.osmdroid.views.MapView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -26,6 +26,7 @@ import android.view.Menu;
 
 import com.app.killerapp.R;
 
+import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
@@ -40,7 +41,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_map);
 		
 		// Create the mapView with an MBTileProvider
         DefaultResourceProxyImpl resProxy;
@@ -52,39 +52,34 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         File file = new File(path, "amsterdam.mbtiles");
  
         MBTileProvider provider = new MBTileProvider(this, file);
-        MapView mapView = new MapView(this,
+        /*MapView mapView = new MapView(this,
                 provider.getTileSource()
                         .getTileSizePixels(),
                 resProxy,
                 provider);
-        /*
-         *TODO: implement the boundbox
+        */
+        
+        // *TODO: implement the boundbox
         BoundedMapView mapView = new BoundedMapView(this, resProxy, provider);
  
-        double north = 52.419150;
-        double east  =  4.994745;
-        double south = 52.333638;
-        double west  =  4.968842;
+        double north = 52.388841;
+        double east  =  4.964136;
+        double south = 52.322969;
+        double west  =  4.835695;
         BoundingBoxE6 bBox = new BoundingBoxE6(north, east, south, west);
  
         mapView.setScrollableAreaLimit(bBox);
-        */
+        
         mapView.setBuiltInZoomControls(true);
  
         // Zoom in and go to Amsterdam
         mapController = mapView.getController();
-        mapController.setZoom(10);
-        //mapController.animateTo(new GeoPoint(52.378003, 4.899709));
+        mapController.setZoom(12);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
-        // Get a reference to the LocationManager object.
-        
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
-        
-        //Location location = locationManager.getLastKnownLocation(locationProvider);
-        //Log.d("Device Latitude", "Last known: " + location.getLatitude());
-    	//Log.d("Device Longitude", "Last known: " + location.getLongitude());
-        
-        //mapController.animateTo(new GeoPoint( location.getLatitude(), location.getLongitude() ));
+        //go to last known location
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        mapController.animateTo(new GeoPoint( lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude() ));
         
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
@@ -94,7 +89,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	protected void onResume(){
 		super.onResume();
 		locationListener = new GeoUpdateHandler();
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
 	}
 	
@@ -128,8 +122,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         @Override
         public void onLocationChanged(Location location) {
             // the location update.
-        	mapController.setZoom(18);
-        	mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
+        	//mapController.setZoom(18);
+        	//mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
         	Log.d("Device Latitude", "" + location.getLatitude());
         	Log.d("Device Longitude", "" + location.getLongitude());
         }
