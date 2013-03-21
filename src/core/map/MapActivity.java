@@ -35,6 +35,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private LocationManager locationManager;
 	private MapController mapController;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
+	private GeoUpdateHandler locationListener;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +77,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         //mapController.animateTo(new GeoPoint(52.378003, 4.899709));
         
         // Get a reference to the LocationManager object.
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
+        
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
         
         //Location location = locationManager.getLastKnownLocation(locationProvider);
         //Log.d("Device Latitude", "Last known: " + location.getLatitude());
@@ -88,6 +89,15 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
 	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		locationListener = new GeoUpdateHandler();
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -113,12 +123,12 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		return true;
 	}
 	
-	private final LocationListener locationListener = new LocationListener() {
+	public class GeoUpdateHandler implements LocationListener  {
 
         @Override
         public void onLocationChanged(Location location) {
             // the location update.
-        	mapController.setZoom(17);
+        	mapController.setZoom(18);
         	mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
         	Log.d("Device Latitude", "" + location.getLatitude());
         	Log.d("Device Longitude", "" + location.getLongitude());
