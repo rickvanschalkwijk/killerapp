@@ -4,7 +4,6 @@
     <!-- Start Main Activity -->
 
     <string name="app_name">KillerApp</string>
-    <string name="action_settings">Settings</string>
     <string name="action_exit">Exit</string>
     <string name="hello_world">Main Activity!</string>
     <string name="title_activity_menu">Killer App</string>
@@ -18,8 +17,15 @@
     <string name="settings">Settings activity</string>
 
     <!-- End Settings Activity -->
+    
+    <!-- Begin Map Activity -->
+    
     <string name="title_activity_map">MapActivity</string>
-	
+	<string name="action_settings">Settings</string>
+	<string name="action_filter">Filter</string>
+	<string name="action_myposition">GoTo my position</string>
+	    
+	<!-- End Map Activity -->
 	<!-- Start Login -->
 	<string name="username">Email</string>
 	<string name="password">Password</string>
