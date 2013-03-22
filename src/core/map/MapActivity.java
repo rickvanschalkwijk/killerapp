@@ -136,9 +136,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		public Dialog filterDialog(){
 			mSelectedItems = new ArrayList();
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			
 			builder.setTitle(R.string.categories_title)
-			
 			.setMultiChoiceItems(R.array.categories, null, 
 					new DialogInterface.OnMultiChoiceClickListener() {			
 						@Override
