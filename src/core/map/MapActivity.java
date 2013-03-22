@@ -140,16 +140,16 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			builder.setTitle(R.string.categories_title)
 			
 			.setMultiChoiceItems(R.array.categories, null, 
-									new DialogInterface.OnMultiChoiceClickListener() {			
-										@Override
-										public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-											if(isChecked){
-												mSelectedItems.add(which);
-											}else if(mSelectedItems.contains(which)){
-												mSelectedItems.remove(Integer.valueOf(which));
-											}
-										}
-									})
+					new DialogInterface.OnMultiChoiceClickListener() {			
+						@Override
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							if(isChecked){
+								mSelectedItems.add(which);
+							}else if(mSelectedItems.contains(which)){
+								mSelectedItems.remove(Integer.valueOf(which));
+							}
+						}
+					})
 			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
