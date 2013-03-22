@@ -9,6 +9,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 
+import android.animation.AnimatorSet.Builder;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -125,7 +126,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	  public boolean onOptionsItemSelected(MenuItem item){
 			switch(item.getItemId()){
 				case R.id.action_filter:
-					Log.d("WIN", "action filter");
 					filterDialog();
 					return true;
 				default:
@@ -135,7 +135,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		
 		public Dialog filterDialog(){
 			mSelectedItems = new ArrayList();
+			
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			
 			builder.setTitle(R.string.categories_title)
 			.setMultiChoiceItems(R.array.categories, null, 
 					new DialogInterface.OnMultiChoiceClickListener() {			
@@ -162,7 +164,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	            	//return to underlaing activity
 	            }
 	        });
-			return builder.create();
+			builder.create();
+			
+			return builder.show();
 		}
 	
 	public class GeoUpdateHandler implements LocationListener  {
@@ -172,8 +176,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
             // the location update.
         	//mapController.setZoom(18);
         	//mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
-        	Log.d("Device Latitude", "" + location.getLatitude());
-        	Log.d("Device Longitude", "" + location.getLongitude());
         }
 
         @Override
