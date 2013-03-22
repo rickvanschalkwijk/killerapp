@@ -38,6 +38,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	
 	private LocationManager locationManager;
 	private MapController mapController;
+	private Location location;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
 	private GeoUpdateHandler locationListener;
 	private ArrayList mSelectedItems;
@@ -127,6 +128,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			switch(item.getItemId()){
 				case R.id.action_filter:
 					filterDialog();
+					return true;
+				case R.id.action_myposition:
+					mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
 					return true;
 				default:
 		            return super.onOptionsItemSelected(item);
