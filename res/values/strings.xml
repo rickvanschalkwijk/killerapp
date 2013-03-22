@@ -16,63 +16,65 @@
 
     <!-- Start settings Activity -->
 
-    <string name="settings">Settings activity</string>
+    <string name="settings">Settings</string>
 
     <!-- End Settings Activity -->
-    
+
+
     <!-- Begin Map Activity -->
-    
-    <string name="title_activity_map">MapActivity</string>
-	<string name="action_settings">Settings</string>
-	<string name="action_filter">Filter</string>
-	<string name="action_myposition">GoTo my position</string>
-	<string name="categories_title">Pick a category</string>
-	<string-array
-        name="categories">
-        <item
-            >Couple</item>
-        <item
-            >Seniors</item>
-        <item
-            >Family</item>
-        <item
-            >Youth</item>
-        <item
-            >Low Budget</item>
-        <item
-            >Romantic</item>
-        <item
-            >Cultural</item>
-        <item
-            >Party</item>
-        <item
-            >Active</item>
-        <item
-            >Non-specific</item>
+
+    <string name="title_activity_map">Map</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_myposition">GoTo my position</string>
+    <string name="action_help">Help</string>
+    <string name="categories_title">Pick a category</string>
+
+    <string-array name="categories">
+        <item>Couple</item>
+        <item>Seniors</item>
+        <item>Family</item>
+        <item>Youth</item>
+        <item>Low Budget</item>
+        <item>Romantic</item>
+        <item>Cultural</item>
+        <item>Party</item>
+        <item>Active</item>
+        <item>Non-specific</item>
     </string-array>
+
     <string name="ok">Filter</string>
     <string name="cancel">Cancel</string>
+
+    <!-- End Map Activity -->
+    <!-- Start Login -->
+    <string name="username">Email</string>
+    <string name="password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="register_link">No KillerApp account yet? Register here</string>
+    <!-- End Login -->
+
+
+    <!-- Start Register -->
+    <string name="name">Full name</string>
+    <string name="email">Email</string>
+    <string name="password_reg">Password</string>
+    <string name="password_reg2">Repeat password</string>
+    <string name="btn_register">Register account</string>
+    <string name="login_link">Already have an account? Login here</string>
+    <!-- End Register -->
+
+
+    <!-- Start MapActvity -->
+    
+    <string name="enable_gps">Enable GPS</string>
+    <string name="enable_gps_dialog">GPS provider not enabled. Would you like to enable it?</string>
+    
+    <!-- End MapActivity -->
+	<!-- Start HelpActivity -->
+    
+    <string name="title_activity_help">Help...</string>
+    <string name="help_activity">Help activity!</string>
 	
-	<!-- End Map Activity -->
-	<!-- Start Login -->
-	<string name="username">Email</string>
-	<string name="password">Password</string>
-	<string name="btn_login">Login</string>
-	<string name="register_link">No KillerApp account yet? Register here</string>
-	<!-- End Login -->
-	
-	<!-- Start Register -->
-	<string name="name">Full name</string>
-	<string name="email">Email</string>
-	<string name="password_reg">Password</string>
-	<string name="password_reg2">Repeat password</string>
-	<string name="btn_register">Register account</string>
-	<string name="login_link">Already have an account? Login here</string>
-	<!-- End Register -->
-	
-	<!-- Start MapActvity -->
-	<string name="enable_gps">Enable GPS</string>
-	<string name="enable_gps_dialog">GPS provider not enabled. Would you like to enable it?</string>
-	<!-- End MapActivity -->
-	
+	<!-- End HelpActivity -->
 </resources>

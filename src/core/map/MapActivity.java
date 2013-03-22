@@ -132,6 +132,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 				case R.id.action_myposition:
 					mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
 					return true;
+				case R.id.action_help:
+					Intent helpIntent = new Intent(this, util.HelpActivity.class);
+					startActivity(helpIntent);
+					return true;
 				default:
 		            return super.onOptionsItemSelected(item);
 			}
