@@ -1,6 +1,7 @@
 package core.map;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.app.killerapp.R;
 
@@ -37,6 +39,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private MapController mapController;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
 	private GeoUpdateHandler locationListener;
+	private ArrayList mSelectedItems;
+	final Context context = this;
+	
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,51 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		return true;
 	}
 	
+	  public boolean onOptionsItemSelected(MenuItem item){
+			switch(item.getItemId()){
+				case R.id.action_filter:
+					Log.d("WIN", "action filter");
+					filterDialog();
+					return true;
+				default:
+		            return super.onOptionsItemSelected(item);
+			}
+		}
+		
+		public Dialog filterDialog(){
+			mSelectedItems = new ArrayList();
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			
+			builder.setTitle(R.string.categories_title)
+			
+			.setMultiChoiceItems(R.array.categories, null, 
+									new DialogInterface.OnMultiChoiceClickListener() {			
+										@Override
+										public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+											if(isChecked){
+												mSelectedItems.add(which);
+											}else if(mSelectedItems.contains(which)){
+												mSelectedItems.remove(Integer.valueOf(which));
+											}
+										}
+									})
+			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//save check items somewhere
+					//or return to underlaning activity
+				}
+			})
+			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int id) {
+	                //user cancels
+	            	//return to underlaing activity
+	            }
+	        });
+			return builder.create();
+		}
+	
 	public class GeoUpdateHandler implements LocationListener  {
 
         @Override
@@ -147,7 +197,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(settingsIntent);
     }
-	
+    
+   
     private class EnableGpsDialogFragment extends DialogFragment {
 
         @Override
@@ -162,6 +213,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
                         }
                     })
                     .create();
-        }
-    }
+        	}
+    	}
 }

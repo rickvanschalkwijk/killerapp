@@ -26,7 +26,33 @@
 	<string name="action_settings">Settings</string>
 	<string name="action_filter">Filter</string>
 	<string name="action_myposition">GoTo my position</string>
-	    
+	<string name="categories_title">Pick a category</string>
+	<string-array
+        name="categories">
+        <item
+            >Couple</item>
+        <item
+            >Seniors</item>
+        <item
+            >Family</item>
+        <item
+            >Youth</item>
+        <item
+            >Low Budget</item>
+        <item
+            >Romantic</item>
+        <item
+            >Cultural</item>
+        <item
+            >Party</item>
+        <item
+            >Active</item>
+        <item
+            >Non-specific</item>
+    </string-array>
+    <string name="ok">Filter</string>
+    <string name="cancel">Cancel</string>
+	
 	<!-- End Map Activity -->
 	<!-- Start Login -->
 	<string name="username">Email</string>
