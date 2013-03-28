@@ -68,6 +68,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="core.map.MapActivity" />
         </activity>
+        <activity
+            android:name="com.app.kservices.ServicesContactActivity" 
+            android:label="@string/title_activity_services_contact"
+            android:parentActivityName="services.ServicesMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="services.ServicesMenuActivity" />
+        </activity>
     </application>
 
 </manifest>

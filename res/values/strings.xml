@@ -85,11 +85,14 @@
     <string name="title_activity_help">Help...</string>
     <string name="help_activity">Help activity!</string>
 
-    <!-- End HelpActivity -->
+
     <string name="title_activity_event">EventActivity</string>
-    <string name="hello_world">Hello world!</string>
 
     <!--  End HelpActivity -->
 
 	<string name="title_activity_friend">FriendActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_services_contact">ServicesContactActivity</string>
+
+
 </resources>
