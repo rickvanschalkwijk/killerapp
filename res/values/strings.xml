@@ -17,6 +17,8 @@
     <string name="map">Dit is een map</string>
     <string name="map_button">Map</string>
     <string name="companion_button">Travel companions</string>
+    <string name="settings_button">Settings</string>
+    <string name="service_button">Services</string>
     <!-- End Main Activity -->
 
 
