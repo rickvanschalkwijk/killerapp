@@ -9,7 +9,6 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 
-import android.animation.AnimatorSet.Builder;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +22,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -38,12 +36,11 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	
 	private LocationManager locationManager;
 	private MapController mapController;
-	private Location location;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
 	private GeoUpdateHandler locationListener;
 	private ArrayList mSelectedItems;
 	final Context context = this;
-	
+	private Location currentLocation;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +56,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         File file = new File(path, "amsterdam.mbtiles");
  
         MBTileProvider provider = new MBTileProvider(this, file);
-        /*MapView mapView = new MapView(this,
-                provider.getTileSource()
-                        .getTileSizePixels(),
-                resProxy,
-                provider);
-        */
-        
-        // *TODO: implement the boundbox
+                
         BoundedMapView mapView = new BoundedMapView(this, resProxy, provider);
- 
         double north = 52.388841;
         double east  =  4.964136;
         double south = 52.322969;
@@ -84,9 +73,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         mapController.setZoom(12);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
-        //go to last known location
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        mapController.animateTo(new GeoPoint( lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude() ));
+                
+        //this location is central station
+        mapController.animateTo(new GeoPoint( 52.379211, 4.899426 ));
         
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
@@ -104,7 +93,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		super.onStart();
 		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		final boolean gpsEnabled = locationManager.isProviderEnabled( locationProvider );
 		if(!gpsEnabled){
 			new EnableGpsDialogFragment().show(getFragmentManager(), "enableGpsDialog");
 		}
@@ -130,7 +119,28 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 					filterDialog();
 					return true;
 				case R.id.action_myposition:
-					mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
+					try {
+						mapController.animateTo(new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()));
+						mapController.setZoom(17);
+					} catch( Exception e){
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+	        			alertDialogBuilder.setTitle("Location error");
+	        			alertDialogBuilder
+	        				.setMessage("Location not found")
+	        				.setCancelable(false)
+	        				.setPositiveButton("OK",new DialogInterface.OnClickListener() 
+	        				{
+	        					public void onClick(DialogInterface dialog,int id) 
+	        					{
+	        						dialog.cancel();
+	        					}
+	        				});
+	        				
+	        				AlertDialog alertDialog = alertDialogBuilder.create();
+	        				alertDialog.show();
+					}
+						
+					
 					return true;
 				case R.id.action_help:
 					Intent helpIntent = new Intent(this, util.HelpActivity.class);
@@ -181,9 +191,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 
         @Override
         public void onLocationChanged(Location location) {
-            // the location update.
-        	//mapController.setZoom(18);
-        	//mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
+        	currentLocation = location;
         }
 
         @Override
