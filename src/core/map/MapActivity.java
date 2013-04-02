@@ -85,10 +85,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
         
-        createOverLay( centralStation );
+        addMarker( centralStation );
 	}
 	
-	private void createOverLay( GeoPoint location ){
+	private void addMarker( GeoPoint location ){
 		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", location );
         Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
         myLocationOverlayItem.setMarker(myCurrentLocationMarker);
