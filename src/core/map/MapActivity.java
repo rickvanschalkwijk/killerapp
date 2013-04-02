@@ -25,8 +25,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.app.killerapp.R;
 
@@ -74,7 +76,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         // Zoom in and go to Amsterdam
         mapController = mapView.getController();
-        mapController.setZoom(12);
+        mapController.setZoom(13);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         GeoPoint centralStation = new GeoPoint( 52.379211, 4.899426 );
@@ -99,6 +101,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         ItemizedIconOverlay currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                    	Toast.makeText(context, R.string.app_name, Toast.LENGTH_LONG).show();
                         return true;
                     }
                     public boolean onItemLongPress(final int index, final OverlayItem item) {
