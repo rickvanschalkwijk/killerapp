@@ -101,7 +101,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         ItemizedIconOverlay currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                    	Toast.makeText(context, R.string.app_name, Toast.LENGTH_LONG).show();
+                    	createEventOverlay();
                         return true;
                     }
                     public boolean onItemLongPress(final int index, final OverlayItem item) {
@@ -109,6 +109,31 @@ public class MapActivity extends Activity implements IRegisterReceiver {
                     }
                 }, resProxy);
         this.mapView.getOverlays().add( currentLocationOverlay );
+	}
+	
+	private void createEventOverlay(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle("Event information");
+		alertDialogBuilder
+			.setMessage("Short description about the event")
+			.setCancelable(true)
+			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int id) {
+	                //user cancels
+	            	//return to underlaing activity
+	            }
+	        })
+			.setPositiveButton( R.string.event_more_information ,new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
+				}
+			});
+			
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 	}
 	
 	@Override

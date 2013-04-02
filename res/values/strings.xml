@@ -33,6 +33,7 @@
     <string name="action_filter">Filter</string>
     <string name="action_myposition">GoTo my position</string>
     <string name="action_help">Help</string>
+    <string name="event_more_information">More information</string>
     <string name="categories_title">Pick a category</string>
 
     <string-array name="categories">
