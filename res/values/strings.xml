@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Start Splash Activity -->
 
+	<string name="load">Loading...</string>
+	<!-- End Splash Activity -->
+	
     <!-- Start Main Activity -->
 
     <string name="app_name">KillerApp</string>
