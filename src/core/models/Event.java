@@ -1,8 +1,6 @@
 package core.models;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.osmdroid.util.GeoPoint;
@@ -20,22 +18,6 @@ public class Event {
 	public Event(){
 	}
 
-	public ArrayList<Event> getDummyData(){
-		ArrayList<Event> events = new ArrayList<Event>();
-		
-		Event eventA = new Event( 
-				"eventA", 
-				"This is eventA", 
-				"test", 
-				new DateTime(2013, 4, 10, 12, 0, 0, 0), 
-				new DateTime(2013, 4, 10, 12, 0, 0, 0),
-				new GeoPoint( 52.376438, 4.893576 ),
-				new BigDecimal(0.00),
-				true);
-		
-		return events;
-	}
-	
 	public Event(String title, String description, String category,
 			DateTime startDate, DateTime endDate, GeoPoint location, BigDecimal price,
 			boolean isFree) {

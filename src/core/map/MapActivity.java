@@ -25,15 +25,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.app.killerapp.R;
 
+import core.event.EventUtil;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
+import core.models.Event;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 
@@ -87,11 +88,19 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
         
-        addMarker( centralStation );
+        addDummyEvents();
 	}
 	
-	private void addMarker( GeoPoint location ){
-		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", location );
+	private void addDummyEvents(){
+		ArrayList<Event> events = EventUtil.getDummyData();
+		
+		for( Event event : events ){
+			addMarker( event );
+		}
+	}
+	
+	private void addMarker( final Event newEvent ){
+		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
         Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
         myLocationOverlayItem.setMarker(myCurrentLocationMarker);
 
@@ -100,8 +109,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 
         ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+        			private Event event = newEvent;
+        			
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                    	createEventOverlay();
+                    	createEventOverlay(event);
                         return true;
                     }
                     public boolean onItemLongPress(final int index, final OverlayItem item) {
@@ -111,11 +122,11 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         this.mapView.getOverlays().add( currentLocationOverlay );
 	}
 	
-	private void createEventOverlay(){
+	private void createEventOverlay( Event event){
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle("Event information");
+		alertDialogBuilder.setTitle( event.getTitle() );
 		alertDialogBuilder
-			.setMessage("Short description about the event")
+			.setMessage( event.getDescription() )
 			.setCancelable(true)
 			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	            @Override
