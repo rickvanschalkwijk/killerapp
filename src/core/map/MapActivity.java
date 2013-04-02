@@ -8,6 +8,8 @@ import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -41,13 +44,14 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private ArrayList mSelectedItems;
 	final Context context = this;
 	private Location currentLocation;
+	private DefaultResourceProxyImpl resProxy;
+	private BoundedMapView mapView;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		// Create the mapView with an MBTileProvider
-        DefaultResourceProxyImpl resProxy;
         resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
  
         //String packageDir = "/com.app.killerapp";
@@ -57,7 +61,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         MBTileProvider provider = new MBTileProvider(this, file);
                 
-        BoundedMapView mapView = new BoundedMapView(this, resProxy, provider);
+        mapView = new BoundedMapView(this, resProxy, provider);
         double north = 52.388841;
         double east  =  4.964136;
         double south = 52.322969;
@@ -73,12 +77,35 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         mapController.setZoom(12);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
+        GeoPoint centralStation = new GeoPoint( 52.379211, 4.899426 );
                 
         //this location is central station
-        mapController.animateTo(new GeoPoint( 52.379211, 4.899426 ));
+        mapController.animateTo( centralStation );
         
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
+        
+        createOverLay( centralStation );
+	}
+	
+	private void createOverLay( GeoPoint location ){
+		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", location );
+        Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
+        myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+
+        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(myLocationOverlayItem);
+
+        ItemizedIconOverlay currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                        return true;
+                    }
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+                        return true;
+                    }
+                }, resProxy);
+        this.mapView.getOverlays().add( currentLocationOverlay );
 	}
 	
 	@Override
