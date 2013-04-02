@@ -1,18 +1,20 @@
 package core.models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.osmdroid.util.GeoPoint;
 
 public class Event {
 	private String title;
 	private String description;
 	private String category;
-	private Date startDate;
-	private Date endDate;
+	private DateTime startDate;
+	private DateTime endDate;
 	private GeoPoint location;
-	private float price;
+	private BigDecimal price;
 	private boolean isFree;
 	
 	public Event(){
@@ -21,13 +23,21 @@ public class Event {
 	public ArrayList<Event> getDummyData(){
 		ArrayList<Event> events = new ArrayList<Event>();
 		
-		Event eventA = new Event();
+		Event eventA = new Event( 
+				"eventA", 
+				"This is eventA", 
+				"test", 
+				new DateTime(2013, 4, 10, 12, 0, 0, 0), 
+				new DateTime(2013, 4, 10, 12, 0, 0, 0),
+				new GeoPoint( 52.376438, 4.893576 ),
+				new BigDecimal(0.00),
+				true);
 		
 		return events;
 	}
 	
 	public Event(String title, String description, String category,
-			Date startDate, Date endDate, GeoPoint location, float price,
+			DateTime startDate, DateTime endDate, GeoPoint location, BigDecimal price,
 			boolean isFree) {
 		super();
 		this.title = title;
@@ -77,25 +87,25 @@ public class Event {
 
 
 
-	public Date getStartDate() {
+	public DateTime getStartDate() {
 		return startDate;
 	}
 
 
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(DateTime startDate) {
 		this.startDate = startDate;
 	}
 
 
 
-	public Date getEndDate() {
+	public DateTime getEndDate() {
 		return endDate;
 	}
 
 
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
 	}
 
@@ -113,13 +123,13 @@ public class Event {
 
 
 
-	public float getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
 
 
-	public void setPrice(float price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
