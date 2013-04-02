@@ -57,7 +57,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
  
         //String packageDir = "/com.app.killerapp";
-        //TODO: change to other path
+        //TODO: change path to Environment.getExternalStorageDirectory().getPath()
         String path = "/mnt/sdcard/osmdroid/";
         File file = new File(path, "amsterdam.mbtiles");
  
@@ -98,7 +98,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
         items.add(myLocationOverlayItem);
 
-        ItemizedIconOverlay currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+        ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
                     	createEventOverlay();
