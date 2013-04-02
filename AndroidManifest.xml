@@ -19,9 +19,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity 
+        <activity
             android:name="com.app.killerapp.SplashActivity"
-            android:label="Loading">
+            android:label="Loading" >
         </activity>
         <activity
             android:name="com.app.killerapp.MainActivity"
@@ -55,6 +55,14 @@
         <activity
             android:name="util.HelpActivity"
             android:label="@string/title_activity_help" >
+        </activity>
+        <activity
+            android:name="com.app.killerapp.EventActivity"
+            android:label="@string/title_activity_event"
+            android:parentActivityName="core.map.MapActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="core.map.MapActivity" />
         </activity>
     </application>
 

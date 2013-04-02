@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.app.killerapp.EventActivity;
 import com.app.killerapp.R;
 
 import core.event.EventUtil;
@@ -122,7 +123,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         this.mapView.getOverlays().add( currentLocationOverlay );
 	}
 	
-	private void createEventOverlay( Event event){
+	private void createEventOverlay( final Event event){
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder.setTitle( event.getTitle() );
 		alertDialogBuilder
@@ -139,6 +140,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			{
 				public void onClick(DialogInterface dialog,int id) 
 				{
+					Intent intent = new Intent(getApplicationContext(), EventActivity.class );
+					intent.putExtra(Event.EXTRA, event);
+					startActivity(intent);
 					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
 				}
 			});

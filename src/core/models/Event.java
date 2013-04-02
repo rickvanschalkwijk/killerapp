@@ -1,11 +1,14 @@
 package core.models;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.joda.time.DateTime;
 import org.osmdroid.util.GeoPoint;
 
-public class Event {
+@SuppressWarnings("serial")
+public class Event implements Serializable{
+	public static final String EXTRA = "com.models.EVENT_EXTRA";
 	private String title;
 	private String description;
 	private String category;

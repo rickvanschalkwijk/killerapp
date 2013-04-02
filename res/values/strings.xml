@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- Start Splash Activity -->
 
-	<string name="load">Loading...</string>
-	<!-- End Splash Activity -->
-	
+    <string name="load">Loading...</string>
+    <!-- End Splash Activity -->
+
+
     <!-- Start Main Activity -->
 
     <string name="app_name">KillerApp</string>
@@ -72,15 +73,18 @@
 
 
     <!-- Start MapActvity -->
-    
+
     <string name="enable_gps">Enable GPS</string>
     <string name="enable_gps_dialog">GPS provider not enabled. Would you like to enable it?</string>
-    
+
     <!-- End MapActivity -->
-	<!-- Start HelpActivity -->
-    
+    <!-- Start HelpActivity -->
+
     <string name="title_activity_help">Help...</string>
     <string name="help_activity">Help activity!</string>
-	
-	<!-- End HelpActivity -->
+
+    <!-- End HelpActivity -->
+    <string name="title_activity_event">EventActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
