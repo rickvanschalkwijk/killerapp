@@ -1,5 +1,6 @@
 package core.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.osmdroid.util.GeoPoint;
@@ -17,6 +18,13 @@ public class Event {
 	public Event(){
 	}
 
+	public ArrayList<Event> getDummyData(){
+		ArrayList<Event> events = new ArrayList<Event>();
+		
+		Event eventA = new Event();
+		
+		return events;
+	}
 	
 	public Event(String title, String description, String category,
 			Date startDate, Date endDate, GeoPoint location, float price,
