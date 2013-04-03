@@ -57,6 +57,10 @@
             android:label="@string/title_activity_help" >
         </activity>
         <activity
+            android:name="com.app.killerapp.FriendActivity"
+            android:label="@string/title_activity_friend" >
+        </activity>
+        <activity
             android:name="com.app.killerapp.EventActivity"
             android:label="@string/title_activity_event"
             android:parentActivityName="core.map.MapActivity" >

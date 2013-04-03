@@ -89,4 +89,7 @@
     <string name="title_activity_event">EventActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <!--  End HelpActivity -->
+
+	<string name="title_activity_friend">FriendActivity</string>
 </resources>
