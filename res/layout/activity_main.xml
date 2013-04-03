@@ -36,6 +36,7 @@
             android:id="@+id/btn_companions_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:onClick="openFriend"
             android:text="@string/companion_button" />
         <Button
             android:id="@+id/btn_services_open"
