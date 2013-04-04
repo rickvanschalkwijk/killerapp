@@ -41,12 +41,11 @@ public class SplashActivity extends Activity {
 						wait(_splashTime);
 					}
 				} catch (InterruptedException e) {
-					// TODO: handle exception
+					
 				}finally{
-					finish();
 					Intent intent = new Intent(sPlashActivity, MainActivity.class);
 					startActivity(intent);
-					stop(); //kill the current activity, user can't get it back with backbutton
+					finish();
 				}
 			}
 		};
@@ -57,7 +56,7 @@ public class SplashActivity extends Activity {
 	public boolean onTouchEvent(MotionEvent event){
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			synchronized (splashThread) {
-				splashThread.notifyAll();
+				//splashThread.notifyAll();
 			}
 		}
 		return true;

@@ -21,24 +21,23 @@
         android:theme="@style/AppTheme" >
         <activity 
             android:name="com.app.killerapp.SplashActivity"
-            android:label="Loading">
-        </activity>
-        <activity
-            android:name="com.app.killerapp.MainActivity"
-            android:label="@string/app_name" >
+            android:label="KillerApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+         <activity
             android:name="com.app.killerapp.LoginActivity"
             android:label="Login to your Account" >
         </activity>
         <activity
             android:name="com.app.killerapp.RegistrationActivity"
             android:label="Register New Account" >
+        </activity>
+        <activity
+            android:name="com.app.killerapp.MainActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.app.killerapp.SettingsActivity"
