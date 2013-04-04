@@ -16,6 +16,7 @@
 
 package com.app.killerapp;
 
+import services.ServicesContactActivity;
 import core.map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -61,7 +62,7 @@ public class MainActivity extends Activity{
 	}
 	public void gotoServices(View view)
 	{
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, ServicesContactActivity.class);
 		startActivity(intent);
 
 	}
