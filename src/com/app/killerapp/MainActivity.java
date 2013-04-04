@@ -52,19 +52,18 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
 	}
-	
 
-	public void openFriend(View view){
+	public void openFriend(View view) {
 		Intent intent = new Intent(this, FriendActivity.class);
 		startActivity(intent);
 	}
-	public void gotoServices(View view)
-	{
+
+	public void gotoServices(View view) {
 		Intent intent = new Intent(this, ServicesContactActivity.class);
 		startActivity(intent);
 
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
