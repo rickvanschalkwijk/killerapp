@@ -2,16 +2,16 @@ package core.models;
 
 import org.osmdroid.util.GeoPoint;
 
-public class Location {
+public class Place {
 
 	private String name;
 	private String description;
 	private GeoPoint location;
 	
-	public Location(){
+	public Place(){
 	}
 
-	public Location(String name, String description, GeoPoint location) {
+	public Place(String name, String description, GeoPoint location) {
 		super();
 		this.name = name;
 		this.description = description;

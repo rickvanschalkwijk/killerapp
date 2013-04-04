@@ -36,6 +36,8 @@ import core.event.EventUtil;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
 import core.models.Event;
+import core.models.Place;
+import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 
@@ -93,6 +95,14 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         addEvents();
 	}
 	
+	private void addLocations(){
+		ArrayList<Place> places = PlaceUtil.getDummyData();
+		
+		for( Place place : places ){
+			addPlaceMarker( place );
+		}
+	}
+	
 	private void addEvents(){
 		ArrayList<Event> events = EventUtil.getDummyData();
 		
@@ -122,6 +132,54 @@ public class MapActivity extends Activity implements IRegisterReceiver {
                     }
                 }, resProxy);
         this.mapView.getOverlays().add( currentLocationOverlay );
+	}
+	
+	private void addPlaceMarker( final Place newPlace ){
+		OverlayItem placeOverLayItem = new OverlayItem("Place", "Some place", newPlace.getLocation() );
+        Drawable placeMarker = this.getResources().getDrawable(R.drawable.place_marker);
+        placeOverLayItem.setMarker(placeMarker);
+
+        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(placeOverLayItem);
+
+        ItemizedIconOverlay<OverlayItem> currentPlaceOverLayItem = new ItemizedIconOverlay<OverlayItem>(items,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+        			private Place place = newPlace;
+        			
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                    	createPlaceOverlay(place);
+                        return true;
+                    }
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+                        return true;
+                    }
+                }, resProxy);
+        this.mapView.getOverlays().add( currentPlaceOverLayItem );
+	}
+	
+	private void createPlaceOverlay( final Place place ){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle( place.getName() );
+		alertDialogBuilder
+			.setMessage( place.getDescription() )
+			.setCancelable(true)
+			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int id) {
+	                //user cancels
+	            	//return to underlaing activity
+	            }
+	        })
+			.setPositiveButton( R.string.event_more_information ,new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
+				}
+			});
+			
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 	}
 	
 	private void createEventOverlay( final Event event){
