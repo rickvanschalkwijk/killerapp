@@ -16,13 +16,12 @@
 
 package com.app.killerapp;
 
+import services.ServicesContactActivity;
 import core.map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends Activity {
@@ -54,9 +53,16 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+
 	public void openFriend(View view){
 		Intent intent = new Intent(this, FriendActivity.class);
 		startActivity(intent);
+	}
+	public void gotoServices(View view)
+	{
+		Intent intent = new Intent(this, ServicesContactActivity.class);
+		startActivity(intent);
+
 	}
 	
 	@Override
