@@ -8,6 +8,8 @@ import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,11 +27,15 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.app.killerapp.EventActivity;
 import com.app.killerapp.R;
 
+import core.event.EventUtil;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
+import core.models.Event;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 
@@ -41,23 +48,24 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private ArrayList mSelectedItems;
 	final Context context = this;
 	private Location currentLocation;
+	private DefaultResourceProxyImpl resProxy;
+	private BoundedMapView mapView;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		// Create the mapView with an MBTileProvider
-        DefaultResourceProxyImpl resProxy;
         resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
  
         //String packageDir = "/com.app.killerapp";
-        //TODO: change to other path
+        //TODO: change path to Environment.getExternalStorageDirectory().getPath()
         String path = "/mnt/sdcard/osmdroid/";
         File file = new File(path, "amsterdam.mbtiles");
  
         MBTileProvider provider = new MBTileProvider(this, file);
                 
-        BoundedMapView mapView = new BoundedMapView(this, resProxy, provider);
+        mapView = new BoundedMapView(this, resProxy, provider);
         double north = 52.388841;
         double east  =  4.964136;
         double south = 52.322969;
@@ -70,15 +78,77 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         // Zoom in and go to Amsterdam
         mapController = mapView.getController();
-        mapController.setZoom(12);
+        mapController.setZoom(13);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
+        GeoPoint centralStation = new GeoPoint( 52.379211, 4.899426 );
                 
         //this location is central station
-        mapController.animateTo(new GeoPoint( 52.379211, 4.899426 ));
+        mapController.animateTo( centralStation );
         
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
+        
+        addDummyEvents();
+	}
+	
+	private void addDummyEvents(){
+		ArrayList<Event> events = EventUtil.getDummyData();
+		
+		for( Event event : events ){
+			addMarker( event );
+		}
+	}
+	
+	private void addMarker( final Event newEvent ){
+		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
+        Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
+        myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+
+        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(myLocationOverlayItem);
+
+        ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+        			private Event event = newEvent;
+        			
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                    	createEventOverlay(event);
+                        return true;
+                    }
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+                        return true;
+                    }
+                }, resProxy);
+        this.mapView.getOverlays().add( currentLocationOverlay );
+	}
+	
+	private void createEventOverlay( final Event event){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle( event.getTitle() );
+		alertDialogBuilder
+			.setMessage( event.getDescription() )
+			.setCancelable(true)
+			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int id) {
+	                //user cancels
+	            	//return to underlaing activity
+	            }
+	        })
+			.setPositiveButton( R.string.event_more_information ,new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					Intent intent = new Intent(getApplicationContext(), EventActivity.class );
+					intent.putExtra(Event.EXTRA, event);
+					startActivity(intent);
+					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
+				}
+			});
+			
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 	}
 	
 	@Override
