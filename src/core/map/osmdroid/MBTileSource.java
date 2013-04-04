@@ -89,8 +89,9 @@ public class MBTileSource extends BitmapTileSourceBase {
         db = SQLiteDatabase.openDatabase(file.getAbsolutePath(), null, flags);
  
         // Get the minimum zoomlevel from the MBTiles file
-        value = getInt(db, "SELECT MIN(zoom_level) FROM tiles;");
-        minZoomLevel = value > -1 ? value : minZoom;
+        //value = getInt(db, "SELECT MIN(zoom_level) FROM tiles;");
+        //minZoomLevel = value > -1 ? value : minZoom;
+        minZoomLevel = 14;
         
  
         // Get the maximum zoomlevel from the MBTiles file
