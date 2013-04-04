@@ -13,56 +13,70 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends Activity {
-	
+
 	final Context context = this;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
-        registerScreen.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RegistrationActivity.class);
-                startActivity(i);
-            }
-        });
-        Button login = (Button) findViewById(R.id.btnLogin);
-        login.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	EditText user = (EditText)findViewById(R.id.insertedUsername);
-            	String username = user.getText().toString();
-            	EditText pass = (EditText)findViewById(R.id.insertedPassword);
-            	String password = pass.getText().toString();
-        
-            	SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-            	if(username.equals(settings.getString("userName", "unknown"))
-            			&& password.equals(settings.getString("passWord", "unknown")))
-            	{
-        	   	SharedPreferences.Editor editor = settings.edit();
-        	    editor.putBoolean("loggedIn", true);
-        	    editor.commit();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            	}
-            	else
-            	{
-            		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        			alertDialogBuilder.setTitle("Error");
-        			alertDialogBuilder
-        				.setMessage("Wrong username or password!")
-        				.setCancelable(false)
-        				.setPositiveButton("OK",new DialogInterface.OnClickListener() 
-        				{
-        					public void onClick(DialogInterface dialog,int id) 
-        					{
-        						dialog.cancel();
-        					}
-        				});
-        				
-        				AlertDialog alertDialog = alertDialogBuilder.create();
-        				alertDialog.show();
-            	}
-            }
-        });
-    }
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login);
+		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+		registerScreen.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(),
+						RegistrationActivity.class);
+				startActivity(i);
+			}
+		});
+		Button login = (Button) findViewById(R.id.btnLogin);
+		login.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				EditText user = (EditText) findViewById(R.id.insertedUsername);
+				String username = user.getText().toString();
+				EditText pass = (EditText) findViewById(R.id.insertedPassword);
+				String password = pass.getText().toString();
+
+				SharedPreferences settings = getSharedPreferences("LocalPrefs",
+						0);
+				if (username.equals(settings.getString("userName", "unknown"))
+						&& password.equals(settings.getString("passWord",
+								"unknown"))) {
+					SharedPreferences.Editor editor = settings.edit();
+					editor.putBoolean("loggedIn", true);
+					editor.commit();
+					Intent i = new Intent(getApplicationContext(),
+							MainActivity.class);
+					startActivity(i);
+				} else {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+							context);
+					alertDialogBuilder.setTitle("Error");
+					alertDialogBuilder
+							.setMessage("Wrong username or password!")
+							.setCancelable(false)
+							.setPositiveButton("OK",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog, int id) {
+											dialog.cancel();
+										}
+									});
+
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
+				}
+			}
+		});
+	}
+	/*
+	 * If back-button is pressed goto homescreen.
+	 * @see android.app.Activity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent backIntent = new Intent(Intent.ACTION_MAIN);
+		backIntent.addCategory(backIntent.CATEGORY_HOME);
+		startActivity(backIntent);
+	}
 }

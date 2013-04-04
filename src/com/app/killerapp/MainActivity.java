@@ -25,8 +25,8 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends Activity{
-	
+public class MainActivity extends Activity {
+
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
 
@@ -35,55 +35,53 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		if(startUp)
-		{
-	   	SharedPreferences.Editor editor = settings.edit();
-	    editor.putBoolean("loggedIn", false);
-	    editor.putString("userName", "");
-	    editor.putString("passWord", "");
-	    editor.commit();
-	    startUp = false;
+		if (startUp) {
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putBoolean("loggedIn", false);
+			editor.putString("userName", "");
+			editor.putString("passWord", "");
+			editor.commit();
+			startUp = false;
 		}
-		if(!settings.getBoolean("loggedIn", false))
-		{
+		if (!settings.getBoolean("loggedIn", false)) {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
-		}	
+		}
 	}
-	
-	public void openMap(View view){
+
+	public void openMap(View view) {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
 	}
-	
+
 	@Override
-	protected void onStart(){
+	protected void onStart() {
 		super.onStart();
-		
+
 	}
-	
-	@Override 
-	protected void onPause(){
-		super.onPause();
-		
-	}
-	
+
 	@Override
-	protected void onResume(){
-		super.onResume();
-		
+	protected void onPause() {
+		super.onPause();
+
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+	}
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
-	} 
-	
+
+	}
+
 	@Override
-	protected void onDestroy(){
+	protected void onDestroy() {
 		super.onDestroy();
-		
+
 	}
 
 }
