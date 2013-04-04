@@ -93,6 +93,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         setContentView(mapView);
         
         addEvents();
+        addLocations();
 	}
 	
 	private void addLocations(){
