@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme" >
         <activity 
             android:name="com.app.killerapp.SplashActivity"
-            android:label="KillerApp">
+            android:label="KillerApp"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
