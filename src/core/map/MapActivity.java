@@ -90,10 +90,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         // Set the MapView as the root View for this Activity; done!
         setContentView(mapView);
         
-        addDummyEvents();
+        addEvents();
 	}
 	
-	private void addDummyEvents(){
+	private void addEvents(){
 		ArrayList<Event> events = EventUtil.getDummyData();
 		
 		for( Event event : events ){
