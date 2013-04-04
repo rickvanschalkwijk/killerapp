@@ -102,12 +102,12 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	}
 	
 	private void addEventMarker( final Event newEvent ){
-		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
-        Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
-        myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+		OverlayItem eventOverLayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
+        Drawable eventMarker = this.getResources().getDrawable(R.drawable.marker);
+        eventOverLayItem.setMarker(eventMarker);
 
         final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(myLocationOverlayItem);
+        items.add(eventOverLayItem);
 
         ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
