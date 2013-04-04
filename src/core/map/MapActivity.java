@@ -50,6 +50,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private Location currentLocation;
 	private DefaultResourceProxyImpl resProxy;
 	private BoundedMapView mapView;
+	private int defaultZoomLevel = 13;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         // Zoom in and go to Amsterdam
         mapController = mapView.getController();
-        mapController.setZoom(13);
+        mapController.setZoom( defaultZoomLevel );
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         GeoPoint centralStation = new GeoPoint( 52.379211, 4.899426 );
@@ -96,11 +97,11 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		ArrayList<Event> events = EventUtil.getDummyData();
 		
 		for( Event event : events ){
-			addMarker( event );
+			addEventMarker( event );
 		}
 	}
 	
-	private void addMarker( final Event newEvent ){
+	private void addEventMarker( final Event newEvent ){
 		OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
         Drawable myCurrentLocationMarker = this.getResources().getDrawable(R.drawable.marker);
         myLocationOverlayItem.setMarker(myCurrentLocationMarker);
