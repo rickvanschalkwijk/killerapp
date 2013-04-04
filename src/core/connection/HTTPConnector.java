@@ -20,6 +20,9 @@ public class HTTPConnector implements Connector {
 	@Override
 	public String performGetRequest(String url) throws DataException {
 		HttpGet getRequest = new HttpGet(url);
+		getRequest.addHeader("Content-Type", "text/xml");
+		// temp auth token, needs to be replaced by real auth token
+		getRequest.addHeader("AuthToken", "letmein");
 		try {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			return client.execute(getRequest, handler);
@@ -33,6 +36,9 @@ public class HTTPConnector implements Connector {
 	@Override
 	public String performPostRequest(String url, String postBody) throws DataException {
 		HttpPost postRequest = new HttpPost(url);
+		postRequest.addHeader("Content-Type", "text/xml");
+		// temp auth token, needs to be replaced by real auth token
+		postRequest.addHeader("AuthToken", "letmein");
 		try {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			HttpEntity entity = new StringEntity(postBody);
