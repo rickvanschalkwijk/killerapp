@@ -102,7 +102,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	}
 	
 	private void addEventMarker( final Event newEvent ){
-		OverlayItem eventOverLayItem = new OverlayItem("Here", "Current Position", newEvent.getLocation() );
+		OverlayItem eventOverLayItem = new OverlayItem("Event", "Some event", newEvent.getLocation() );
         Drawable eventMarker = this.getResources().getDrawable(R.drawable.marker);
         eventOverLayItem.setMarker(eventMarker);
 
@@ -263,6 +263,23 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         @Override
         public void onLocationChanged(Location location) {
         	currentLocation = location;
+        	OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
+            Drawable myCurrentLocationMarker = context.getResources().getDrawable(R.drawable.marker);
+            myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+
+            final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+            items.add(myLocationOverlayItem);
+
+            ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
+                    new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                        public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                            return true;
+                        }
+                        public boolean onItemLongPress(final int index, final OverlayItem item) {
+                            return true;
+                        }
+                    }, resProxy );
+            mapView.getOverlays().add(currentLocationOverlay);
         }
 
         @Override
