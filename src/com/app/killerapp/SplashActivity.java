@@ -23,7 +23,7 @@ import android.view.MotionEvent;
 
 public class SplashActivity extends Activity {
 	
-	protected int _splashTime = 5000;
+	protected int _splashTime = 2500;
 	private Thread splashThread;
 	
 	@Override
