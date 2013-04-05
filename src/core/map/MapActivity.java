@@ -79,7 +79,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         mapView.setScrollableAreaLimit(bBox);
         
-        mapView.setBuiltInZoomControls(true);
+        mapView.setBuiltInZoomControls(false);
+        mapView.setMultiTouchControls(true);
  
         // Zoom in and go to Amsterdam
         mapController = mapView.getController();
