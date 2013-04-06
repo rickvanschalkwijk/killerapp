@@ -50,7 +50,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	
 	private static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
 			+ TABLE_EVENTS + " ("
-			+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COLUMN_ID + " INTEGER, "
 			+ COLUMN_TITLE + " TEXT, " 
 			+ COLUMN_DESCRIPTION + " TEXT, "
 			+ COLUMN_CATEGORY + " TEXT, "
@@ -58,7 +58,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_END_DATE + " TEXT, "
 			+ COLUMN_LONGITUDE + " REAL, "
 			+ COLUMN_LATITUDE + " REAL, "
-			+ COLUMN_PRICE + " REAL, "
+			+ COLUMN_PRICE + " TEXT, "
 			+ COLUMN_ISFREE + " INTEGER "
 			+ ")";
 	
