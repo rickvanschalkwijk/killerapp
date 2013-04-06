@@ -34,7 +34,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	private static final String DATABASE_NAME = "offlineStorage.db";
 	public static final String TABLE_EVENTS = "events";
 	public static final String TABLE_USERS = "users";
-	public static final String TABLE_LOCATIONS = "locations";
+	public static final String TABLE_PLACES = "places";
 	public static final String TABLE_SERVICES = "services";
 	public static final String TABLE_APPLICATION = "application";
 	
@@ -75,6 +75,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_PASSWORD + " TEXT "
 			+ ")";
 	
+	private static final String CREATE_PLACES_TABLE = "CREATE TABLE" 
+			+ TABLE_PLACES + " ("
+			+ COLUMN_TITLE + " TEXT, "
+			+ COLUMN_DESCRIPTION + " TEXT, "
+			+ COLUMN_LONGITUDE + " REAL, "
+			+ COLUMN_LATITUDE + " REAL "
+			+ ")";
+	
 	
 	public DatabaseOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -88,6 +96,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		Log.i(LOGTAG, "Created events table");
 		db.execSQL(CREATE_USERS_TABLE);
 		Log.i(LOGTAG, "Created users table");
+		db.execSQL(CREATE_PLACES_TABLE);
+		Log.i(LOGTAG, "Created places table");
 	}
 
 	//update database
@@ -95,6 +105,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACES);
 		onCreate(db);
 	}
 }
