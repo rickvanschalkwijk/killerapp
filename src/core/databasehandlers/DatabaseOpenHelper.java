@@ -53,6 +53,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_USERNAME = "username";
 	public static final String COLUMN_PASSWORD = "password";
 	
+	public static final String COLUMN_KEY = "key";
+	public static final String COLUMN_VALUE = "value";
+	
 	private static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
 			+ TABLE_EVENTS + " ("
 			+ COLUMN_ID + " INTEGER, "
@@ -83,6 +86,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_LATITUDE + " REAL "
 			+ ")";
 	
+	private static final String TABLE_APPLICATION_CREATE = "CREATE TABLE " 
+			+ TABLE_APPLICATION + " (" 
+			+ COLUMN_KEY + " TEXT, " 
+			+ COLUMN_VALUE + " TEXT "  
+			+ ")";
+	
 	
 	public DatabaseOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -98,6 +107,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		Log.i(LOGTAG, "Created users table");
 		db.execSQL(CREATE_PLACES_TABLE);
 		Log.i(LOGTAG, "Created places table");
+		db.execSQL(TABLE_APPLICATION_CREATE);
+		 Log.i(LOGTAG, "Created application table");
 	}
 
 	//update database
@@ -106,6 +117,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPLICATION);
 		onCreate(db);
 	}
 }
