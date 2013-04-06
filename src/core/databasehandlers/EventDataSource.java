@@ -42,9 +42,6 @@ public class EventDataSource {
 		values.put(DatabaseOpenHelper.COLUMN_PRICE, event.getPrice().toString());
 		values.put(DatabaseOpenHelper.COLUMN_ISFREE, event.isFree());
 		
-		
-	}
-	
-	
-
+		database.insert(DatabaseOpenHelper.TABLE_EVENTS, null, values);	
+	} 
 }
