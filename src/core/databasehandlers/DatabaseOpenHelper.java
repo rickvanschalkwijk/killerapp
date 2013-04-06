@@ -86,7 +86,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_LATITUDE + " REAL "
 			+ ")";
 	
-	private static final String TABLE_APPLICATION_CREATE = "CREATE TABLE " 
+	private static final String CREATE_APPLICATION_TABLE = "CREATE TABLE " 
 			+ TABLE_APPLICATION + " (" 
 			+ COLUMN_KEY + " TEXT, " 
 			+ COLUMN_VALUE + " TEXT "  
@@ -107,7 +107,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		Log.i(LOGTAG, "Created users table");
 		db.execSQL(CREATE_PLACES_TABLE);
 		Log.i(LOGTAG, "Created places table");
-		db.execSQL(TABLE_APPLICATION_CREATE);
+		db.execSQL(CREATE_APPLICATION_TABLE);
 		 Log.i(LOGTAG, "Created application table");
 	}
 
