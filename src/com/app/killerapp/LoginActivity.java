@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
 				{
 					// TODO: authentication failed
 				}
-				
+
 				SharedPreferences settings = getSharedPreferences("LocalPrefs",
 						0);
 				if (username.equals(settings.getString("userName", "unknown"))

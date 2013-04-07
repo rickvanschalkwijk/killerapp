@@ -66,7 +66,7 @@ public class AuthenticationService
 		} catch (IOException e) {
 			Log.e(DEBUG_TAG, e.getMessage());
 		} catch (Exception e) {
-			Log.e(DEBUG_TAG, e.getMessage());
+			Log.e(DEBUG_TAG, e.toString());
 		}
 		return null;
 	}
