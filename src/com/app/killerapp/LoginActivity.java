@@ -1,5 +1,7 @@
 package com.app.killerapp;
 
+import core.connection.killerbone.AuthenticationService;
+import core.connection.killerbone.AuthenticationService.AuthToken;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +39,18 @@ public class LoginActivity extends Activity {
 				EditText pass = (EditText) findViewById(R.id.insertedPassword);
 				String password = pass.getText().toString();
 
+				// email: onno@valkering.nl
+				// password: valkering
+				boolean isAuthenticated = authenticateUser(username, password);
+				if (isAuthenticated)
+				{
+					// TODO: authentication success
+				}
+				else
+				{
+					// TODO: authentication failed
+				}
+				
 				SharedPreferences settings = getSharedPreferences("LocalPrefs",
 						0);
 				if (username.equals(settings.getString("userName", "unknown"))
@@ -76,7 +91,24 @@ public class LoginActivity extends Activity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		Intent backIntent = new Intent(Intent.ACTION_MAIN);
-		backIntent.addCategory(backIntent.CATEGORY_HOME);
+		backIntent.addCategory(Intent.CATEGORY_HOME);
 		startActivity(backIntent);
+	}
+	
+	private boolean authenticateUser(String email, String password)
+	{
+		AuthenticationService authService = new AuthenticationService();
+		AuthToken authToken = authService.authenticateWithCredentials(email, password);
+		
+		if (authToken != null)
+		{
+			String userId = authToken.userId;
+			String token = authToken.token;
+			
+			Log.d("Authentication", "userId: " + userId + " & authToken: " + token);
+			
+			// TODO: store userId and token and mark current session as logged in
+		}
+		return false;
 	}
 }

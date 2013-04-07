@@ -50,7 +50,6 @@ public class HttpsConnector
 	{
 		HttpGet getRequest = new HttpGet(request.getUrl());
 		
-		// Copy header values 
 		for (Entry<String, String> header : request.getHeaders().entrySet())
 		{
 			getRequest.addHeader(header.getKey(), header.getValue());
@@ -70,7 +69,6 @@ public class HttpsConnector
 	{
 		HttpPost postRequest = new HttpPost(request.getUrl());
 		
-		// Copy header values 
 		for (Entry<String, String> header : request.getHeaders().entrySet())
 		{
 			postRequest.addHeader(header.getKey(), header.getValue());

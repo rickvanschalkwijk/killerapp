@@ -24,7 +24,7 @@ public class KillerboneUtils
 	
 	public static String postAuthTokenRequestUrl()
 	{
-		return KILLERBONE_FULL_URL + "authtoken";
+		return KILLERBONE_FULL_URL + "authenticate/api";
 	}
 	
 	public static String getFriendships(long userId)

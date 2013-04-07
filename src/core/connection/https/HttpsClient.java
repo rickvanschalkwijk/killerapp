@@ -1,6 +1,9 @@
 package core.connection.https;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -13,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
 
+@SuppressLint("NewApi")
 public class HttpsClient extends DefaultHttpClient 
 {
 	private Context appContext = null;
@@ -27,6 +31,10 @@ public class HttpsClient extends DefaultHttpClient
 			httpScheme = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 			httpsScheme = new Scheme("https", mySSLSocketFactory(), 443);
 		}
+		
+		// Set thread policy to allow https requests
+		ThreadPolicy tp = ThreadPolicy.LAX;
+		StrictMode.setThreadPolicy(tp);
 		
 		getConnectionManager().getSchemeRegistry().register(httpScheme);
 		getConnectionManager().getSchemeRegistry().register(httpsScheme);
