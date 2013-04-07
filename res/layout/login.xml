@@ -66,6 +66,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:text="@string/btn_login"/>
+          	<Button 
+          	    android:id="@+id/btnGuest"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/btn_Guest"/>
           	<!-- Link to Registration Screen -->
           	<TextView 
           	    android:id="@+id/link_to_register"

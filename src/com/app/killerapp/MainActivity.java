@@ -40,12 +40,11 @@ public class MainActivity extends Activity {
 			selfReferance = this;
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putBoolean("loggedIn", false);
-			editor.putString("userName", "");
-			editor.putString("passWord", "");
+			editor.putBoolean("loggedInGuest", false);
 			editor.commit();
 			startUp = false;
 		}
-		if (!settings.getBoolean("loggedIn", false)) {
+		if (!settings.getBoolean("loggedIn", false) && !settings.getBoolean("loggedInGuest", false)) {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
 		}

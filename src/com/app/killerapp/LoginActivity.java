@@ -38,31 +38,22 @@ public class LoginActivity extends Activity {
 				String username = user.getText().toString();
 				EditText pass = (EditText) findViewById(R.id.insertedPassword);
 				String password = pass.getText().toString();
-
+				SharedPreferences settings = getSharedPreferences("LocalPrefs",
+						0);
 				// email: onno@valkering.nl
 				// password: valkering
 				boolean isAuthenticated = authenticateUser(username, password);
 				if (isAuthenticated)
 				{
-					// TODO: authentication success
-				}
-				else
-				{
-					// TODO: authentication failed
-				}
-
-				SharedPreferences settings = getSharedPreferences("LocalPrefs",
-						0);
-				if (username.equals(settings.getString("userName", "unknown"))
-						&& password.equals(settings.getString("passWord",
-								"unknown"))) {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
 					editor.commit();
 					Intent i = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(i);
-				} else {
+				}
+				else
+				{
 					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 							context);
 					alertDialogBuilder.setTitle("Error");
@@ -80,6 +71,19 @@ public class LoginActivity extends Activity {
 					AlertDialog alertDialog = alertDialogBuilder.create();
 					alertDialog.show();
 				}
+			}
+		});
+		Button loginGuest = (Button) findViewById(R.id.btnGuest);
+		loginGuest.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				SharedPreferences settings = getSharedPreferences("LocalPrefs",
+						0);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putBoolean("loggedInGuest", true);
+				editor.commit();
+				Intent i = new Intent(getApplicationContext(),
+						MainActivity.class);
+				startActivity(i);
 			}
 		});
 	}
@@ -106,8 +110,13 @@ public class LoginActivity extends Activity {
 			String token = authToken.token;
 			
 			Log.d("Authentication", "userId: " + userId + " & authToken: " + token);
-			
-			// TODO: store userId and token and mark current session as logged in
+			SharedPreferences settings = getSharedPreferences("LocalPrefs",
+					0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("userID", userId);
+			editor.putString("token", token);
+			editor.commit();
+			return true;
 		}
 		return false;
 	}
