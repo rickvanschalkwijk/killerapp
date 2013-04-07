@@ -6,7 +6,6 @@
     <string name="load">Loading...</string>
     <!-- End Splash Activity -->
 
-
     <!-- Start Main Activity -->
 
     <string name="app_name">KillerApp</string>
@@ -94,5 +93,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_services_contact">ServicesContactActivity</string>
 
-
+	<!-- HTTPS Client -->
+    <string name="store_pass">valkering</string>
 </resources>
