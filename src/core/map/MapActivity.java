@@ -27,6 +27,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -321,27 +322,48 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		}
 	
 	public class GeoUpdateHandler implements LocationListener  {
+		
+		private OverlayItem myLocationOverlayItem;
+		private Drawable myCurrentLocationMarker = context.getResources().getDrawable(R.drawable.bluedot);
+		private ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
+		private int arrayLocation = 0;
 
         @Override
         public void onLocationChanged(Location location) {
-        	currentLocation = location;
-        	OverlayItem myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
-            Drawable myCurrentLocationMarker = context.getResources().getDrawable(R.drawable.marker);
-            myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+        	Log.d("blaat", "long: " + location.getLongitude() + " lat: " + location.getLatitude() );
+        	
+        	
+        	if( myLocationOverlayItem == null ){
+        		Log.d("blaat", "niet bestaande overlay");
+        		currentLocation = location;
+            	
+            	myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
+                
+                myLocationOverlayItem.setMarker(myCurrentLocationMarker);
 
-            final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-            items.add(myLocationOverlayItem);
+                final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+                items.add(myLocationOverlayItem);
 
-            ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
-                    new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                        public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                            return true;
-                        }
-                        public boolean onItemLongPress(final int index, final OverlayItem item) {
-                            return true;
-                        }
-                    }, resProxy );
-            mapView.getOverlays().add(currentLocationOverlay);
+                currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, null, resProxy );
+                mapView.getOverlays().add(currentLocationOverlay);
+                arrayLocation = mapView.getOverlays().size() - 1;
+        	} else {
+        		Log.d("blaat", "OVERLAY BESTAAT AL");
+        		mapView.getOverlays().remove( arrayLocation );
+        		mapView.invalidate();
+        		
+        		currentLocation = location;
+        		myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
+                myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+
+                final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+                items.add(myLocationOverlayItem);
+
+                ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, null, resProxy );
+                mapView.getOverlays().add(currentLocationOverlay);
+                
+                arrayLocation = mapView.getOverlays().size() - 1;
+        	}
         }
 
         @Override
