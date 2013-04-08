@@ -41,7 +41,8 @@
             android:id="@+id/btn_services_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_button" />
+            android:text="@string/service_button"
+            android:onClick="gotoServices" />
         <Button
             android:id="@+id/btn_settings_open"
             android:layout_width="fill_parent"
