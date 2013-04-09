@@ -35,7 +35,8 @@ public class RESTEventService {
 	public String response;
 	private Document xmlDocument;
 	private Element rootNode;
-	
+	private SAXBuilder builder;
+
 	public List<Category> getAllCategories() {
 
 		String url = KillerboneUtils.getAllEventCategories();
@@ -52,21 +53,21 @@ public class RESTEventService {
 			e1.printStackTrace();
 		}
 
-		SAXBuilder builder = new SAXBuilder();
-		
+		builder = new SAXBuilder();
+
 		try {
 			xmlDocument = builder.build(new StringReader(response));
 		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		rootNode = xmlDocument.getRootElement();
 
 		List<Category> categories = new ArrayList<Category>();
 
-		return null;
+		return categories;
 	}
 }
