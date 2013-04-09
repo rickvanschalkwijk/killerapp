@@ -43,7 +43,7 @@ public class FriendActivity extends FragmentActivity implements
 		selfReferance = this;
 		dialig = new AddCompanionDialog(this);
 		adapter = new FriendRowAdapter(this);
-
+		
 		ListView listView = (ListView) findViewById(R.id.friendlist);
 		listView.setAdapter(adapter);
 		getSupportLoaderManager().initLoader(0, null, this);
