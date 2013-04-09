@@ -15,6 +15,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import core.connection.DataException;
 
 import android.content.Context;
+import android.util.Log;
 
 public class HttpsConnector 
 {
@@ -57,7 +58,10 @@ public class HttpsConnector
 
 		try {
 			ResponseHandler<String> handler = new BasicResponseHandler();
-			return httpsClient.execute(getRequest, handler);
+			Log.d("voor", "voor de request");
+			String test = httpsClient.execute(getRequest, handler);
+			Log.d("response",test);
+			return test;
 		} catch (ClientProtocolException e) {
 			throw defaultException(e);
 		} catch (IOException e) {
