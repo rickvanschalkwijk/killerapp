@@ -78,7 +78,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_PASSWORD + " TEXT "
 			+ ")";
 	
-	private static final String CREATE_PLACES_TABLE = "CREATE TABLE" 
+	private static final String CREATE_PLACES_TABLE = "CREATE TABLE " 
 			+ TABLE_PLACES + " ("
 			+ COLUMN_TITLE + " TEXT, "
 			+ COLUMN_DESCRIPTION + " TEXT, "

@@ -78,6 +78,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="services.ServicesMenuActivity" />
         </activity>
+        <activity 
+            android:name="search.SearchMainActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity 
+            android:name="search.SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+        </activity>y
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@
 
 package com.app.killerapp;
 
+import search.SearchMainActivity;
 import services.ServicesContactActivity;
 import core.map.MapActivity;
 import android.app.Activity;
@@ -62,6 +63,11 @@ public class MainActivity extends Activity {
 
 	public void gotoServices(View view) {
 		Intent intent = new Intent(this, ServicesContactActivity.class);
+		startActivity(intent);
+	}
+	
+	public void openSearch(View view) {
+		Intent intent = new Intent(this, SearchMainActivity.class);
 		startActivity(intent);
 	}
 	

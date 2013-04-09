@@ -11,7 +11,10 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.osmdroid.util.GeoPoint;
+
+import util.KillerboneUtils;
 
 import com.app.killerapp.R;
 
@@ -61,11 +64,12 @@ public class XMLParser {
 						LOCATION_TAG).getChildText(LOCATION_LONGITUDE)));
 				location = new GeoPoint(latitude, longitude);
 				event.setLocation(location);
-				DateTime dtStart = new DateTime(node.getChild(DURATION_TAG)
-						.getChildText(DURATION_START));
+				
+				DateTime dtStart = new DateTime(parseDateTime(node.getChild(DURATION_TAG)
+						.getChildText(DURATION_START)));
 				event.setStartDate(dtStart);
-				DateTime dtEnd = new DateTime(node.getChild(DURATION_TAG)
-						.getChildText(DURATION_END));
+				DateTime dtEnd = new DateTime(parseDateTime(node.getChild(DURATION_TAG)
+						.getChildText(DURATION_END)));
 				event.setEndDate(dtEnd);
 				event.setFree(Boolean.parseBoolean(node.getChildText(FREE_TAG)));
 				BigDecimal price = new BigDecimal(node.getChildText(PRICE_TAG));
@@ -82,6 +86,13 @@ public class XMLParser {
 		}
 		return events;
 
+	}
+	
+	private static DateTime parseDateTime(String input){
+		Log.i(LOGTAG, input);
+	     String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
+	     DateTime dateTime  = DateTime.parse(input, DateTimeFormat.forPattern(pattern));
+	     return dateTime;
 	}
 	
 	

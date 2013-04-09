@@ -98,5 +98,10 @@ public class Event implements Serializable {
 	public void setFree(boolean isFree) {
 		this.isFree = isFree;
 	}
+	
+	@Override
+	public String toString() {
+		return title;
+	}
 
 }

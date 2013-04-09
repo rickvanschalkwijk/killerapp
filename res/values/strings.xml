@@ -17,7 +17,9 @@
     <string name="map_button">Map</string>
     <string name="companion_button">Travel companions</string>
     <string name="settings_button">Settings</string>
+    <string name="search_button">Search</string>
     <string name="service_button">Services</string>
+    
     <!-- End Main Activity -->
 
 
@@ -96,4 +98,11 @@
 
 	<!-- HTTPS Client -->
     <string name="store_pass">valkering</string>
+    
+    <!-- Start Search Activity -->
+    <string name="get_events">Get events</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_search_result">Result</string>
+    <!-- End Search Activity -->
+    
 </resources>
