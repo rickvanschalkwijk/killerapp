@@ -64,14 +64,15 @@ public class XMLParser {
 						LOCATION_TAG).getChildText(LOCATION_LONGITUDE)));
 				location = new GeoPoint(latitude, longitude);
 				event.setLocation(location);
-				
-				DateTime dtStart = new DateTime(parseDateTime(node.getChild(DURATION_TAG)
-						.getChildText(DURATION_START)));
+
+				DateTime dtStart = new DateTime(parseDateTime(node.getChild(
+						DURATION_TAG).getChildText(DURATION_START).trim()));
 				event.setStartDate(dtStart);
-				DateTime dtEnd = new DateTime(parseDateTime(node.getChild(DURATION_TAG)
-						.getChildText(DURATION_END)));
+				DateTime dtEnd = new DateTime(parseDateTime(node.getChild(
+						DURATION_TAG).getChildText(DURATION_END).trim()));
 				event.setEndDate(dtEnd);
 				event.setFree(Boolean.parseBoolean(node.getChildText(FREE_TAG)));
+				Log.i(LOGTAG, node.getChildText(PRICE_TAG));
 				BigDecimal price = new BigDecimal(node.getChildText(PRICE_TAG));
 				event.setPrice(price);
 				events.add(event);
@@ -87,14 +88,13 @@ public class XMLParser {
 		return events;
 
 	}
-	
-	private static DateTime parseDateTime(String input){
+
+	private static DateTime parseDateTime(String input) {
 		Log.i(LOGTAG, input);
-	     String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
-	     DateTime dateTime  = DateTime.parse(input, DateTimeFormat.forPattern(pattern));
-	     return dateTime;
+		String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
+		DateTime dateTime = DateTime.parse(input,
+				DateTimeFormat.forPattern(pattern));
+		return dateTime;
 	}
-	
-	
 
 }

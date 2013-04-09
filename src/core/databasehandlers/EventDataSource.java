@@ -99,6 +99,7 @@ public class EventDataSource {
 				event.setFree(Boolean.parseBoolean(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_ISFREE))));
 				events.add(event);
+				Log.i(LOGTAG, "Item uit database gehaald");
 
 			}
 		}
