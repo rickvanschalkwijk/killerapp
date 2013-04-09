@@ -51,6 +51,7 @@ public class LoginActivity extends Activity {
 					Intent i = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(i);
+					finish();
 				}
 				else
 				{
