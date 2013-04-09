@@ -1,5 +1,7 @@
 package com.app.killerapp;
 
+import core.connection.killerbone.AuthenticationService;
+import core.connection.killerbone.AuthenticationService.AuthToken;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,19 +38,22 @@ public class LoginActivity extends Activity {
 				String username = user.getText().toString();
 				EditText pass = (EditText) findViewById(R.id.insertedPassword);
 				String password = pass.getText().toString();
-
 				SharedPreferences settings = getSharedPreferences("LocalPrefs",
 						0);
-				if (username.equals(settings.getString("userName", "unknown"))
-						&& password.equals(settings.getString("passWord",
-								"unknown"))) {
+				// email: onno@valkering.nl
+				// password: valkering
+				boolean isAuthenticated = authenticateUser(username, password);
+				if (isAuthenticated)
+				{
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
 					editor.commit();
 					Intent i = new Intent(getApplicationContext(),
 							MainActivity.class);
 					startActivity(i);
-				} else {
+				}
+				else
+				{
 					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 							context);
 					alertDialogBuilder.setTitle("Error");
@@ -67,6 +73,19 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
+		Button loginGuest = (Button) findViewById(R.id.btnGuest);
+		loginGuest.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				SharedPreferences settings = getSharedPreferences("LocalPrefs",
+						0);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putBoolean("loggedInGuest", true);
+				editor.commit();
+				Intent i = new Intent(getApplicationContext(),
+						MainActivity.class);
+				startActivity(i);
+			}
+		});
 	}
 	/*
 	 * If back-button is pressed goto homescreen.
@@ -76,7 +95,29 @@ public class LoginActivity extends Activity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		Intent backIntent = new Intent(Intent.ACTION_MAIN);
-		backIntent.addCategory(backIntent.CATEGORY_HOME);
+		backIntent.addCategory(Intent.CATEGORY_HOME);
 		startActivity(backIntent);
+	}
+	
+	private boolean authenticateUser(String email, String password)
+	{
+		AuthenticationService authService = new AuthenticationService();
+		AuthToken authToken = authService.authenticateWithCredentials(email, password);
+		
+		if (authToken != null)
+		{
+			String userId = authToken.userId;
+			String token = authToken.token;
+			
+			Log.d("Authentication", "userId: " + userId + " & authToken: " + token);
+			SharedPreferences settings = getSharedPreferences("LocalPrefs",
+					0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("userID", userId);
+			editor.putString("token", token);
+			editor.commit();
+			return true;
+		}
+		return false;
 	}
 }

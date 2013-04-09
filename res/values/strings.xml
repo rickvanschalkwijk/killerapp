@@ -6,7 +6,6 @@
     <string name="load">Loading...</string>
     <!-- End Splash Activity -->
 
-
     <!-- Start Main Activity -->
 
     <string name="app_name">KillerApp</string>
@@ -60,6 +59,7 @@
     <string name="username">Email</string>
     <string name="password">Password</string>
     <string name="btn_login">Login</string>
+    <string name="btn_Guest">Login as guest</string>
     <string name="register_link">No KillerApp account yet? Register here</string>
     <!-- End Login -->
 
@@ -94,5 +94,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_services_contact">ServicesContactActivity</string>
 
-
+	<!-- HTTPS Client -->
+    <string name="store_pass">valkering</string>
 </resources>

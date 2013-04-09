@@ -19,6 +19,7 @@ package com.app.killerapp;
 import services.ServicesContactActivity;
 import core.map.MapActivity;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,21 +29,22 @@ public class MainActivity extends Activity {
 
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
-
+	private static MainActivity selfReferance = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		if (startUp) {
+			selfReferance = this;
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putBoolean("loggedIn", false);
-			editor.putString("userName", "");
-			editor.putString("passWord", "");
+			editor.putBoolean("loggedInGuest", false);
 			editor.commit();
 			startUp = false;
 		}
-		if (!settings.getBoolean("loggedIn", false)) {
+		if (!settings.getBoolean("loggedIn", false) && !settings.getBoolean("loggedInGuest", false)) {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
 		}
@@ -61,7 +63,15 @@ public class MainActivity extends Activity {
 	public void gotoServices(View view) {
 		Intent intent = new Intent(this, ServicesContactActivity.class);
 		startActivity(intent);
-
+	}
+	
+	public static Context getContext()
+	{
+		if (selfReferance != null)
+		{
+			return selfReferance.getApplicationContext();
+		}
+		return null;
 	}
 
 	@Override
@@ -91,7 +101,5 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 	}
-
 }
