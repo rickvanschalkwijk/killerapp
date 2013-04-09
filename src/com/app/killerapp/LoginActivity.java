@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,8 +37,8 @@ public class LoginActivity extends Activity {
 				String username = user.getText().toString();
 				EditText pass = (EditText) findViewById(R.id.insertedPassword);
 				String password = pass.getText().toString();
-				SharedPreferences settings = getSharedPreferences("LocalPrefs",
-						0);
+				SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+				
 				// email: onno@valkering.nl
 				// password: valkering
 				boolean isAuthenticated = authenticateUser(username, password);
@@ -48,15 +47,14 @@ public class LoginActivity extends Activity {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
 					editor.commit();
-					Intent i = new Intent(getApplicationContext(),
-							MainActivity.class);
+					
+					Intent i = new Intent(getApplicationContext(), MainActivity.class);
 					startActivity(i);
 					finish();
 				}
 				else
 				{
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-							context);
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 					alertDialogBuilder.setTitle("Error");
 					alertDialogBuilder
 							.setMessage("Wrong username or password!")
@@ -112,13 +110,12 @@ public class LoginActivity extends Activity {
 			String userId = authToken.userId;
 			String token = authToken.token;
 			
-			Log.d("Authentication", "userId: " + userId + " & authToken: " + token);
-			SharedPreferences settings = getSharedPreferences("LocalPrefs",
-					0);
+			SharedPreferences settings = getSharedPreferences("LocalPrefs",	0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("userID", userId);
 			editor.putString("token", token);
 			editor.commit();
+			
 			return true;
 		}
 		return false;
