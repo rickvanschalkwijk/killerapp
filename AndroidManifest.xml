@@ -85,7 +85,7 @@
         <activity 
             android:name="search.SearchResultActivity"
             android:label="@string/title_activity_search_result" >
-        </activity>y
+        </activity>
     </application>
 
 </manifest>
