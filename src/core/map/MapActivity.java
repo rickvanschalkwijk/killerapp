@@ -70,7 +70,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         File file = new File(path, "amsterdam.mbtiles");
  
         MBTileProvider provider = new MBTileProvider(this, file);
-                
+        //4.8653,52.3325,4.9604,52.3839
+        
         mapView = new BoundedMapView(this, resProxy, provider);
         double north = 52.388841;
         double east  =  4.964136;
@@ -80,7 +81,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
  
         mapView.setScrollableAreaLimit(bBox);
         
-        mapView.setBuiltInZoomControls(false);
+        mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
  
         // Zoom in and go to Amsterdam
