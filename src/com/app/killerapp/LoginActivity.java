@@ -84,6 +84,7 @@ public class LoginActivity extends Activity {
 				Intent i = new Intent(getApplicationContext(),
 						MainActivity.class);
 				startActivity(i);
+				finish();
 			}
 		});
 	}
@@ -97,6 +98,7 @@ public class LoginActivity extends Activity {
 		Intent backIntent = new Intent(Intent.ACTION_MAIN);
 		backIntent.addCategory(Intent.CATEGORY_HOME);
 		startActivity(backIntent);
+		finish();
 	}
 	
 	private boolean authenticateUser(String email, String password)
