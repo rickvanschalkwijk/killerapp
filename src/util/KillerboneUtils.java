@@ -2,10 +2,15 @@ package util;
 
 public class KillerboneUtils
 {
-  final public static String KILLERBONE_FULL_URL = "https://killerbone.mooo.com/";
+	final public static String KILLERBONE_FULL_URL = "https://killerbone.mooo.com/";
 	final public static String KILLERBONE_DATE_FORMAT = "dd-MM-yyyy HH:mm";
 	
 	//-----------------------------------------------------------------------//
+	
+	public static String getUser(long userId)
+	{
+		return KILLERBONE_FULL_URL + "user/" + String.valueOf(userId);
+	}
 	
 	public static String postUserCreateUrl()
 	{
@@ -47,7 +52,7 @@ public class KillerboneUtils
 		return KILLERBONE_FULL_URL + "friendship/" + String.valueOf(friendshipId) + "/decline/" + String.valueOf(userId);
 	}
 	
-	public static String putFriendshipEndRequestUrl(long friendshipId, long userId)
+	public static String deleteFriendshipEndRequestUrl(long friendshipId, long userId)
 	{
 		return KILLERBONE_FULL_URL + "friendship/" + String.valueOf(friendshipId) + "/end/" + String.valueOf(userId);
 	}
@@ -55,6 +60,31 @@ public class KillerboneUtils
 	public static String putFriendshipUpdateLocationRequestUrl(long friendshipId, long userId)
 	{
 		return KILLERBONE_FULL_URL + "friendship/" + String.valueOf(friendshipId) + "/location/" + String.valueOf(userId);
+	}
+	
+	public static String getAllEvents()
+	{
+		return KILLERBONE_FULL_URL + "/events";
+	}
+	
+	public static String getNewEvents(long timestamp)
+	{
+		return KILLERBONE_FULL_URL + "/events/new/" + String.valueOf(timestamp);
+	}
+	
+	public static String getAllEventCategories()
+	{
+		return KILLERBONE_FULL_URL + "/events/categories";
+	}	
+	
+	public static String getAllEventsFromCategory(long categoryId)
+	{
+		return KILLERBONE_FULL_URL + "/events/" + String.valueOf(categoryId);
+	}
+	
+	public static String getNewEventsFromCategory(long categoryId, long timestamp)
+	{
+		return KILLERBONE_FULL_URL + "/events/" + String.valueOf(categoryId) + "/new/" + String.valueOf(timestamp);
 	}
 	
 	//-----------------------------------------------------------------------//
