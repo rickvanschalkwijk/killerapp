@@ -37,6 +37,7 @@ import com.app.killerapp.R;
 import core.event.EventUtil;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
+import core.models.Category;
 import core.models.Event;
 import core.models.Place;
 import core.place.PlaceUtil;
@@ -288,6 +289,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			mSelectedItems = new ArrayList();
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			final ArrayList<Category> categories = new ArrayList<Category>();
 			
 			builder.setTitle(R.string.categories_title)
 			.setMultiChoiceItems(R.array.categories, null, 
