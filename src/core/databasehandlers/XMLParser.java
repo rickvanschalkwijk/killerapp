@@ -3,7 +3,6 @@ package core.databasehandlers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -42,11 +41,12 @@ public class XMLParser {
 	private static final String FREE_TAG = "free";
 	private static final String PRICE_TAG = "price";
 
-	public List<Event> getEventsXML(Context context) {
+	public void getEventsXML(Context context) {
 		InputStream stream = context.getResources().openRawResource(
 				R.raw.dummyevents);
 		SAXBuilder builder = new SAXBuilder();
-		List<Event> events = new ArrayList<Event>();
+		EventDataSource eventDataSource = new EventDataSource(context);
+		
 
 		try {
 			Document document = builder.build(stream);
@@ -72,10 +72,10 @@ public class XMLParser {
 						DURATION_TAG).getChildText(DURATION_END).trim()));
 				event.setEndDate(dtEnd);
 				event.setFree(Boolean.parseBoolean(node.getChildText(FREE_TAG)));
-				Log.i(LOGTAG, node.getChildText(PRICE_TAG));
 				BigDecimal price = new BigDecimal(node.getChildText(PRICE_TAG));
 				event.setPrice(price);
-				events.add(event);
+				eventDataSource.open();
+				eventDataSource.addEvent(event);
 				Log.i(LOGTAG, "Item aan events table toegevoegd");
 			}
 		} catch (JDOMException e) {
@@ -85,12 +85,10 @@ public class XMLParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return events;
 
 	}
 
 	private static DateTime parseDateTime(String input) {
-		Log.i(LOGTAG, input);
 		String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
 		DateTime dateTime = DateTime.parse(input,
 				DateTimeFormat.forPattern(pattern));

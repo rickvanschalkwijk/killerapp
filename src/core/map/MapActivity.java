@@ -207,7 +207,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 				public void onClick(DialogInterface dialog,int id) 
 				{
 					Intent intent = new Intent(getApplicationContext(), EventActivity.class );
-					intent.putExtra(Event.EXTRA, event);
 					startActivity(intent);
 					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
 				}

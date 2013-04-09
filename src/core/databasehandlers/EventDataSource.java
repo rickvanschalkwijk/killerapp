@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.osmdroid.util.GeoPoint;
+
+import util.KillerboneUtils;
 
 import core.models.Event;
 import android.content.ContentValues;
@@ -26,7 +29,8 @@ public class EventDataSource {
 			DatabaseOpenHelper.COLUMN_END_DATE,
 			DatabaseOpenHelper.COLUMN_LATITUDE,
 			DatabaseOpenHelper.COLUMN_LONGITUDE,
-			DatabaseOpenHelper.COLUMN_PRICE, DatabaseOpenHelper.COLUMN_ISFREE };
+			DatabaseOpenHelper.COLUMN_PRICE, 
+			DatabaseOpenHelper.COLUMN_ISFREE };
 
 	SQLiteOpenHelper dbhelper;
 	SQLiteDatabase database;
@@ -53,9 +57,9 @@ public class EventDataSource {
 				event.getDescription());
 		values.put(DatabaseOpenHelper.COLUMN_CATEGORY, event.getCategory());
 		values.put(DatabaseOpenHelper.COLUMN_START_DATE, event.getStartDate()
-				.toString("dd-MMM-yy hh:mm:ss aa"));
+				.toString(KillerboneUtils.KILLERBONE_DATE_FORMAT));
 		values.put(DatabaseOpenHelper.COLUMN_END_DATE, event.getEndDate()
-				.toString("dd-MMM-yy hh:mm:ss aa"));
+				.toString(KillerboneUtils.KILLERBONE_DATE_FORMAT));
 		values.put(DatabaseOpenHelper.COLUMN_LATITUDE, event.getLocation()
 				.getLatitudeE6() / 1E6);
 		values.put(DatabaseOpenHelper.COLUMN_LONGITUDE, event.getLocation()
@@ -75,34 +79,48 @@ public class EventDataSource {
 				Event event = new Event();
 				event.setTitle(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_TITLE)));
+				
 				event.setDescription(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_DESCRIPTION)));
+				
 				event.setCategory(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_CATEGORY)));
-
-				DateTime dtStart = new DateTime(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_START_DATE)));
+				
+				DateTime dtStart = new DateTime(parseDateTime(cursor.getString(cursor
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_START_DATE)).trim()));
 				event.setStartDate(dtStart);
-
-				DateTime dtEnd = new DateTime(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_END_DATE)));
+				
+				DateTime dtEnd = new DateTime(parseDateTime(cursor.getString(cursor
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_END_DATE)).trim()));
 				event.setEndDate(dtEnd);
-
+				
 				Double latitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LATITUDE));
 				Double longitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LONGITUDE));
 				event.setLocation(new GeoPoint(latitude, longitude));
-
+				
 				event.setPrice(new BigDecimal(cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_PRICE))));
+				
 				event.setFree(Boolean.parseBoolean(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_ISFREE))));
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_ISFREE))));				
 				events.add(event);
-				Log.i(LOGTAG, "Item uit database gehaald");
-
+				Log.i(LOGTAG, "Retrieved event from db");
 			}
 		}
+		cursor.close();
 		return events;
+	}
+	
+	private static DateTime parseDateTime(String input) {
+		String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
+		DateTime dateTime = DateTime.parse(input,
+				DateTimeFormat.forPattern(pattern));
+		return dateTime;
+	}
+	
+	public void clearTable() {
+		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_EVENTS);
 	}
 }

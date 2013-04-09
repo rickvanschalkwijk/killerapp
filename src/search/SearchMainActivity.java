@@ -9,14 +9,15 @@ import core.databasehandlers.EventDataSource;
 import core.databasehandlers.XMLParser;
 import core.models.Event;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
-public class SearchMainActivity extends Activity {
+public class SearchMainActivity extends ListActivity {
 	
-	public List<Event> events = new ArrayList<Event>();
+	public static List<Event> events = new ArrayList<Event>();
+	private static final String LOGTAG = "IP13HVA";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +29,18 @@ public class SearchMainActivity extends Activity {
 	}
 	
 	public void getEvents(View view) {
-		XMLParser parser = new XMLParser();
-		parser.getEventsXML(this);
 		EventDataSource eventDataSource = new EventDataSource(this);
 		eventDataSource.open();
+		eventDataSource.clearTable();
+		XMLParser parser = new XMLParser();		
+		parser.getEventsXML(this);
+		events.clear();
 		events = eventDataSource.getAllEvents();
-		Intent intent = new Intent(this, SearchResultActivity.class);
-		startActivity(intent);
-		eventDataSource.close();
-	}
-	
-	public List<Event> getResult() {
-		return events;
+		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
+				android.R.layout.simple_list_item_1, events);
+		setListAdapter(adapter);
 		
+		eventDataSource.close();
 	}
 
 	@Override
@@ -57,7 +57,4 @@ public class SearchMainActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 	}
-	
-	
-
 }
