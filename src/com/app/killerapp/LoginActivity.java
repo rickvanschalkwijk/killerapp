@@ -37,24 +37,24 @@ public class LoginActivity extends Activity {
 				String username = user.getText().toString();
 				EditText pass = (EditText) findViewById(R.id.insertedPassword);
 				String password = pass.getText().toString();
-				SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-				
+				SharedPreferences settings = getSharedPreferences("LocalPrefs",
+						0);
+
 				// email: onno@valkering.nl
 				// password: valkering
 				boolean isAuthenticated = authenticateUser(username, password);
-				if (isAuthenticated)
-				{
+				if (isAuthenticated) {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
 					editor.commit();
-					
-					Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+					Intent i = new Intent(getApplicationContext(),
+							MainActivity.class);
 					startActivity(i);
 					finish();
-				}
-				else
-				{
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+				} else {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+							context);
 					alertDialogBuilder.setTitle("Error");
 					alertDialogBuilder
 							.setMessage("Wrong username or password!")
@@ -87,8 +87,10 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
+
 	/*
 	 * If back-button is pressed goto homescreen.
+	 * 
 	 * @see android.app.Activity#onBackPressed()
 	 */
 	@Override
@@ -99,23 +101,22 @@ public class LoginActivity extends Activity {
 		startActivity(backIntent);
 		finish();
 	}
-	
-	private boolean authenticateUser(String email, String password)
-	{
+
+	private boolean authenticateUser(String email, String password) {
 		AuthenticationService authService = new AuthenticationService();
-		AuthToken authToken = authService.authenticateWithCredentials(email, password);
-		
-		if (authToken != null)
-		{
+		AuthToken authToken = authService.authenticateWithCredentials(email,
+				password);
+
+		if (authToken != null) {
 			String userId = authToken.userId;
 			String token = authToken.token;
-			
-			SharedPreferences settings = getSharedPreferences("LocalPrefs",	0);
+
+			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("userID", userId);
 			editor.putString("token", token);
 			editor.commit();
-			
+
 			return true;
 		}
 		return false;

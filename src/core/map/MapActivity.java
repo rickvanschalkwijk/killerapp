@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.app.killerapp.EventActivity;
+import com.app.killerapp.FriendActivity;
 import com.app.killerapp.R;
 
 import core.event.EventUtil;
@@ -57,6 +58,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private DefaultResourceProxyImpl resProxy;
 	private BoundedMapView mapView;
 	private int defaultZoomLevel = 13;
+	private static MapActivity selfReferance = null;
 	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -397,8 +399,13 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
-
-    
+	
+	public static Context getContext(){
+		if (selfReferance != null){
+			return selfReferance.getApplicationContext();
+		}
+		return null;
+	}
    
     private class EnableGpsDialogFragment extends DialogFragment {
 
