@@ -36,7 +36,7 @@ public class EventDataSource {
 	SQLiteDatabase database;
 
 	public EventDataSource(Context context) {
-		dbhelper = new DatabaseOpenHelper(context);
+		dbhelper = DatabaseOpenHelper.getInstance(context);
 	}
 
 	public void open() {
