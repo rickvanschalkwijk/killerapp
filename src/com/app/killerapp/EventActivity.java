@@ -25,6 +25,7 @@ public class EventActivity extends Activity {
 		
 		TextView descriptionText = (TextView) findViewById(R.id.event_description_text);
 		descriptionText.setText( event.getDescription() );
+		
 	}
 
 	/**

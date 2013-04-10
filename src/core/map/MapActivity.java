@@ -212,6 +212,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 				public void onClick(DialogInterface dialog,int id) 
 				{
 					Intent intent = new Intent(getApplicationContext(), EventActivity.class );
+					intent.putExtra(Event.EXTRA, event);
 					startActivity(intent);
 					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
 				}
@@ -337,9 +338,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 
         @Override
         public void onLocationChanged(Location location) {
-        	Log.d("blaat", "long: " + location.getLongitude() + " lat: " + location.getLatitude() );
-        	
-        	
         	if( myLocationOverlayItem == null ){
         		currentLocation = location;
             	
