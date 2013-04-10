@@ -16,7 +16,9 @@
 
 package com.app.killerapp;
 
+import core.databasehandlers.DatabaseLoaderThread;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -30,6 +32,10 @@ public class SplashActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		
+		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
+		Thread thread = new Thread(databaseLoaderThread);
+		thread.start();
 		
 		final SplashActivity sPlashActivity  = this;
 		

@@ -15,7 +15,7 @@ public class UserDataSource {
 	SQLiteDatabase database;
 
 	public UserDataSource(Context context) {
-		dbhelper = new DatabaseOpenHelper(context);
+		dbhelper = DatabaseOpenHelper.getInstance(context);
 	}
 
 	public void open() {

@@ -15,7 +15,7 @@ public class PlaceDataSource {
 	SQLiteDatabase database;
 	
 	public PlaceDataSource(Context context) {
-		dbhelper = new DatabaseOpenHelper(context);
+		dbhelper = DatabaseOpenHelper.getInstance(context);
 	}
 	
 	public void open() {
