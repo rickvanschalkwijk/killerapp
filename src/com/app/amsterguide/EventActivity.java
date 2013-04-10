@@ -4,6 +4,7 @@ import com.app.killerapp.R;
 
 import core.models.Event;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,15 @@ public class EventActivity extends Activity {
 		TextView descriptionText = (TextView) findViewById(R.id.event_description_text);
 		descriptionText.setText( Html.fromHtml( event.getDescription() ) );
 		
+		changeTitle();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void changeTitle() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			ActionBar actionBar = getActionBar();
+			actionBar.setTitle( event.getTitle() );
+		}
 	}
 
 	/**
