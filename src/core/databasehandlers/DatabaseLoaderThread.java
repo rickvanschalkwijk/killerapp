@@ -18,6 +18,7 @@ public class DatabaseLoaderThread implements Runnable {
 		eventDataSource.clearTable();
 		XMLParser parser = new XMLParser();		
 		parser.getEventsXML(context);
+		eventDataSource.close();
 	}
 
 }
