@@ -2,6 +2,7 @@ package core.map;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
@@ -27,6 +28,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,7 @@ import android.widget.Toast;
 import com.app.killerapp.EventActivity;
 import com.app.killerapp.R;
 
-import core.event.EventUtil;
+import core.databasehandlers.EventDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
 import core.models.Category;
@@ -111,7 +113,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	}
 	
 	private void addEvents(){
-		ArrayList<Event> events = EventUtil.getDummyData();
+		EventDataSource eventDataSource = new EventDataSource(context);
+		eventDataSource.open();
+		List<Event> events = eventDataSource.getAllEvents();
+		eventDataSource.close();
 		
 		for( Event event : events ){
 			addEventMarker( event );
@@ -193,7 +198,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder.setTitle( event.getTitle() );
 		alertDialogBuilder
-			.setMessage( event.getDescription() )
+			.setMessage( Html.fromHtml( event.getDescription() ) )
 			.setCancelable(true)
 			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	            @Override
@@ -336,7 +341,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         	
         	
         	if( myLocationOverlayItem == null ){
-        		Log.d("blaat", "niet bestaande overlay");
         		currentLocation = location;
             	
             	myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
@@ -348,9 +352,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 
                 currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, null, resProxy );
                 mapView.getOverlays().add(currentLocationOverlay);
+                mapView.invalidate();
                 arrayLocation = mapView.getOverlays().size() - 1;
         	} else {
-        		Log.d("blaat", "OVERLAY BESTAAT AL");
         		mapView.getOverlays().remove( arrayLocation );
         		mapView.invalidate();
         		
