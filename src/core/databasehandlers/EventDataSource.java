@@ -36,7 +36,7 @@ public class EventDataSource {
 	SQLiteDatabase database;
 
 	public EventDataSource(Context context) {
-		dbhelper = new DatabaseOpenHelper(context);
+		dbhelper = DatabaseOpenHelper.getInstance(context);
 	}
 
 	public void open() {
@@ -112,6 +112,8 @@ public class EventDataSource {
 		cursor.close();
 		return events;
 	}
+	
+	
 	
 	private static DateTime parseDateTime(String input) {
 		String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;

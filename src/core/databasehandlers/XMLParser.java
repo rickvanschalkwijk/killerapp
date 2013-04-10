@@ -77,6 +77,7 @@ public class XMLParser {
 				eventDataSource.open();
 				eventDataSource.addEvent(event);
 				Log.i(LOGTAG, "Item aan events table toegevoegd");
+				eventDataSource.close();
 			}
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block

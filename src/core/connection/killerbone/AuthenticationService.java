@@ -10,7 +10,7 @@ import org.jdom2.input.SAXBuilder;
 
 import android.util.Log;
 
-import com.app.killerapp.MainActivity;
+import com.app.amsterguide.MainActivity;
 
 import util.KillerboneUtils;
 import core.connection.DataException;

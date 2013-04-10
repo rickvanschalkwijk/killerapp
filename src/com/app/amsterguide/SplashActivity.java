@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package com.app.killerapp;
+package com.app.amsterguide;
 
+import com.app.killerapp.R;
+
+import core.databasehandlers.DatabaseLoaderThread;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -36,6 +40,10 @@ public class SplashActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		
+		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
+		Thread thread = new Thread(databaseLoaderThread);
+		thread.start();
 		
 		final SplashActivity sPlashActivity  = this;
 		

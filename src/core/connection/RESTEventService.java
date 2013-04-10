@@ -2,29 +2,19 @@ package core.connection;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-
 import util.KillerboneUtils;
-
 import android.util.Log;
-
-import com.app.killerapp.FriendActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import core.connection.https.HttpsConnector;
 import core.connection.https.HttpsRequest;
 import core.connection.https.HttpsRequestType;
 import core.map.MapActivity;
 import core.models.Category;
-import core.models.User;
 
 public class RESTEventService {
 	public Category category;

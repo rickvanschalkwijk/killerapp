@@ -1,32 +1,30 @@
-package com.app.killerapp;
+package com.app.amsterguide;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.app.killerapp.adapters.FriendRowAdapter;
-import com.app.killerapp.loaders.FriendLoader;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
-import core.models.User;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.app.amsterguide.adapters.FriendRowAdapter;
+import com.app.amsterguide.loaders.FriendLoader;
+import com.app.killerapp.R;
+
+import core.models.User;
 
 public class FriendActivity extends FragmentActivity implements
 		LoaderCallbacks<List<User>> {
@@ -49,6 +47,7 @@ public class FriendActivity extends FragmentActivity implements
 		getSupportLoaderManager().initLoader(0, null, this);
 
 		// get the ActionBar from our layout
+		/*
 		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
 		// set its title
 		actionBar.setTitle("");
@@ -57,6 +56,7 @@ public class FriendActivity extends FragmentActivity implements
 				.createIntent(this), R.drawable.ic_custom_launcher));
 		// add the refresh action
 		actionBar.addAction(new SaveAction());
+		*/
 		// add the save action
 		// actionBar.addAction(new SaveAction());
 
@@ -68,6 +68,7 @@ public class FriendActivity extends FragmentActivity implements
 	}
 
 	// the save action
+	/*
 	private class SaveAction implements Action {
 
 		@Override
@@ -81,7 +82,7 @@ public class FriendActivity extends FragmentActivity implements
 			//makeToast("Saving...");
 		}
 
-	}
+	}*/
 
 	public static Context getContext() {
 		if (selfReferance != null) {

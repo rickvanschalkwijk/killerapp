@@ -6,7 +6,6 @@ import java.util.List;
 import com.app.killerapp.R;
 
 import core.databasehandlers.EventDataSource;
-import core.databasehandlers.XMLParser;
 import core.models.Event;
 
 import android.app.ListActivity;
@@ -23,19 +22,14 @@ public class SearchMainActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_main);
-		
-		
-		
 	}
 	
 	public void getEvents(View view) {
 		EventDataSource eventDataSource = new EventDataSource(this);
 		eventDataSource.open();
-		eventDataSource.clearTable();
-		XMLParser parser = new XMLParser();		
-		parser.getEventsXML(this);
 		events.clear();
 		events = eventDataSource.getAllEvents();
+		
 		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
 				android.R.layout.simple_list_item_1, events);
 		setListAdapter(adapter);

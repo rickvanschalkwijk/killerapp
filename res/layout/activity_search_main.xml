@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".mainActivity" >
 
     <Button
         android:id="@+id/btn_get_events"
-        android:layout_width="137dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:onClick="getEvents"
         android:text="@string/get_events" />
 
     <RelativeLayout
-
+		
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
