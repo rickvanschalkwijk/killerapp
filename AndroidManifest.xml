@@ -21,7 +21,7 @@
         android:icon="@drawable/ic_custom_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.app.killerapp.SplashActivity"
+        <activity android:name="com.app.amsterguide.SplashActivity"
             android:label="AmsterGuide"
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
@@ -31,19 +31,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.killerapp.MainActivity"
+            android:name="com.app.amsterguide.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.app.killerapp.LoginActivity"
+            android:name="com.app.amsterguide.LoginActivity"
             android:label="Login to your Account" >
         </activity>
         <activity
-            android:name="com.app.killerapp.RegistrationActivity"
+            android:name="com.app.amsterguide.RegistrationActivity"
             android:label="Register New Account" >
         </activity>
         <activity
-            android:name="com.app.killerapp.SettingsActivity"
+            android:name="com.app.amsterguide.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
@@ -53,7 +53,7 @@
         <activity
             android:name="core.map.MapActivity"
             android:label="@string/title_activity_map" 
-            android:parentActivityName="com.app.killerapp.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -63,11 +63,11 @@
             android:label="@string/title_activity_help" >
         </activity>
         <activity
-            android:name="com.app.killerapp.FriendActivity"
+            android:name="com.app.amsterguide.FriendActivity"
             android:label="@string/title_activity_friend" >
         </activity>
         <activity
-            android:name="com.app.killerapp.EventActivity"
+            android:name="com.app.amsterguide.EventActivity"
             android:label="@string/title_activity_event"
             android:parentActivityName="core.map.MapActivity" >
             <meta-data
@@ -77,7 +77,7 @@
         <activity
             android:name="services.ServicesContactActivity"
             android:label="@string/title_activity_services_contact"
-            android:parentActivityName="com.app.killerapp.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />

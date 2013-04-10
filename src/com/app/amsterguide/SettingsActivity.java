@@ -1,4 +1,4 @@
-package com.app.killerapp;
+package com.app.amsterguide;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
 import java.util.List;
+
+import com.app.killerapp.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

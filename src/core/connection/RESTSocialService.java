@@ -12,7 +12,7 @@ import org.jdom2.input.SAXBuilder;
 
 import android.util.Log;
 
-import com.app.killerapp.FriendActivity;
+import com.app.amsterguide.FriendActivity;
 
 import util.KillerboneUtils;
 import core.connection.https.HttpsConnector;

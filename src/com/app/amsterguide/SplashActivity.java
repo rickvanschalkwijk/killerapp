@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.app.killerapp;
+package com.app.amsterguide;
+
+import com.app.killerapp.R;
 
 import core.databasehandlers.DatabaseLoaderThread;
 import android.app.Activity;

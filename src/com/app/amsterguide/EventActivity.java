@@ -1,4 +1,6 @@
-package com.app.killerapp;
+package com.app.amsterguide;
+
+import com.app.killerapp.R;
 
 import core.models.Event;
 import android.os.Bundle;

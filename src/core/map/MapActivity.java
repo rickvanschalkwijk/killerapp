@@ -34,7 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.app.killerapp.EventActivity;
+import com.app.amsterguide.EventActivity;
 import com.app.killerapp.R;
 
 import core.databasehandlers.EventDataSource;

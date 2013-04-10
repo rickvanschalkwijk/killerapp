@@ -1,7 +1,7 @@
 package util;
 
+import com.app.amsterguide.SettingsActivity;
 import com.app.killerapp.R;
-import com.app.killerapp.SettingsActivity;
 
 import android.app.Activity;
 import android.content.Intent;
