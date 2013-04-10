@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
+import android.text.Html;
 import android.annotation.TargetApi;
 import android.os.Build;
 
@@ -26,7 +27,7 @@ public class EventActivity extends Activity {
 		event = (Event) getIntent().getSerializableExtra( Event.EXTRA );
 		
 		TextView descriptionText = (TextView) findViewById(R.id.event_description_text);
-		descriptionText.setText( event.getDescription() );
+		descriptionText.setText( Html.fromHtml( event.getDescription() ) );
 		
 	}
 
