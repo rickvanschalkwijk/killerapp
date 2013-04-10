@@ -27,17 +27,17 @@ import core.models.Category;
 import core.models.User;
 
 public class RESTEventService {
-
-	private final static String baseUrl = "https://killerbone.mooo.com/";
-	private final static String URL_ALL_CATEGORIES = baseUrl
-			+ "development/allcategories";
+	public Category category;
 	private final static HttpsRequestType requestType = HttpsRequestType.GET;
 	public String response;
 	private Document xmlDocument;
 	private Element rootNode;
 	private SAXBuilder builder;
-
-	public List<Category> getAllCategories() {
+	public List categoryList;
+	List<Category> categories;
+	public Element node;
+	
+	public List<Category> getAllCategories() throws DataException, IOException, JDOMException {
 
 		String url = KillerboneUtils.getAllEventCategories();
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
@@ -50,23 +50,27 @@ public class RESTEventService {
 		try {
 			response = httpsConnector.performHttpsRequest(authenticateRequest);
 		} catch (DataException e1) {
-			e1.printStackTrace();
+			throw new DataException("Can't get https data from server"); 
 		}
 
 		builder = new SAXBuilder();
 
 		try {
 			xmlDocument = builder.build(new StringReader(response));
+			rootNode = xmlDocument.getRootElement();
+			categoryList = rootNode.getChildren("title");
 		} catch (JDOMException e) {
-
-			e.printStackTrace();
+			throw new JDOMException();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IOException();
 		}
-
-		rootNode = xmlDocument.getRootElement();
-
-		List<Category> categories = new ArrayList<Category>();
+		
+		for(int i = 0; i < categoryList.size(); i ++){
+			node = (Element) categoryList.get(i);
+			
+		}
+		
+		categories = new ArrayList<Category>();
 
 		return categories;
 	}
