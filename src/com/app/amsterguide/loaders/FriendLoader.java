@@ -1,4 +1,4 @@
-package com.app.killerapp.loaders;
+package com.app.amsterguide.loaders;
 
 import java.util.List;
 

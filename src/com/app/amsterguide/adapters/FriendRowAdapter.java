@@ -1,4 +1,4 @@
-package com.app.killerapp.adapters;
+package com.app.amsterguide.adapters;
 
 import java.util.ArrayList;
 import java.util.List;

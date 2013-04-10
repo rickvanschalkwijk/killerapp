@@ -20,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.app.amsterguide.adapters.FriendRowAdapter;
+import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
-import com.app.killerapp.adapters.FriendRowAdapter;
-import com.app.killerapp.loaders.FriendLoader;
 
 import core.models.User;
 
