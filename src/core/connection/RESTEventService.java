@@ -67,7 +67,7 @@ public class RESTEventService {
 		
 		for(int i = 0; i < categoryList.size(); i ++){
 			node = (Element) categoryList.get(i);
-			
+			Log.d("node teklst", node.getChildText("title"));
 		}
 		
 		categories = new ArrayList<Category>();
