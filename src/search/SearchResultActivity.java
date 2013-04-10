@@ -19,7 +19,7 @@ public class SearchResultActivity extends ListActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_result);
 		SearchMainActivity searchMainActivity = new SearchMainActivity();
-		events = searchMainActivity.getResult();
+		//events = searchMainActivity.getResult();
 		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this, android.R.layout.simple_list_item_1, events);
 		setListAdapter(adapter);
 	}

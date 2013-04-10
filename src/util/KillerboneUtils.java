@@ -77,14 +77,14 @@ public class KillerboneUtils
 		return KILLERBONE_FULL_URL + "/events/categories";
 	}	
 	
-	public static String getAllEventsFromCategory(long categoryId)
+	public static String getAllEventsFromCategory(String categoryId)
 	{
-		return KILLERBONE_FULL_URL + "/events/" + String.valueOf(categoryId);
+		return KILLERBONE_FULL_URL + "/events/" + categoryId;
 	}
 	
-	public static String getNewEventsFromCategory(long categoryId, long timestamp)
+	public static String getNewEventsFromCategory(String categoryId, long timestamp)
 	{
-		return KILLERBONE_FULL_URL + "/events/" + String.valueOf(categoryId) + "/new/" + String.valueOf(timestamp);
+		return KILLERBONE_FULL_URL + "/events/" + categoryId + "/new/" + String.valueOf(timestamp);
 	}
 	
 	//-----------------------------------------------------------------------//
