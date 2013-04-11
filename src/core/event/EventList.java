@@ -3,15 +3,10 @@ package core.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import services.MyCustomBaseAdapter;
-import services.ServicesList;
-
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ListActivity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,19 +33,18 @@ public class EventList extends Activity {
 		events.clear();
 		events = eventDataSource.getAllEvents();
 		eventDataSource.close();
-		
+
 		final ListView listView = (ListView) findViewById(R.id.listEvents);
 
 		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
 				R.layout.text_view, events);
 		listView.setAdapter(adapter);
-		
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-				Dialog dialog = new Dialog(EventList.this);
+				Dialog dialog = new Dialog(EventList.this, R.style.AppTheme);
 				dialog.setContentView(R.layout.event_dialog);
 				dialog.setTitle("Detailed event info");
 				dialog.setCancelable(true);
@@ -58,9 +52,10 @@ public class EventList extends Activity {
 				TextView name = (TextView) dialog.findViewById(R.id.textView1);
 				name.setText(events.get(position).getTitle());
 
-				TextView description = (TextView) dialog.findViewById(R.id.textView2);
-				description.setText(events.get(position).getDescription());
-				
+				TextView description = (TextView) dialog
+						.findViewById(R.id.textView2);
+				description.setText(Html.fromHtml( events.get(position).getDescription()));
+
 				dialog.show();
 			}
 		});
