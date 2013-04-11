@@ -5,8 +5,8 @@
 
     <string name="load">Loading...</string>
     <!-- End Splash Activity -->
-	<string name="welcome">Welkom to Amsterdam...</string>
-
+	<string name="welcome">Welcome,</string>
+	<string name="welcome_underline">to Amsterdam.</string>
     <!-- Start Main Activity -->
 
     <string name="app_name">AmsterGuide</string>
