@@ -47,6 +47,13 @@ public class Friendship {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public User getOtherUser(long userId){
+		if (this.initiator.getId() == userId){
+			return this.participant;
+		}
+		return this.initiator;
+	}
 
 	@Override
 	public String toString() {

@@ -5,6 +5,7 @@ import java.util.List;
 import core.connection.RESTSocialService;
 import core.connection.killerbone.AuthenticationService;
 import core.connection.killerbone.AuthenticationService.AuthToken;
+import core.models.Friendship;
 import core.models.User;
 
 import android.content.Context;
@@ -12,9 +13,9 @@ import android.content.SharedPreferences;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class FriendLoader  extends AsyncTaskLoader<List<User>> {
+public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 	
-	private List<User> result;
+	private List<Friendship> result;
 	private long userId;
 	private String authToken;
 	private String friendshipStatus;
@@ -27,12 +28,12 @@ public class FriendLoader  extends AsyncTaskLoader<List<User>> {
 	}
 
 	@Override
-	public List<User> loadInBackground() {
+	public List<Friendship> loadInBackground() {
 		Log.d("adapter" , "adapter start");
 		RESTSocialService socialService = new RESTSocialService();
-		List<User> users = socialService.RetrieveFriendships(userId, authToken, friendshipStatus);
-		if (users != null){
-			return users;
+		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus);
+		if (friendships != null){
+			return friendships;
 		}
 		return null;
 	}
@@ -50,7 +51,7 @@ public class FriendLoader  extends AsyncTaskLoader<List<User>> {
 	}
 
 	@Override
-	public void deliverResult(List<User> result) {
+	public void deliverResult(List<Friendship> result) {
 		if (this.result == null) {
 			this.result = result;
 		}

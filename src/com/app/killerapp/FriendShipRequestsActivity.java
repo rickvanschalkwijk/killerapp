@@ -20,7 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class FriendShipRequestsActivity extends FragmentActivity implements
-		LoaderCallbacks<List<User>> {
+		LoaderCallbacks<List<Friendship>> {
 
 	private static FriendShipRequestsActivity selfReferance = null;
 	FriendshipRequestsAdapter comReqAdap = null;
@@ -49,27 +49,25 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public Loader<List<User>> onCreateLoader(int id, Bundle args) {
+	public Loader<List<Friendship>> onCreateLoader(int id, Bundle args) {
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		long userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
 		String authToken = settings.getString("token", "letmein");
-		Log.d("realauthtoken", authToken);
-		Log.d("realID", String.valueOf(userId));
 		return new FriendLoader(getApplicationContext(), userId, authToken, "NEUTRAL");
 	}
 
 	@Override
-	public void onLoadFinished(Loader<List<User>> loader, List<User> result) {
+	public void onLoadFinished(Loader<List<Friendship>> loader, List<Friendship> result) {
 			
 		User currentUser = new User(1, "Test@User.nl", "DummyUser");
 		
 		ArrayList<Friendship> frList = new ArrayList<Friendship>();
 		for (int i = 0; i < result.size(); i++) {
 			Friendship fr = new Friendship();
-			fr.setParticipant(result.get(i));
+			fr.setParticipant(result.get(i).getParticipant());
 			fr.setStatus("Neutral");
-			fr.setInitiator(currentUser);
+			fr.setInitiator(result.get(i).getInitiator());
 		}
 		if (frList.size() > 0) {
 			comReqAdap.setList(frList);
@@ -77,7 +75,7 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onLoaderReset(Loader<List<User>> arg0) {
+	public void onLoaderReset(Loader<List<Friendship>> arg0) {
 		// TODO Auto-generated method stub
 
 	}
