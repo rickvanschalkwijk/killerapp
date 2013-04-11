@@ -3,49 +3,66 @@ package core.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import services.MyCustomBaseAdapter;
+import services.ServicesList;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ListActivity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+
 import com.app.killerapp.R;
 
 import core.databasehandlers.EventDataSource;
 import core.models.Event;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 public class EventList extends Activity {
-	
+
 	public static List<Event> events = new ArrayList<Event>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_list);
-		
+
 		EventDataSource eventDataSource = new EventDataSource(this);
 		eventDataSource.open();
 		events.clear();
 		events = eventDataSource.getAllEvents();
-		
-		ListView lv = (ListView)findViewById(R.id.listView1);
-        lv.setAdapter(new ArrayAdapter<Event>(this, R.layout.text_view, events));
-		
 		eventDataSource.close();
-	}
-	
+		
+		final ListView listView = (ListView) findViewById(R.id.listEvents);
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
+		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
+				R.layout.text_view, events);
+		listView.setAdapter(adapter);
+		
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> a, View v, int position,
+					long id) {
+				Dialog dialog = new Dialog(EventList.this);
+				dialog.setContentView(R.layout.event_dialog);
+				dialog.setTitle("Detailed event info");
+				dialog.setCancelable(true);
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+				TextView name = (TextView) dialog.findViewById(R.id.textView1);
+				name.setText(events.get(position).getTitle());
+
+				TextView description = (TextView) dialog.findViewById(R.id.textView2);
+				description.setText(events.get(position).getDescription());
+				
+				dialog.show();
+			}
+		});
 	}
 }
