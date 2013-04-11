@@ -12,17 +12,30 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
 public class PreLoginActivity extends Activity {
 	private Context context = this;
+	public static final String PREFS_NAME = "LocalPrefs";
+	public static boolean startUp = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		if (startUp) {
+			SharedPreferences.Editor editor = settings.edit();
+			if(settings.getBoolean("stayLoggedIn", true))
+			{
+				Intent intent = new Intent(this, MainActivity.class);
+				startActivity(intent);
+			}
+			editor.commit();
+			startUp = false;
+		}
 		setContentView(R.layout.activity_pre_login);
 		
 		// Show the Up button in the action bar.

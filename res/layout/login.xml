@@ -66,6 +66,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:text="@string/btn_login"/>
+
+          	<CheckBox
+          	    android:id="@+id/stayLoggedIn"
+          	    android:layout_width="wrap_content"
+          	    android:layout_height="wrap_content"
+          	    android:text="Keep me logged in" />
+
           	<Button 
           	    android:id="@+id/btnGuest"
                 android:layout_width="fill_parent"

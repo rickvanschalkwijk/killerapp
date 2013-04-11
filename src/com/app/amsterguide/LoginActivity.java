@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -53,6 +54,12 @@ public class LoginActivity extends Activity {
 				if (isAuthenticated) {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
+					CheckBox keeplogged = (CheckBox) findViewById(R.id.stayLoggedIn);
+			         if (keeplogged.isChecked()) {
+			        	 editor.putBoolean("stayLoggedIn", true);
+			         }
+			         else
+			        	 editor.putBoolean("stayLoggedIn", false);
 					editor.commit();
 
 					Intent i = new Intent(context,

@@ -42,7 +42,10 @@ public class MainActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		if (startUp) {
 			SharedPreferences.Editor editor = settings.edit();
-			editor.putBoolean("loggedIn", false);
+			if(settings.getBoolean("stayLoggedIn", false))
+			{
+				editor.putBoolean("loggedIn", false);
+			}
 			editor.putBoolean("loggedInGuest", false);
 			editor.commit();
 			startUp = false;
