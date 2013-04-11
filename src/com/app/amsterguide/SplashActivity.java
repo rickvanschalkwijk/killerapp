@@ -34,13 +34,11 @@ public class SplashActivity extends Activity {
 	protected int _splashTime = 2500;
 	private Thread splashThread;
 	
-	final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
+		final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
 		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
 		Thread thread = new Thread(databaseLoaderThread);
 		thread.start();

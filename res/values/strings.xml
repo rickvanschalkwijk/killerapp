@@ -41,16 +41,9 @@
     <string name="categories_title">Pick a category</string>
 
     <string-array name="categories">
-        <item>Couple</item>
-        <item>Seniors</item>
-        <item>Family</item>
-        <item>Youth</item>
-        <item>Low Budget</item>
-        <item>Romantic</item>
-        <item>Cultural</item>
-        <item>Party</item>
-        <item>Active</item>
-        <item>Non-specific</item>
+        <item>Art</item>
+        <item>Music</item>
+        <item>Nightlife</item>
     </string-array>
 
     <string name="ok">Filter</string>
