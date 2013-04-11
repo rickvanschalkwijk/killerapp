@@ -65,7 +65,12 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
-		// Create the mapView with an MBTileProvider
+		 Bundle b = getIntent().getExtras();
+	     if(b != null){
+	    	 String[] resultArr = b.getStringArray("selectedItems");
+	    	 Log.d("Filter result", resultArr + "");
+	     }
+	     // Create the mapView with an MBTileProvider
         resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
  
         //String packageDir = "/com.app.killerapp";
@@ -314,8 +319,16 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					//save check items somewhere
-					//or return to underlaning activity
+					if(mSelectedItems.isEmpty()){
+						Toast.makeText(context, "You did'nt select anything!", Toast.LENGTH_SHORT).show();
+					}else{
+						Intent intent = new Intent(context, MapActivity.class);
+						Bundle b = new Bundle();
+						b.putStringArrayList("selectedItems", mSelectedItems);
+						intent.putExtras(b);
+						finish();
+						startActivity(intent);
+					}
 				}
 			})
 			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
