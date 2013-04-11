@@ -1,8 +1,10 @@
 package core.map;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
@@ -46,365 +48,423 @@ import core.models.Place;
 import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
-
 public class MapActivity extends Activity implements IRegisterReceiver {
-	
+
 	private LocationManager locationManager;
 	private MapController mapController;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
 	private GeoUpdateHandler locationListener;
-	private ArrayList mSelectedItems;
+	public List<Integer> mSelectedItems;
 	final Context context = this;
 	private Location currentLocation;
 	private DefaultResourceProxyImpl resProxy;
 	private BoundedMapView mapView;
 	private int defaultZoomLevel = 13;
 	private static MapActivity selfReferance = null;
-	  
+	public String[] categories = { "music", "art", "nightlife" };
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
-		 Bundle b = getIntent().getExtras();
-	     if(b != null){
-	    	 String[] resultArr = b.getStringArray("selectedItems");
-	    	 Log.d("Filter result", resultArr + "");
-	     }
-	     // Create the mapView with an MBTileProvider
-        resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
- 
-        //String packageDir = "/com.app.killerapp";
-        //TODO: change path to Environment.getExternalStorageDirectory().getPath()
-        String path = "/mnt/sdcard/osmdroid/";
-        File file = new File(path, "amsterdam.mbtiles");
- 
-        MBTileProvider provider = new MBTileProvider(this, file);
-        //4.8653,52.3325,4.9604,52.3839
-        
-        mapView = new BoundedMapView(this, resProxy, provider);
-        double north = 52.388841;
-        double east  =  4.964136;
-        double south = 52.322969;
-        double west  =  4.835695;
-        BoundingBoxE6 bBox = new BoundingBoxE6(north, east, south, west);
- 
-        mapView.setScrollableAreaLimit(bBox);
-        
-        mapView.setBuiltInZoomControls(true);
-        mapView.setMultiTouchControls(true);
- 
-        // Zoom in and go to Amsterdam
-        mapController = mapView.getController();
-        mapController.setZoom( defaultZoomLevel );
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
-        GeoPoint centralStation = new GeoPoint( 52.379211, 4.899426 );
-                
-        //this location is central station
-        mapController.animateTo( centralStation );
-        
-        // Set the MapView as the root View for this Activity; done!
-        setContentView(mapView);
-        
-        addEvents();
-        addLocations();
+
+		// Create the mapView with an MBTileProvider
+		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
+
+		// String packageDir = "/com.app.killerapp";
+		// TODO: change path to
+		// Environment.getExternalStorageDirectory().getPath()
+		String path = "/mnt/sdcard/osmdroid/";
+		File file = new File(path, "amsterdam.mbtiles");
+
+		MBTileProvider provider = new MBTileProvider(this, file);
+		// 4.8653,52.3325,4.9604,52.3839
+
+		mapView = new BoundedMapView(this, resProxy, provider);
+		double north = 52.388841;
+		double east = 4.964136;
+		double south = 52.322969;
+		double west = 4.835695;
+		BoundingBoxE6 bBox = new BoundingBoxE6(north, east, south, west);
+
+		mapView.setScrollableAreaLimit(bBox);
+
+		mapView.setBuiltInZoomControls(true);
+		mapView.setMultiTouchControls(true);
+
+		// Zoom in and go to Amsterdam
+		mapController = mapView.getController();
+		mapController.setZoom(defaultZoomLevel);
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
+
+		// this location is central station
+		mapController.animateTo(centralStation);
+
+		// Set the MapView as the root View for this Activity; done!
+		setContentView(mapView);
+		/*
+		 * Bundle b = getIntent().getExtras(); if(b != null){ ArrayList<String>
+		 * resultArr = b.getStringArrayList("selectedItems");
+		 * addFilterEvents(resultArr); }else{ addEvents(); }
+		 */
+
+		addEvents();
+		addLocations();
 	}
-	
-	private void addLocations(){
+
+	private void addLocations() {
 		ArrayList<Place> places = PlaceUtil.getDummyData();
-		
-		for( Place place : places ){
-			addPlaceMarker( place );
+
+		for (Place place : places) {
+			addPlaceMarker(place);
 		}
 	}
-	
-	private void addEvents(){
+
+	private void addFilterEvents(ArrayList<String> filter) {
 		EventDataSource eventDataSource = new EventDataSource(context);
 		eventDataSource.open();
 		List<Event> events = eventDataSource.getAllEvents();
 		eventDataSource.close();
-		
-		for( Event event : events ){
-			addEventMarker( event );
+
+		for (Event event : events) {
+			if (filter.contains(event.getCategory())) {
+				addEventMarker(event);
+			}
 		}
 	}
-	
-	private void addEventMarker( final Event newEvent ){
-		OverlayItem eventOverLayItem = new OverlayItem("Event", "Some event", newEvent.getLocation() );
-        Drawable eventMarker = this.getResources().getDrawable(R.drawable.marker);
-        eventOverLayItem.setMarker(eventMarker);
 
-        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(eventOverLayItem);
+	private void addEvents() {
+		EventDataSource eventDataSource = new EventDataSource(context);
+		eventDataSource.open();
+		List<Event> events = eventDataSource.getAllEvents();
+		eventDataSource.close();
 
-        ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-        			private Event event = newEvent;
-        			
-                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                    	createEventOverlay(event);
-                        return true;
-                    }
-                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        return true;
-                    }
-                }, resProxy);
-        this.mapView.getOverlays().add( currentLocationOverlay );
+		for (Event event : events) {
+			addEventMarker(event);
+		}
 	}
-	
-	private void addPlaceMarker( final Place newPlace ){
-		OverlayItem placeOverLayItem = new OverlayItem("Place", "Some place", newPlace.getLocation() );
-        Drawable placeMarker = this.getResources().getDrawable(R.drawable.place_marker);
-        placeOverLayItem.setMarker(placeMarker);
 
-        final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(placeOverLayItem);
+	private void addEventMarker(final Event newEvent) {
+		OverlayItem eventOverLayItem = new OverlayItem("Event", "Some event",
+				newEvent.getLocation());
+		Drawable eventMarker = this.getResources().getDrawable(
+				R.drawable.marker);
+		eventOverLayItem.setMarker(eventMarker);
 
-        ItemizedIconOverlay<OverlayItem> currentPlaceOverLayItem = new ItemizedIconOverlay<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-        			private Place place = newPlace;
-        			
-                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                    	createPlaceOverlay(place);
-                        return true;
-                    }
-                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        return true;
-                    }
-                }, resProxy);
-        this.mapView.getOverlays().add( currentPlaceOverLayItem );
+		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		items.add(eventOverLayItem);
+
+		ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
+				items,
+				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+					private Event event = newEvent;
+
+					public boolean onItemSingleTapUp(final int index,
+							final OverlayItem item) {
+						createEventOverlay(event);
+						return true;
+					}
+
+					public boolean onItemLongPress(final int index,
+							final OverlayItem item) {
+						return true;
+					}
+				}, resProxy);
+		this.mapView.getOverlays().add(currentLocationOverlay);
 	}
-	
-	private void createPlaceOverlay( final Place place ){
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle( place.getName() );
+
+	private void addPlaceMarker(final Place newPlace) {
+		OverlayItem placeOverLayItem = new OverlayItem("Place", "Some place",
+				newPlace.getLocation());
+		Drawable placeMarker = this.getResources().getDrawable(
+				R.drawable.place_marker);
+		placeOverLayItem.setMarker(placeMarker);
+
+		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		items.add(placeOverLayItem);
+
+		ItemizedIconOverlay<OverlayItem> currentPlaceOverLayItem = new ItemizedIconOverlay<OverlayItem>(
+				items,
+				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+					private Place place = newPlace;
+
+					public boolean onItemSingleTapUp(final int index,
+							final OverlayItem item) {
+						createPlaceOverlay(place);
+						return true;
+					}
+
+					public boolean onItemLongPress(final int index,
+							final OverlayItem item) {
+						return true;
+					}
+				}, resProxy);
+		this.mapView.getOverlays().add(currentPlaceOverLayItem);
+	}
+
+	private void createPlaceOverlay(final Place place) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setTitle(place.getName());
 		alertDialogBuilder
-			.setMessage( place.getDescription() )
-			.setCancelable(true)
-			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int id) {
-	                //user cancels
-	            	//return to underlaing activity
-	            }
-	        })
-			.setPositiveButton( R.string.event_more_information ,new DialogInterface.OnClickListener() 
-			{
-				public void onClick(DialogInterface dialog,int id) 
-				{
-					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
-				}
-			});
-			
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+				.setMessage(place.getDescription())
+				.setCancelable(true)
+				.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								// user cancels
+								// return to underlaing activity
+							}
+						})
+				.setPositiveButton(R.string.event_more_information,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								Toast.makeText(context,
+										R.string.event_more_information,
+										Toast.LENGTH_SHORT).show();
+							}
+						});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
-	
-	private void createEventOverlay( final Event event){
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle( event.getTitle() );
+
+	private void createEventOverlay(final Event event) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+		alertDialogBuilder.setTitle(event.getTitle());
 		alertDialogBuilder
-			.setMessage( Html.fromHtml( event.getDescription() ) )
-			.setCancelable(true)
-			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int id) {
-	                //user cancels
-	            	//return to underlaing activity
-	            }
-	        })
-			.setPositiveButton( R.string.event_more_information ,new DialogInterface.OnClickListener() 
-			{
-				public void onClick(DialogInterface dialog,int id) 
-				{
-					Intent intent = new Intent(getApplicationContext(), EventActivity.class );
-					intent.putExtra(Event.EXTRA, event);
-					startActivity(intent);
-					Toast.makeText(context, R.string.event_more_information, Toast.LENGTH_SHORT).show();
-				}
-			});
-			
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+				.setMessage(Html.fromHtml(event.getDescription()))
+				.setCancelable(true)
+				.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								// user cancels
+								// return to underlaing activity
+							}
+						})
+				.setPositiveButton(R.string.event_more_information,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								Intent intent = new Intent(
+										getApplicationContext(),
+										EventActivity.class);
+								intent.putExtra(Event.EXTRA, event);
+								startActivity(intent);
+								Toast.makeText(context,
+										R.string.event_more_information,
+										Toast.LENGTH_SHORT).show();
+							}
+						});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
-	
+
 	@Override
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
 		locationListener = new GeoUpdateHandler();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				100, 0, locationListener);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		final boolean gpsEnabled = locationManager.isProviderEnabled( locationProvider );
-		if(!gpsEnabled){
-			new EnableGpsDialogFragment().show(getFragmentManager(), "enableGpsDialog");
+		final boolean gpsEnabled = locationManager
+				.isProviderEnabled(locationProvider);
+		if (!gpsEnabled) {
+			new EnableGpsDialogFragment().show(getFragmentManager(),
+					"enableGpsDialog");
 		}
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-	    locationManager.removeUpdates(locationListener);
+		locationManager.removeUpdates(locationListener);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.map, menu);
-		
+
 		return true;
 	}
-	
-	  public boolean onOptionsItemSelected(MenuItem item){
-			switch(item.getItemId()){
-				case R.id.action_filter:
-					filterDialog();
-					return true;
-				case R.id.action_myposition:
-					try {
-						mapController.animateTo(new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()));
-						mapController.setZoom(17);
-					} catch( Exception e){
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-	        			alertDialogBuilder.setTitle("Location error");
-	        			alertDialogBuilder
-	        				.setMessage("Location not found")
-	        				.setCancelable(false)
-	        				.setPositiveButton("OK",new DialogInterface.OnClickListener() 
-	        				{
-	        					public void onClick(DialogInterface dialog,int id) 
-	        					{
-	        						dialog.cancel();
-	        					}
-	        				});
-	        				
-	        				AlertDialog alertDialog = alertDialogBuilder.create();
-	        				alertDialog.show();
-					}
-						
-					
-					return true;
-				case R.id.action_help:
-					Intent helpIntent = new Intent(this, util.HelpActivity.class);
-					startActivity(helpIntent);
-					return true;
-				default:
-		            return super.onOptionsItemSelected(item);
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_filter:
+			filterDialog();
+			return true;
+		case R.id.action_myposition:
+			try {
+				mapController.setZoom(17);
+				mapController.animateTo(new GeoPoint(currentLocation
+						.getLatitude(), currentLocation.getLongitude()));
+			} catch (Exception e) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						context);
+				alertDialogBuilder.setTitle("Location error");
+				alertDialogBuilder
+						.setMessage("Location not found")
+						.setCancelable(false)
+						.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										dialog.cancel();
+									}
+								});
+
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
 			}
+
+			return true;
+		case R.id.action_help:
+			Intent helpIntent = new Intent(this, util.HelpActivity.class);
+			startActivity(helpIntent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		
-		public Dialog filterDialog(){
-			mSelectedItems = new ArrayList();
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			final ArrayList<Category> categories = new ArrayList<Category>();
-			
-			builder.setTitle(R.string.categories_title)
-			.setMultiChoiceItems(R.array.categories, null, 
-					new DialogInterface.OnMultiChoiceClickListener() {			
-						@Override
-						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-							if(isChecked){
-								mSelectedItems.add(which);
-							}else if(mSelectedItems.contains(which)){
-								mSelectedItems.remove(Integer.valueOf(which));
+	}
+
+	public Dialog filterDialog() {
+		mSelectedItems = new ArrayList<Integer>();
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+		builder.setTitle(R.string.categories_title)
+				
+				.setMultiChoiceItems(categories, null,
+						new DialogInterface.OnMultiChoiceClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which, boolean isChecked) {
+								if (isChecked) {
+									mSelectedItems.add(which);
+								} else if (mSelectedItems.contains(which)) {
+									mSelectedItems.remove(Integer
+											.valueOf(which));
+								}
 							}
-						}
-					})
-			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					if(mSelectedItems.isEmpty()){
-						Toast.makeText(context, "You did'nt select anything!", Toast.LENGTH_SHORT).show();
-					}else{
-						Intent intent = new Intent(context, MapActivity.class);
-						Bundle b = new Bundle();
-						b.putStringArrayList("selectedItems", mSelectedItems);
-						intent.putExtras(b);
-						finish();
-						startActivity(intent);
-					}
-				}
-			})
-			.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int id) {
-	                //user cancels
-	            	//return to underlaing activity
-	            }
-	        });
-			builder.create();
-			
-			return builder.show();
-		}
-	
-	public class GeoUpdateHandler implements LocationListener  {
-		
+						})
+				.setPositiveButton(R.string.ok,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (mSelectedItems.isEmpty()) {
+									Toast.makeText(context,
+											"You did'nt select anything!",
+											Toast.LENGTH_SHORT).show();
+								} else {
+									mapView.getOverlays().clear();
+									mapView.invalidate();
+
+									ArrayList<String> selectedCategoryIds = new ArrayList<String>();
+
+									for (Integer selectedItem : mSelectedItems) {
+										String selectedCategory = categories[selectedItem];
+										if (selectedCategory != null) {
+											selectedCategoryIds
+													.add(selectedCategory);
+										}
+									}
+									addFilterEvents(selectedCategoryIds);
+									addLocations();
+								}
+							}
+						})
+				.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								// user cancels
+								// return to underlaing activity
+							}
+						});
+		builder.create();
+
+		return builder.show();
+	}
+
+	public class GeoUpdateHandler implements LocationListener {
+
 		private OverlayItem myLocationOverlayItem;
-		private Drawable myCurrentLocationMarker = context.getResources().getDrawable(R.drawable.bluedot);
+		private Drawable myCurrentLocationMarker = context.getResources()
+				.getDrawable(R.drawable.bluedot);
 		private ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
 		private int arrayLocation = 0;
 
-        @Override
-        public void onLocationChanged(Location location) {
-        	if( myLocationOverlayItem == null ){
-        		currentLocation = location;
-            	
-            	myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
-                
-                myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+		@Override
+		public void onLocationChanged(Location location) {
+			if (myLocationOverlayItem == null) {
+				currentLocation = location;
 
-                final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-                items.add(myLocationOverlayItem);
+				myLocationOverlayItem = new OverlayItem("Here",
+						"Current Position", new GeoPoint(currentLocation));
 
-                currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, null, resProxy );
-                mapView.getOverlays().add(currentLocationOverlay);
-                mapView.invalidate();
-                arrayLocation = mapView.getOverlays().size() - 1;
-        	} else {
-        		mapView.getOverlays().remove( arrayLocation );
-        		mapView.invalidate();
-        		
-        		currentLocation = location;
-        		myLocationOverlayItem = new OverlayItem("Here", "Current Position", new GeoPoint(currentLocation));
-                myLocationOverlayItem.setMarker(myCurrentLocationMarker);
+				myLocationOverlayItem.setMarker(myCurrentLocationMarker);
 
-                final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-                items.add(myLocationOverlayItem);
+				final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+				items.add(myLocationOverlayItem);
 
-                ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, null, resProxy );
-                mapView.getOverlays().add(currentLocationOverlay);
-                
-                arrayLocation = mapView.getOverlays().size() - 1;
-        	}
-        }
+				currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
+						items, null, resProxy);
+				mapView.getOverlays().add(currentLocationOverlay);
+				mapView.invalidate();
+				arrayLocation = mapView.getOverlays().size() - 1;
+			} else {
+				mapView.getOverlays().remove(arrayLocation);
+				mapView.invalidate();
 
-        @Override
-        public void onProviderDisabled(String provider) {
-        }
+				currentLocation = location;
+				myLocationOverlayItem = new OverlayItem("Here",
+						"Current Position", new GeoPoint(currentLocation));
+				myLocationOverlayItem.setMarker(myCurrentLocationMarker);
 
-        @Override
-        public void onProviderEnabled(String provider) {
-        }
+				final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+				items.add(myLocationOverlayItem);
 
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-	
-	
-	 // Method to launch Settings
-    private void enableLocationSettings() {
-        Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(settingsIntent);
-    }
-    
-    /**
+				ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
+						items, null, resProxy);
+				mapView.getOverlays().add(currentLocationOverlay);
+
+				arrayLocation = mapView.getOverlays().size() - 1;
+			}
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+	};
+
+	// Method to launch Settings
+	private void enableLocationSettings() {
+		Intent settingsIntent = new Intent(
+				Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		startActivity(settingsIntent);
+	}
+
+	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -413,28 +473,29 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
-	
-	public static Context getContext(){
-		if (selfReferance != null){
+
+	public static Context getContext() {
+		if (selfReferance != null) {
 			return selfReferance.getApplicationContext();
 		}
 		return null;
 	}
-   
-    private class EnableGpsDialogFragment extends DialogFragment {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.enable_gps)
-                    .setMessage(R.string.enable_gps_dialog)
-                    .setPositiveButton(R.string.enable_gps, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            enableLocationSettings();
-                        }
-                    })
-                    .create();
-        	}
-    	}
+	private class EnableGpsDialogFragment extends DialogFragment {
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			return new AlertDialog.Builder(getActivity())
+					.setTitle(R.string.enable_gps)
+					.setMessage(R.string.enable_gps_dialog)
+					.setPositiveButton(R.string.enable_gps,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									enableLocationSettings();
+								}
+							}).create();
+		}
+	}
 }

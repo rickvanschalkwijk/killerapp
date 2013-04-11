@@ -1,5 +1,6 @@
 package core.databasehandlers;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +114,12 @@ public class EventDataSource {
 		return events;
 	}
 	
+	public List<Event> getFilterEvents(Array categories){
+		List<Event> events = new ArrayList<Event>();
+		Cursor cursor = database.query(DatabaseOpenHelper.TABLE_EVENTS,
+				columns, null, null, null, null, null);
+		return events;
+	}
 	
 	
 	private static DateTime parseDateTime(String input) {

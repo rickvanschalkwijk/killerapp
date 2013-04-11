@@ -42,9 +42,9 @@
     <string name="categories_title">Pick a category</string>
 
     <string-array name="categories">
-        <item id="art">Art</item>
-        <item id="music">Music</item>
-        <item id="night_life">Nightlife</item>
+        <item>Art</item>
+        <item>Music</item>
+        <item>Nightlife</item>
     </string-array>
 
     <string name="ok">Filter</string>
