@@ -19,12 +19,14 @@ import core.connection.https.HttpsConnector;
 import core.connection.https.HttpsRequest;
 import core.connection.https.HttpsRequestType;
 import core.connection.killerbone.AuthenticationService.AuthToken;
+import core.models.Friendship;
 import core.models.User;
 
 public class RESTSocialService {
 	final private String DEBUG_TAG = "SocialRest";
 
-	public List<User> RetrieveFriendships(long userId, String authToken) {
+	public List<User> RetrieveFriendships(long userId, String authToken,
+			String friendStatus) {
 		HttpsRequestType requestType = HttpsRequestType.GET;
 		String url = KillerboneUtils.getFriendships(userId);
 		Log.d("friend authtoken", authToken);
@@ -62,8 +64,9 @@ public class RESTSocialService {
 				Log.d("listfriend", node.getChildText("status"));
 
 				String status = node.getChildText("status");
-				Log.d("statusenzo", (node.getChildText("status")) + " " + String.valueOf(status.trim() == "APPROVED"));
-				if (status.trim().equals("APPROVED")) {
+				Log.d("statusenzo", (node.getChildText("status")) + " "
+						+ String.valueOf(status.trim() == "APPROVED"));
+				if (status.trim().equals(friendStatus)) {
 					List initiatorRow = node.getChildren("initiator");
 
 					List participantRow = node.getChildren("participant");
@@ -109,4 +112,32 @@ public class RESTSocialService {
 		return null;
 	}
 
+	public boolean AddFriendship(long userId, String authToken, String friendEmail) {
+		
+		String url = KillerboneUtils.postFrienshipCreateUrl();
+		String body = KillerboneUtils.composeFriendshipRequestXml(friendEmail, userId);
+		HttpsRequestType type = HttpsRequestType.POST;
+		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
+			
+		authenticateRequest.setHeader("Content-Type", "text/xml");
+		authenticateRequest.setHeader("AuthToken", authToken);
+
+		HttpsConnector httpsConnector = new HttpsConnector(FriendActivity.getContext());
+		
+		Log.d("BODY", authenticateRequest.getBody());
+
+		try {
+			
+			String response = httpsConnector.performHttpsRequest(authenticateRequest);
+			
+			Log.d("Response: ", response);
+			
+			return true;
+		} catch (DataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }

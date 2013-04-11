@@ -16,35 +16,35 @@ public class Friendship {
 	public Friendship() {
 	}
 
-	long getId() {
+	public long getId() {
 		return id;
 	}
 
-	void setId(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	User getInitiator() {
+	public User getInitiator() {
 		return initiator;
 	}
 
-	void setInitiator(User initiator) {
+	public void setInitiator(User initiator) {
 		this.initiator = initiator;
 	}
 
-	User getParticipant() {
+	public User getParticipant() {
 		return participant;
 	}
 
-	void setParticipant(User participant) {
+	public void setParticipant(User participant) {
 		this.participant = participant;
 	}
 
-	String getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

@@ -3,6 +3,18 @@ package com.app.amsterguide;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
+import com.app.amsterguide.adapters.FriendRowAdapter;
+import com.app.amsterguide.loaders.FriendLoader;
+
+import core.connection.RESTSocialService;
+import core.models.User;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +34,7 @@ import android.widget.Toast;
 
 import com.app.amsterguide.adapters.FriendRowAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
+import com.app.killerapp.FriendShipRequestsActivity;
 import com.app.killerapp.R;
 
 import core.models.User;
@@ -31,17 +44,22 @@ public class FriendActivity extends FragmentActivity implements
 
 	private FriendRowAdapter adapter;
 	private static FriendActivity selfReferance = null;
+
+	private FragmentActivity GetThis() {
+		return this;
+	}
+
 	AddCompanionDialog dialig;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("activity", "activity1");
+		
 		setContentView(R.layout.activityfriend);
 		selfReferance = this;
 		dialig = new AddCompanionDialog(this);
 		adapter = new FriendRowAdapter(this);
-		
+
 		ListView listView = (ListView) findViewById(R.id.friendlist);
 		listView.setAdapter(adapter);
 		getSupportLoaderManager().initLoader(0, null, this);
@@ -55,16 +73,26 @@ public class FriendActivity extends FragmentActivity implements
 		actionBar.setHomeAction(new IntentAction(this, FriendActivity
 				.createIntent(this), R.drawable.ic_custom_launcher));
 		// add the refresh action
+<<<<<<< Updated upstream:src/com/app/amsterguide/FriendActivity.java
 		actionBar.addAction(new SaveAction());
 		*/
+
+		//actionBar.addAction(new ViewRequestsAction());
+
 		// add the save action
-		// actionBar.addAction(new SaveAction());
+
+		//actionBar.addAction(new SaveAction());
 
 		// add a listener to the title
 		/*
 		 * actionBar.setOnTitleClickListener(new onclickListener() { public void
 		 * onclick(View v) { makeToast("Title clicked..."); }
 		 */
+	}
+
+	private void startFriendShipRequestsActivity() {
+		Intent intent = new Intent(this, FriendShipRequestsActivity.class);
+		startActivity(intent);
 	}
 
 	// the save action
@@ -79,7 +107,23 @@ public class FriendActivity extends FragmentActivity implements
 		@Override
 		public void performAction(View view) {
 			dialig.show();
-			//makeToast("Saving...");
+			// makeToast("Saving...");
+		}
+
+	}
+
+	// the save action
+	private class ViewRequestsAction implements Action {
+
+		@Override
+		public int getDrawable() {
+			return R.drawable.actionbar_back_indicator;
+		}
+
+		@Override
+		public void performAction(View view) {
+			startFriendShipRequestsActivity();
+			// makeToast("Saving...");
 		}
 
 	}*/
@@ -99,7 +143,7 @@ public class FriendActivity extends FragmentActivity implements
 		String authToken = settings.getString("token", "letmein");
 		Log.d("realauthtoken", authToken);
 		Log.d("realID", String.valueOf(userId));
-		return new FriendLoader(getApplicationContext(), userId, authToken);
+		return new FriendLoader(getApplicationContext(), userId, authToken, "APPROVED");
 	}
 
 	@Override
@@ -136,7 +180,7 @@ public class FriendActivity extends FragmentActivity implements
 			alertDialog = buildAlertDialog(context);
 			alertDialog.setOnDismissListener(this);
 			alertDialog.setOnCancelListener(this);
-			
+
 		}
 
 		private AlertDialog buildAlertDialog(Context context) {
@@ -144,7 +188,7 @@ public class FriendActivity extends FragmentActivity implements
 					.setMessage("Enter email address").setView(editText)
 					.setNeutralButton("Submit", null)
 					.setNegativeButton("Cancel", new OnClickListener() {
-						
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
@@ -167,6 +211,13 @@ public class FriendActivity extends FragmentActivity implements
 					show();
 				} else {
 					canceled = true;
+					Log.d("Send Mail", "Sending add request");
+					SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+					long userId = Long.valueOf(settings.getString("userID", "0"))
+							.longValue();
+					String authToken = settings.getString("token", "letmein");
+					RESTSocialService socialService = new RESTSocialService();
+					socialService.AddFriendship(userId, authToken, name);
 					// Send request to server
 				}
 			}

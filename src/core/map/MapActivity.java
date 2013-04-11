@@ -104,14 +104,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
-		/*
-		 * Bundle b = getIntent().getExtras(); if(b != null){ ArrayList<String>
-		 * resultArr = b.getStringArrayList("selectedItems");
-		 * addFilterEvents(resultArr); }else{ addEvents(); }
-		 */
 
 		addEvents();
 		addLocations();
+
 	}
 
 	private void addLocations() {

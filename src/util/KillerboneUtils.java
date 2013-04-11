@@ -116,7 +116,7 @@ public class KillerboneUtils
 	/**
 	 * Composes the xml for an friendship request
 	 */
-	public static String composeFriendshipRequestXml(String toEmail, int fromId)
+	public static String composeFriendshipRequestXml(String toEmail, long fromId)
 	{
 		return String.format("<friendshipRequest><participantEmail>%s</participantEmail><initiatorId>%d</initiatorId></friendshipRequest>", toEmail, fromId);
 	}

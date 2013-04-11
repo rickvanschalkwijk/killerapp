@@ -84,9 +84,9 @@
 
     <!-- End HelpActivity -->
 
-    <string name="title_activity_friend">FriendActivity</string>
+    <string name="title_activity_friend">Travel companions</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_services_contact">ServicesContactActivity</string>
+    <string name="title_activity_services_contact">Services</string>
 
     <!-- HTTPS Client -->
     <string name="store_pass">valkering</string>
@@ -100,5 +100,7 @@
     <string name="title_event_list">Events</string>
 
     <string name="title_activity_pre_login">PreLoginActivity</string>
+
+    <string name="title_activity_friend_ship_requests">FriendShipRequestsActivity</string>
 
 </resources>

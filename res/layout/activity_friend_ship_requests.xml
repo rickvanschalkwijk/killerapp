@@ -3,6 +3,11 @@
  android:orientation="vertical" 
  android:layout_width="fill_parent"
   android:layout_height="fill_parent">
+ <TextView
+  android:layout_height="wrap_content"
+  android:text="Travel accompany requests"
+  android:gravity="center_vertical|center_horizontal"
+  android:layout_width="fill_parent" />
   <ListView 
    android:id="@+id/ListView01" 
    android:layout_height="wrap_content"

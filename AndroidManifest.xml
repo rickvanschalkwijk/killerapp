@@ -49,7 +49,11 @@
         </activity>
         <activity
             android:name="com.app.amsterguide.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings" 
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
             android:name="com.app.killerapp.util.MenuActivity"
@@ -65,11 +69,19 @@
         </activity>
         <activity
             android:name="util.HelpActivity"
-            android:label="@string/title_activity_help" >
+            android:label="@string/title_activity_help" 
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
             android:name="com.app.amsterguide.FriendActivity"
-            android:label="@string/title_activity_friend" >
+            android:label="@string/title_activity_friend" 
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
             android:name="com.app.amsterguide.EventActivity"
@@ -89,7 +101,23 @@
         </activity>
         <activity
             android:name="core.event.EventList"
-            android:label="@string/title_event_list" >
+            android:label="@string/title_event_list" 
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.killerapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="search.SearchMainActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity
+            android:name="search.SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+        </activity>
+        <activity
+            android:name="com.app.killerapp.FriendShipRequestsActivity"
+            android:label="@string/title_activity_friend_ship_requests" >
         </activity>
     </application>
 
