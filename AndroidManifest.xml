@@ -24,16 +24,16 @@
         <activity
             android:name="com.app.amsterguide.PreLoginActivity"
             android:label="AmsterGuide" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.app.amsterguide.SplashActivity"
             android:label="AmsterGuide"
             android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.app.amsterguide.MainActivity"

@@ -24,6 +24,7 @@ public class LoginActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
