@@ -6,9 +6,6 @@ import java.util.regex.Pattern;
 
 import com.app.amsterguide.adapters.FriendRowAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
 import core.connection.RESTSocialService;
 import core.models.User;
