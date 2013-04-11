@@ -6,6 +6,7 @@
     <string name="load">Loading...</string>
     <!-- End Splash Activity -->
 
+
     <!-- Start Main Activity -->
 
     <string name="app_name">AmsterGuide</string>
@@ -19,7 +20,7 @@
     <string name="settings_button">Settings</string>
     <string name="search_button">Search</string>
     <string name="service_button">Services</string>
-    
+
     <!-- End Main Activity -->
 
 
@@ -79,23 +80,23 @@
 
     <string name="title_activity_help">Help...</string>
     <string name="help_activity">Help activity!</string>
-
-
     <string name="title_activity_event">EventActivity</string>
 
-    <!--  End HelpActivity -->
+    <!-- End HelpActivity -->
 
-	<string name="title_activity_friend">FriendActivity</string>
+    <string name="title_activity_friend">FriendActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_services_contact">ServicesContactActivity</string>
 
-	<!-- HTTPS Client -->
+    <!-- HTTPS Client -->
     <string name="store_pass">valkering</string>
-    
+
     <!-- Start Search Activity -->
     <string name="get_events">Get events</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_search_result">Result</string>
     <!-- End Search Activity -->
-    
+
+    <string name="title_activity_pre_login">PreLoginActivity</string>
+
 </resources>
