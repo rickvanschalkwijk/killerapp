@@ -32,11 +32,11 @@
 
 
     <!-- Begin Map Activity -->
-
+	<string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
-    <string name="action_settings">Settings</string>
     <string name="action_filter">Filter</string>
-    <string name="action_myposition">GoTo my position</string>
+    <string name="action_myposition">Go to my position</string>
+    <string name="action_map_settings">Map Settings</string>
     <string name="action_help">Help</string>
     <string name="event_more_information">More information</string>
     <string name="categories_title">Pick a category</string>

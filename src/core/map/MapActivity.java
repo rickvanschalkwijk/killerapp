@@ -292,7 +292,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.map, menu);
-
 		return true;
 	}
 
@@ -324,7 +323,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 				AlertDialog alertDialog = alertDialogBuilder.create();
 				alertDialog.show();
 			}
-
+			return true;
+		case R.id.action_map_settings:
+			
 			return true;
 		case R.id.action_help:
 			Intent helpIntent = new Intent(this, util.HelpActivity.class);
@@ -338,9 +339,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	public Dialog filterDialog() {
 		mSelectedItems = new ArrayList<Integer>();
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-		builder.setTitle(R.string.categories_title)
-				
+		builder.setTitle(R.string.categories_title)		
 				.setMultiChoiceItems(categories, null,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							@Override
