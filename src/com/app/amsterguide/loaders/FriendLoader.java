@@ -17,18 +17,20 @@ public class FriendLoader  extends AsyncTaskLoader<List<User>> {
 	private List<User> result;
 	private long userId;
 	private String authToken;
+	private String friendshipStatus;
 	
-	public FriendLoader(Context context, long id, String authToken) {
+	public FriendLoader(Context context, long id, String authToken, String friendStatus) {
 		super(context);
 		this.userId = id;
 		this.authToken = authToken;
+		this.friendshipStatus = friendStatus;
 	}
 
 	@Override
 	public List<User> loadInBackground() {
 		Log.d("adapter" , "adapter start");
 		RESTSocialService socialService = new RESTSocialService();
-		List<User> users = socialService.RetrieveFriendships(userId, authToken);
+		List<User> users = socialService.RetrieveFriendships(userId, authToken, friendshipStatus);
 		if (users != null){
 			return users;
 		}

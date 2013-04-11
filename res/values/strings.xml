@@ -101,4 +101,6 @@
 
     <string name="title_activity_pre_login">PreLoginActivity</string>
 
+    <string name="title_activity_friend_ship_requests">FriendShipRequestsActivity</string>
+
 </resources>

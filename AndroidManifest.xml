@@ -91,6 +91,18 @@
             android:name="core.event.EventList"
             android:label="@string/title_event_list" >
         </activity>
+        <activity
+            android:name="search.SearchMainActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity
+            android:name="search.SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+        </activity>
+        <activity
+            android:name="com.app.killerapp.FriendShipRequestsActivity"
+            android:label="@string/title_activity_friend_ship_requests" >
+        </activity>
     </application>
 
 </manifest>
