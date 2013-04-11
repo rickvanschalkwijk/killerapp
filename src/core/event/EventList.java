@@ -8,12 +8,12 @@ import com.app.killerapp.R;
 import core.databasehandlers.EventDataSource;
 import core.models.Event;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class EventList extends ListActivity {
+public class EventList extends Activity {
 	
 	public static List<Event> events = new ArrayList<Event>();
 
@@ -27,9 +27,8 @@ public class EventList extends ListActivity {
 		events.clear();
 		events = eventDataSource.getAllEvents();
 		
-		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
-				android.R.layout.simple_list_item_1, events);
-		setListAdapter(adapter);
+		ListView lv = (ListView)findViewById(R.id.listView1);
+        lv.setAdapter(new ArrayAdapter<Event>(this, R.layout.text_view, events));
 		
 		eventDataSource.close();
 	}
