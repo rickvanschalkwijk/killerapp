@@ -1,5 +1,6 @@
 package com.app.amsterguide.loaders;
 
+import java.util.Iterator;
 import java.util.List;
 
 import core.connection.RESTSocialService;
@@ -32,6 +33,14 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 		Log.d("adapter" , "adapter start");
 		RESTSocialService socialService = new RESTSocialService();
 		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus);
+		
+		if (friendshipStatus.contains("PENDING")) {
+			List<Friendship> friendships2 = socialService.RetrieveFriendships(userId, authToken, "SENT");
+			for (int i = 0; i < friendships2.size(); i++) {
+				friendships.add(friendships2.get(i));
+			}
+		}
+		
 		if (friendships != null){
 			return friendships;
 		}

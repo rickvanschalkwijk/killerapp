@@ -24,8 +24,7 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 	private final Context context;
 	private long id;
 	private String auth;
-		
-	
+
 	public FriendshipRequestsAdapter(Context context, long id, String auth) {
 
 		this.id = id;
@@ -68,12 +67,17 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 			// Search if status is already changed
 			Log.d("FriendReqAdapter: ",
 					"Statug: " + searchArrayList.get(position).getStatus());
+			Log.d("FriendReqAdapter: ", "position: " + position);
 			Friendship frTemp = searchArrayList.get(position);
-			if (frTemp.getStatus().trim().contains("PENDING")) {
+			Log.d("FriendReqAdapter: ",
+					"Friendship summary: " + frTemp.toString());
+
+			if (frTemp.getStatus().trim().contains("PENDING")
+					|| frTemp.getStatus().trim().contains("SENT")) {
 				Log.d("FriendReqAdapter: ", "Pending statement");
 				convertView = mInflater.inflate(R.layout.company_request_row,
 						null);
-				
+
 				// Approve
 				holder.buttonApprove = (Button) convertView
 						.findViewById(R.id.buttonAccept);
@@ -96,12 +100,13 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 						clickDeclineListener(v);
 					}
 				});
-				
-				holder.txtName = (TextView) convertView.findViewById(R.id.username);
-				holder.txtName.setText(frTemp.getParticipant().getUsername());
-				
-			} 
-	
+
+				holder.txtName = (TextView) convertView
+						.findViewById(R.id.username);
+				holder.txtName.setText(frTemp.getInitiator().getUsername());
+
+			}
+
 			convertView.setTag(holder);
 
 		} else {
@@ -112,12 +117,13 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 
 	private OnClickListener clickApproveListener(View v) {
 
-		
 		Friendship item = (Friendship) v.getTag();
 		RESTSocialService socialService = new RESTSocialService();
-		//socialService.ApproveFriendship(id, auth, item.getId());
-		
+		socialService.ApproveFriendship(item.getParticipant().getId(), auth,
+				item.getId());
+		Log.d("Approving auth: ", auth);
 		Log.d("Approving: ", item.toString());
+		notifyDataSetChanged();
 		return null;
 	}
 
@@ -125,8 +131,9 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 
 		Friendship item = (Friendship) v.getTag();
 		RESTSocialService socialService = new RESTSocialService();
-		//socialService.DeclineFriendship(id, auth, item.getId());
+		socialService.DeclineFriendship(item.getParticipant().getId(), auth, item.getId());
 		Log.d("Trying to Deny: ", item.toString());
+		notifyDataSetChanged();
 		return null;
 	}
 

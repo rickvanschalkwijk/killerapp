@@ -24,6 +24,8 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 
 	private static FriendShipRequestsActivity selfReferance = null;
 	FriendshipRequestsAdapter comReqAdap = null;
+	private long userID;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,11 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 		selfReferance = this;
 		
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-		long userId = Long.valueOf(settings.getString("userID", "0"))
+		userID = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
 		String authToken = settings.getString("token", "letmein");
 		//ArrayList<Friendship> searchResults = GetSearchResults();
-		comReqAdap = new FriendshipRequestsAdapter(this, userId, authToken);
+		comReqAdap = new FriendshipRequestsAdapter(this, userID, authToken);
 		
 		final ListView lv1 = (ListView) findViewById(R.id.ListView01);
 		lv1.setAdapter(comReqAdap);
@@ -64,7 +66,16 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 	@Override
 	public void onLoadFinished(Loader<List<Friendship>> loader, List<Friendship> result) {
 		if (result.size() > 0) {
-			comReqAdap.setList(result);
+			
+			List<Friendship> tempL = new ArrayList<Friendship>();
+			for (int i = 0; i < result.size(); i++) {
+				if (result.get(i).getInitiator().getId() != userID) {
+					tempL.add(result.get(i));
+				}
+			}		
+			Log.d("FriendReqAdapter: ", "List set to adapter. Length: " + tempL.size() );
+			Log.d("FriendReqAdapter: ", "userid: " + userID );
+			comReqAdap.setList(tempL);
 		}	
 	}
 
