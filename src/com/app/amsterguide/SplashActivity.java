@@ -16,7 +16,6 @@
 
 package com.app.amsterguide;
 
-import com.app.killerapp.PreLoginActivity;
 import com.app.killerapp.R;
 
 import core.databasehandlers.DatabaseLoaderThread;

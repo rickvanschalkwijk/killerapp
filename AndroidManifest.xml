@@ -92,7 +92,7 @@
             android:label="@string/title_activity_search_result" >
         </activity>
         <activity
-            android:name="com.app.killerapp.PreLoginActivity"
+            android:name="com.app.amsterguide.PreLoginActivity"
             android:label="@string/title_activity_pre_login" >
         </activity>
     </application>
