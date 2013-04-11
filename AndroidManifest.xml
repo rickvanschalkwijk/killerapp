@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.app.amsterguide.PreLoginActivity"
-            android:label="@string/title_activity_pre_login" >
+            android:label="AmsterGuide" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
