@@ -25,13 +25,10 @@ import core.models.User;
 public class RESTSocialService {
 	final private String DEBUG_TAG = "SocialRest";
 
-	public List<User> RetrieveFriendships(long userId, String authToken,
+	public List<Friendship> RetrieveFriendships(long userId, String authToken,
 			String friendStatus) {
 		HttpsRequestType requestType = HttpsRequestType.GET;
 		String url = KillerboneUtils.getFriendships(userId);
-		Log.d("friend authtoken", authToken);
-		Log.d("friend id", String.valueOf(userId));
-		Log.d("url", url);
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
 				"");
 		authenticateRequest.setHeader("Content-Type", "text/xml");
@@ -50,55 +47,50 @@ public class RESTSocialService {
 			Document xmlDocument = builder.build(new StringReader(response));
 			Element rootNode = xmlDocument.getRootElement();
 
-			List<User> users = new ArrayList<User>();
-			Log.d("Hier", "Hier");
+			List<Friendship> friendships = new ArrayList<Friendship>();
 			// Parse users
 
 			List listFriend = rootNode.getChildren("friendship");
 
 			for (int i = 0; i < listFriend.size(); i++) {
-				long id = 0;
-				String name = "";
 
 				Element node = (Element) listFriend.get(i);
-				Log.d("listfriend", node.getChildText("status"));
 
 				String status = node.getChildText("status");
-				Log.d("statusenzo", (node.getChildText("status")) + " "
-						+ String.valueOf(status.trim() == "APPROVED"));
+				Friendship friendship = new Friendship();
+				friendship.setStatus(status);
+				friendship.setId(Long.valueOf(
+						node.getAttribute("id").getValue()).longValue());
+
 				if (status.trim().equals(friendStatus)) {
 					List initiatorRow = node.getChildren("initiator");
 
 					List participantRow = node.getChildren("participant");
 					for (int j = 0; j < initiatorRow.size(); j++) {
 						Element column = (Element) initiatorRow.get(j);
-						if (Long.valueOf(column.getAttribute("id").getValue())
-								.longValue() != userId) {
-							Log.d("init_werk", "oehhh");
-							name = column.getChildText("name");
-							id = Long.valueOf(
-									column.getAttribute("id").getValue())
-									.longValue();
-						}
+						String name = column.getChildText("name");
+						long id = Long.valueOf(
+								column.getAttribute("id").getValue())
+								.longValue();
+
+						friendship.setInitiator(new User(id, name));
 					}
 					for (int j = 0; j < participantRow.size(); j++) {
 						Element column = (Element) participantRow.get(j);
-						if (Long.valueOf(column.getAttribute("id").getValue())
-								.longValue() != userId) {
-							name = column.getChildText("name");
-							id = Long.valueOf(
-									column.getAttribute("id").getValue())
-									.longValue();
-						}
+						String name = column.getChildText("name");
+						long id = Long.valueOf(
+								column.getAttribute("id").getValue())
+								.longValue();
+
+						friendship.setParticipant(new User(id, name));
 					}
 
-					User user = new User(id, status, name);
-					users.add(user);
+					friendships.add(friendship);
 				}
 
 			}
 
-			return users;
+			return friendships;
 		} catch (DataException e) {
 			Log.e(DEBUG_TAG, e.getMessage());
 		} catch (JDOMException e) {
@@ -112,26 +104,30 @@ public class RESTSocialService {
 		return null;
 	}
 
-	public boolean AddFriendship(long userId, String authToken, String friendEmail) {
-		
+	public boolean AddFriendship(long userId, String authToken,
+			String friendEmail) {
+
 		String url = KillerboneUtils.postFrienshipCreateUrl();
-		String body = KillerboneUtils.composeFriendshipRequestXml(friendEmail, userId);
+		String body = KillerboneUtils.composeFriendshipRequestXml(friendEmail,
+				userId);
 		HttpsRequestType type = HttpsRequestType.POST;
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
-			
+
 		authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
-		HttpsConnector httpsConnector = new HttpsConnector(FriendActivity.getContext());
-		
+		HttpsConnector httpsConnector = new HttpsConnector(
+				FriendActivity.getContext());
+
 		Log.d("BODY", authenticateRequest.getBody());
 
 		try {
-			
-			String response = httpsConnector.performHttpsRequest(authenticateRequest);
-			
+
+			String response = httpsConnector
+					.performHttpsRequest(authenticateRequest);
+
 			Log.d("Response: ", response);
-			
+
 			return true;
 		} catch (DataException e) {
 			// TODO Auto-generated catch block
