@@ -13,6 +13,7 @@ import org.jdom2.input.SAXBuilder;
 import android.util.Log;
 
 import com.app.amsterguide.FriendActivity;
+import com.app.killerapp.FriendShipRequestsActivity;
 
 import util.KillerboneUtils;
 import core.connection.https.HttpsConnector;
@@ -135,5 +136,41 @@ public class RESTSocialService {
 		}
 
 		return false;
+	}
+	
+	public void ApproveFriendship(long userId, String authToken, long friendshipID)
+	{
+		String url = KillerboneUtils.putFriendshipAcceptRequestUrl(friendshipID, userId);
+
+		HttpsRequestType type = HttpsRequestType.PUT;
+		HttpsRequest authenticateRequest = new HttpsRequest(type, url, null);
+
+		authenticateRequest.setHeader("Content-Type", "text/xml");
+		authenticateRequest.setHeader("AuthToken", authToken);
+
+		HttpsConnector httpsConnector = new HttpsConnector(
+				FriendShipRequestsActivity.getContext());
+		// 3 /1
+		Log.d("URL", url);
+
+		try {
+
+			String response = httpsConnector
+					.performHttpsRequest(authenticateRequest);
+
+			Log.d("Response: ", response);
+
+		} catch (DataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	public void DeclineFriendship(long userId, String authToken, long friendshipID)
+	{
+		
+		
 	}
 }

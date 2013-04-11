@@ -5,8 +5,8 @@
 
     <string name="load">Loading...</string>
     <!-- End Splash Activity -->
-	<string name="welcome">Welcome,</string>
-	<string name="welcome_underline">to Amsterdam.</string>
+    <string name="welcome">Welcome,</string>
+    <string name="welcome_underline">to Amsterdam.</string>
     <!-- Start Main Activity -->
 
     <string name="app_name">AmsterGuide</string>
@@ -32,7 +32,7 @@
 
 
     <!-- Begin Map Activity -->
-	<string name="action_settings">Settings</string>
+    <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="action_filter">Filter</string>
     <string name="action_myposition">Go to my position</string>
@@ -95,12 +95,13 @@
     <string name="title_activity_search">Search</string>
     <string name="title_activity_search_result">Result</string>
     <!-- End Search Activity -->
-    
+
+
     <!-- Event List -->
     <string name="title_event_list">Events</string>
-
     <string name="title_activity_pre_login">PreLoginActivity</string>
-
     <string name="title_activity_friend_ship_requests">FriendShipRequestsActivity</string>
+    <string name="addfriends">Add Friends</string>
+    <string name="friendrequests">Friend Requests</string>
 
 </resources>

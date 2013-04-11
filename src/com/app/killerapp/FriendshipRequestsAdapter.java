@@ -1,10 +1,13 @@
 package com.app.killerapp;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import core.connection.RESTSocialService;
 import core.models.Friendship;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,29 +18,41 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class FriendshipRequestsAdapter extends BaseAdapter {
-	private static ArrayList<Friendship> searchArrayList;
 
+	private static List<Friendship> searchArrayList;
 	private LayoutInflater mInflater;
+	private final Context context;
+	private long id;
+	private String auth;
+		
+	
+	public FriendshipRequestsAdapter(Context context, long id, String auth) {
 
-	public FriendshipRequestsAdapter(Context context,
-			ArrayList<Friendship> results) {
-		searchArrayList = results;
-		mInflater = LayoutInflater.from(context);
+		this.id = id;
+		this.auth = auth;
+		this.mInflater = LayoutInflater.from(context);
+		this.context = context;
+		Log.d("FriendReqAdapter", "Constructing");
 	}
 
-	public void setList(ArrayList<Friendship> results) {
+	public void setList(List<Friendship> results) {
 		searchArrayList = results;
+		notifyDataSetChanged();
 	}
 
 	public int getCount() {
 		if (searchArrayList != null) {
 			return searchArrayList.size();
-		} else
+		} else {
 			return 0;
+		}
 	}
 
 	public Object getItem(int position) {
-		return searchArrayList.get(position);
+		if (searchArrayList != null) {
+			return searchArrayList.get(position);
+		}
+		return null;
 	}
 
 	public long getItemId(int position) {
@@ -45,17 +60,20 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-
+		Log.d("FriendReqAdapter: ", "Starting Getview");
 		ViewHolderStatus holder;
 		if (convertView == null) {
 			holder = new ViewHolderStatus();
 
 			// Search if status is already changed
-			if (searchArrayList.get(position).getStatus() == "Neutral") {
+			Log.d("FriendReqAdapter: ",
+					"Statug: " + searchArrayList.get(position).getStatus());
+			Friendship frTemp = searchArrayList.get(position);
+			if (frTemp.getStatus().trim().contains("PENDING")) {
+				Log.d("FriendReqAdapter: ", "Pending statement");
 				convertView = mInflater.inflate(R.layout.company_request_row,
 						null);
-				Friendship frTemp = searchArrayList.get(position);
-
+				
 				// Approve
 				holder.buttonApprove = (Button) convertView
 						.findViewById(R.id.buttonAccept);
@@ -68,6 +86,8 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 					}
 				});
 
+				holder.buttonDecline = (Button) convertView
+						.findViewById(R.id.buttonDecline);
 				// Decline
 				holder.buttonDecline.setTag(frTemp);
 				holder.buttonDecline.setOnClickListener(new OnClickListener() {
@@ -76,41 +96,37 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 						clickDeclineListener(v);
 					}
 				});
-			} else {
-				convertView = mInflater.inflate(
-						R.layout.company_request_status_row, null);
-				holder.txtStatus = (TextView) convertView
-						.findViewById(R.id.status);
-				holder.txtStatus.setText(searchArrayList.get(position)
-						.getStatus().toString());
-			}
-
-			holder.txtName = (TextView) convertView.findViewById(R.id.username);
+				
+				holder.txtName = (TextView) convertView.findViewById(R.id.username);
+				holder.txtName.setText(frTemp.getParticipant().getUsername());
+				
+			} 
+	
 			convertView.setTag(holder);
+
 		} else {
 			holder = (ViewHolderStatus) convertView.getTag();
 		}
-
-		holder.txtName.setText(searchArrayList.get(position).getParticipant()
-				.getEmail());
-
 		return convertView;
 	}
 
 	private OnClickListener clickApproveListener(View v) {
 
+		
 		Friendship item = (Friendship) v.getTag();
-		Log.d("Approving: ", item.getParticipant().getEmail() + " from: "
-				+ item.getInitiator().getEmail() + " Status approved");
+		RESTSocialService socialService = new RESTSocialService();
+		//socialService.ApproveFriendship(id, auth, item.getId());
+		
+		Log.d("Approving: ", item.toString());
 		return null;
 	}
 
 	private OnClickListener clickDeclineListener(View v) {
 
 		Friendship item = (Friendship) v.getTag();
-		Log.d("Trying to approve: ", item.getParticipant().getEmail() + "");
-		Log.d("Denying: ", item.getParticipant().getEmail() + " from: "
-				+ item.getInitiator().getEmail() + " Status approved");
+		RESTSocialService socialService = new RESTSocialService();
+		//socialService.DeclineFriendship(id, auth, item.getId());
+		Log.d("Trying to Deny: ", item.toString());
 		return null;
 	}
 
