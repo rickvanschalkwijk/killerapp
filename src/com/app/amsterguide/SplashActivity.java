@@ -16,6 +16,7 @@
 
 package com.app.amsterguide;
 
+import com.app.killerapp.PreLoginActivity;
 import com.app.killerapp.R;
 
 import core.databasehandlers.DatabaseLoaderThread;
@@ -58,7 +59,7 @@ public class SplashActivity extends Activity {
 				} catch (InterruptedException e) {
 					
 				}finally{
-					Intent intent = new Intent(sPlashActivity, MainActivity.class);
+					Intent intent = new Intent(sPlashActivity, PreLoginActivity.class);
 					startActivity(intent);
 					finish();
 				}
