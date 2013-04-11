@@ -82,10 +82,10 @@ public class MapActivity extends Activity implements IRegisterReceiver {
         //4.8653,52.3325,4.9604,52.3839
         
         mapView = new BoundedMapView(this, resProxy, provider);
-        double north = 52.388841;
-        double east  =  4.964136;
-        double south = 52.322969;
-        double west  =  4.835695;
+        double north = 52.383754;
+        double east  =  4.954462;
+        double south = 52.337813;
+        double west  =  4.852521;
         BoundingBoxE6 bBox = new BoundingBoxE6(north, east, south, west);
  
         mapView.setScrollableAreaLimit(bBox);
