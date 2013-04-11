@@ -1,16 +1,11 @@
 package com.app.amsterguide.loaders;
 
-import java.util.Iterator;
 import java.util.List;
 
 import core.connection.RESTSocialService;
-import core.connection.killerbone.AuthenticationService;
-import core.connection.killerbone.AuthenticationService.AuthToken;
 import core.models.Friendship;
-import core.models.User;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
