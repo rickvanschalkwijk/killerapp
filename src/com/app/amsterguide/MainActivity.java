@@ -26,21 +26,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends Activity {
 
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
-	private static MainActivity selfReferance = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		if (startUp) {
-			selfReferance = this;
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putBoolean("loggedIn", false);
 			editor.putBoolean("loggedInGuest", false);
@@ -71,15 +71,6 @@ public class MainActivity extends Activity {
 	public void openEventList(View view) {
 		Intent intent = new Intent(this, EventList.class);
 		startActivity(intent);
-	}
-	
-	public static Context getContext()
-	{
-		if (selfReferance != null)
-		{
-			return selfReferance.getApplicationContext();
-		}
-		return null;
 	}
 
 	@Override

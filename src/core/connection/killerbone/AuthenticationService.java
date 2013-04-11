@@ -2,16 +2,12 @@ package core.connection.killerbone;
 
 import java.io.IOException;
 import java.io.StringReader;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-
 import android.util.Log;
-
-import com.app.amsterguide.MainActivity;
-
+import com.app.amsterguide.LoginActivity;
 import util.KillerboneUtils;
 import core.connection.DataException;
 import core.connection.https.HttpsConnector;
@@ -41,8 +37,8 @@ public class AuthenticationService
 		String body = KillerboneUtils.composeAuthTokenRequestXml(email, password);
 		
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url, body);
-		authenticateRequest.setHeader("Content-Type", "text/xml");
-		HttpsConnector httpsConnector = new HttpsConnector(MainActivity.getContext());
+		authenticateRequest.setHeader("Content-Type", "text/xml");		
+		HttpsConnector httpsConnector = new HttpsConnector(LoginActivity.getContext());
 		
 		try {
 			String response = httpsConnector.performHttpsRequest(authenticateRequest);

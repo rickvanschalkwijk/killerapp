@@ -54,6 +54,8 @@ public class HttpsClient extends DefaultHttpClient
 			return ret;
 		} catch (UnrecoverableKeyException ex) {
 			Log.d(DEBUG_TAG, ex.getMessage());
+		} catch (NullPointerException e) {
+			e.printStackTrace();			
 		} catch (KeyStoreException ex) {
 			Log.d(DEBUG_TAG, ex.getMessage());
 		} catch (KeyManagementException ex) {
@@ -63,7 +65,7 @@ public class HttpsClient extends DefaultHttpClient
 		} catch (IOException ex) {
 			Log.d(DEBUG_TAG, ex.getMessage());
 		} catch (Exception ex) {
-			Log.d(DEBUG_TAG, ex.getMessage());
+			Log.d(DEBUG_TAG, ex.toString());
 		}
 		return null;
 	}

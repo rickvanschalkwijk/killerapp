@@ -23,6 +23,7 @@ import android.widget.TextView;
 public class RegistrationActivity extends Activity {
 	
 	final Context context = this;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +103,7 @@ public class RegistrationActivity extends Activity {
     	String requestBody = utils.composeUserCreateXml(name, email, password);
     	HttpsRequest request = new HttpsRequest(requestType, requestUrl, requestBody);
     	request.setHeader("Content-Type", "text/xml");
-    	HttpsConnector httpsConnector = new HttpsConnector(MainActivity.getContext());
+    	HttpsConnector httpsConnector = new HttpsConnector(context.getApplicationContext());
     	try {
     		
 			httpsConnector.performHttpsRequest(request);

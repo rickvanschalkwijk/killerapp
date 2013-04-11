@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,12 +20,15 @@ import android.widget.TextView;
 public class LoginActivity extends Activity {
 
 	final Context context = this;
-
+	private static LoginActivity selfReferance = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		
+		if(selfReferance == null){
+			selfReferance = this;
+		}
 		TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 		registerScreen.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -51,7 +55,7 @@ public class LoginActivity extends Activity {
 					editor.putBoolean("loggedIn", true);
 					editor.commit();
 
-					Intent i = new Intent(getApplicationContext(),
+					Intent i = new Intent(context,
 							MainActivity.class);
 					startActivity(i);
 					finish();
@@ -103,6 +107,13 @@ public class LoginActivity extends Activity {
 		backIntent.addCategory(Intent.CATEGORY_HOME);
 		startActivity(backIntent);
 		finish();
+	}
+
+	public static Context getContext() {
+		if (selfReferance != null) {
+			return selfReferance.getApplicationContext();
+		}
+		return null;
 	}
 
 	private boolean authenticateUser(String email, String password) {
