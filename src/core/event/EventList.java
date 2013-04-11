@@ -1,4 +1,4 @@
-package search;
+package core.event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
-public class SearchMainActivity extends ListActivity {
+public class EventList extends ListActivity {
 	
 	public static List<Event> events = new ArrayList<Event>();
-	private static final String LOGTAG = "IP13HVA";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search_main);
-	}
-	
-	public void getEvents(View view) {
+		setContentView(R.layout.activity_event_list);
+		
 		EventDataSource eventDataSource = new EventDataSource(this);
 		eventDataSource.open();
 		events.clear();
@@ -36,6 +33,7 @@ public class SearchMainActivity extends ListActivity {
 		
 		eventDataSource.close();
 	}
+	
 
 	@Override
 	protected void onDestroy() {

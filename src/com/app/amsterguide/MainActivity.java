@@ -18,8 +18,8 @@ package com.app.amsterguide;
 
 import com.app.killerapp.R;
 
-import search.SearchMainActivity;
 import services.ServicesContactActivity;
+import core.event.EventList;
 import core.map.MapActivity;
 import android.app.Activity;
 import android.content.Context;
@@ -68,8 +68,8 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	public void openSearch(View view) {
-		Intent intent = new Intent(this, SearchMainActivity.class);
+	public void openEventList(View view) {
+		Intent intent = new Intent(this, EventList.class);
 		startActivity(intent);
 	}
 	
