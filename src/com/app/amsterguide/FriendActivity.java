@@ -8,11 +8,14 @@ import com.app.amsterguide.adapters.FriendRowAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
 
 import core.connection.RESTSocialService;
+import core.map.MapActivity;
 import core.models.Friendship;
 import core.models.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,8 +29,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.AndroidCharacter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,70 +77,12 @@ public class FriendActivity extends FragmentActivity implements
 		ListView listView = (ListView) findViewById(R.id.friendlist);
 		listView.setAdapter(adapter);
 		getSupportLoaderManager().initLoader(0, null, this);
-
-		// get the ActionBar from our layout
-		/*
-		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		// set its title
-		actionBar.setTitle("");
-		// set what the home action does
-		actionBar.setHomeAction(new IntentAction(this, FriendActivity
-				.createIntent(this), R.drawable.ic_custom_launcher));
-		// add the refresh action
-<<<<<<< Updated upstream:src/com/app/amsterguide/FriendActivity.java
-		actionBar.addAction(new SaveAction());
-		*/
-
-		//actionBar.addAction(new ViewRequestsAction());
-
-		// add the save action
-
-		//actionBar.addAction(new SaveAction());
-
-		// add a listener to the title
-		/*
-		 * actionBar.setOnTitleClickListener(new onclickListener() { public void
-		 * onclick(View v) { makeToast("Title clicked..."); }
-		 */
 	}
 
 	private void startFriendShipRequestsActivity() {
 		Intent intent = new Intent(this, FriendShipRequestsActivity.class);
 		startActivity(intent);
 	}
-
-	// the save action
-	/*
-	private class SaveAction implements Action {
-
-		@Override
-		public int getDrawable() {
-			return R.drawable.actionbar_btn_normal;
-		}
-
-		@Override
-		public void performAction(View view) {
-			dialig.show();
-			// makeToast("Saving...");
-		}
-
-	}
-
-	// the save action
-	private class ViewRequestsAction implements Action {
-
-		@Override
-		public int getDrawable() {
-			return R.drawable.actionbar_back_indicator;
-		}
-
-		@Override
-		public void performAction(View view) {
-			startFriendShipRequestsActivity();
-			// makeToast("Saving...");
-		}
-
-	}*/
 
 	public static Context getContext() {
 		if (selfReferance != null) {
@@ -178,6 +125,37 @@ public class FriendActivity extends FragmentActivity implements
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.friend_ship_requests, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addfriends:
+			dialig.show();
+			break;
+		case R.id.friendrequests:			
+			Intent intent = new Intent(this, FriendShipRequestsActivity.class);
+			startActivity(intent);
+			break;
+			default:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {
 		final private EditText editText;
 		final private AlertDialog alertDialog;
@@ -226,7 +204,12 @@ public class FriendActivity extends FragmentActivity implements
 							.longValue();
 					String authToken = settings.getString("token", "letmein");
 					RESTSocialService socialService = new RESTSocialService();
-					socialService.AddFriendship(userId, authToken, name);
+					canceled = socialService.AddFriendship(userId, authToken, name);
+					
+					if (!canceled) {
+						editText.setError("User does not exist or is already invited");
+						show();
+					}
 					// Send request to server
 				}
 			}
