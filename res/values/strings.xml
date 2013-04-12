@@ -20,6 +20,7 @@
     <string name="settings_button">Settings</string>
     <string name="events_button">Events</string>
     <string name="service_button">Services</string>
+    <string name="logout_button">Sign out</string>
 
     <!-- End Main Activity -->
 
