@@ -38,23 +38,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		/*
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		if (startUp) {
-			SharedPreferences.Editor editor = settings.edit();
-			if(settings.getBoolean("stayLoggedIn", false))
-			{
-				editor.putBoolean("loggedIn", false);
-			}
-			editor.putBoolean("loggedInGuest", false);
-			editor.commit();
-			startUp = false;
-		}
-		if (!settings.getBoolean("loggedIn", false) && !settings.getBoolean("loggedInGuest", false)) {
-			Intent intent = new Intent(this, LoginActivity.class);
-			startActivity(intent);
-		}
-		*/
 	}
 
 	public void openMap(View view) {
