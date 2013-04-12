@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		/*
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		if (startUp) {
 			SharedPreferences.Editor editor = settings.edit();
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
 		}
+		*/
 	}
 
 	public void openMap(View view) {

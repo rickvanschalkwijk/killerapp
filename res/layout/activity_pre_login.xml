@@ -29,6 +29,56 @@
         android:textColorHint="@color/actionbar_separator"
         android:textSize="25dp" />
 
+    <LinearLayout
+        android:id="@+id/loginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView2"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layout_marginTop="50dp"
+        android:padding="10dip" >
+
+        <!-- Email Label -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textColor="#372c24" />
+
+        <EditText
+            android:id="@+id/insertedUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="5dip"
+            android:singleLine="true" />
+        <!-- Password Label -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:textColor="#372c24" />
+
+        <EditText
+            android:id="@+id/insertedPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:password="true"
+            android:singleLine="true" />
+        <!-- Login button -->
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/btn_login" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_register"
         android:layout_width="wrap_content"
@@ -36,14 +86,27 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="37dp"
         android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/btn_login_as_guest"
         android:gravity="center_vertical|center_horizontal|right"
         android:text="Register"
         android:textColor="@color/actionbar_separator"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_login_as_guest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="37dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/btn_show_login"
+        android:gravity="center_vertical|center_horizontal|right"
+        android:text="Login as guest"
+        android:textColor="@color/actionbar_separator"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_show_login"
         style="@style/Theme.Default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

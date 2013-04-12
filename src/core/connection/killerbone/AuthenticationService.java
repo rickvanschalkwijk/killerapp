@@ -8,6 +8,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import android.util.Log;
 import com.app.amsterguide.LoginActivity;
+import com.app.amsterguide.PreLoginActivity;
+
 import util.KillerboneUtils;
 import core.connection.DataException;
 import core.connection.https.HttpsConnector;
@@ -38,7 +40,7 @@ public class AuthenticationService
 		
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url, body);
 		authenticateRequest.setHeader("Content-Type", "text/xml");		
-		HttpsConnector httpsConnector = new HttpsConnector(LoginActivity.getContext());
+		HttpsConnector httpsConnector = new HttpsConnector(PreLoginActivity.getContext());
 		
 		try {
 			String response = httpsConnector.performHttpsRequest(authenticateRequest);

@@ -28,14 +28,6 @@ public class RegistrationActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
-        loginScreen.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                finish();
-            }
-        });
-        
-        
         
         Button register = (Button) findViewById(R.id.btnRegister);
 		register.setOnClickListener(new View.OnClickListener() {
