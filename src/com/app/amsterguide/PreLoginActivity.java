@@ -30,50 +30,43 @@ public class PreLoginActivity extends Activity {
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
 	private static PreLoginActivity selfReferance = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		if(selfReferance == null){
+		if (selfReferance == null) {
 			selfReferance = this;
 		}
-		
-		
-		if (startUp) {
-			SharedPreferences.Editor editor = settings.edit();
-			if(settings.getBoolean("stayLoggedIn", true))
-			{
-				Intent intent = new Intent(this, MainActivity.class);
-				startActivity(intent);
-			}
-			editor.commit();
+
+		if (settings.getBoolean("stayLoggedIn", false)) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
 			finish();
-			startUp = false;
 		}
-		
+
 		setContentView(R.layout.activity_pre_login);
-		
+
 		LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-		loginLayout.setVisibility( LinearLayout.GONE );
-		
+		loginLayout.setVisibility(LinearLayout.GONE);
+
 		// Show the Up button in the action bar.
 		setupActionBar();
 		hideActionBar();
-		
+
 		Button showLogin = (Button) findViewById(R.id.btn_show_login);
 		Button logginAsGuest = (Button) findViewById(R.id.btn_login_as_guest);
 		Button register = (Button) findViewById(R.id.btn_register);
-		
+
 		showLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-				loginLayout.setVisibility( LinearLayout.VISIBLE );
+				loginLayout.setVisibility(LinearLayout.VISIBLE);
 			}
 		});
-		
-		logginAsGuest.setOnClickListener( new View.OnClickListener() {
-			
+
+		logginAsGuest.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				SharedPreferences settings = getSharedPreferences("LocalPrefs",
@@ -83,18 +76,19 @@ public class PreLoginActivity extends Activity {
 				editor.commit();
 				Intent intent = new Intent(getApplicationContext(),
 						MainActivity.class);
-				startActivity( intent );
-				finish();				
+				startActivity(intent);
+				finish();
 			}
 		});
-		
+
 		register.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent registerIntent = new Intent(context, RegistrationActivity.class);
+				Intent registerIntent = new Intent(context,
+						RegistrationActivity.class);
 				startActivity(registerIntent);
 			}
 		});
-		
+
 		Button login = (Button) findViewById(R.id.btnLogin);
 		login.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -109,11 +103,10 @@ public class PreLoginActivity extends Activity {
 				if (isAuthenticated) {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
-		        	 editor.putBoolean("stayLoggedIn", true);
+					editor.putBoolean("stayLoggedIn", true);
 					editor.commit();
 
-					Intent i = new Intent(context,
-							MainActivity.class);
+					Intent i = new Intent(context, MainActivity.class);
 					startActivity(i);
 					finish();
 				} else {
@@ -137,7 +130,7 @@ public class PreLoginActivity extends Activity {
 			}
 		});
 	}
-	
+
 	private boolean authenticateUser(String email, String password) {
 		AuthenticationService authService = new AuthenticationService();
 		AuthToken authToken = authService.authenticateWithCredentials(email,
@@ -157,14 +150,14 @@ public class PreLoginActivity extends Activity {
 		}
 		return false;
 	}
-	
+
 	public static Context getContext() {
 		if (selfReferance != null) {
 			return selfReferance.getApplicationContext();
 		}
 		return null;
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void hideActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -172,7 +165,7 @@ public class PreLoginActivity extends Activity {
 			actionBar.hide();
 		}
 	}
-	
+
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
 	 */

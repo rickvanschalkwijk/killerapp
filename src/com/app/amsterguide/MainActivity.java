@@ -59,6 +59,16 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, EventList.class);
 		startActivity(intent);
 	}
+	
+	public void signOut(View view){
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putBoolean("stayLoggedIn", false);
+		editor.commit();
+		
+		Intent intent = new Intent(this, PreLoginActivity.class);
+		startActivity(intent);
+	}
 
 	@Override
 	protected void onStart() {
