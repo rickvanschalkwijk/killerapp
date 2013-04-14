@@ -40,31 +40,41 @@ public class RegistrationActivity extends Activity {
 		        String userPassword0 = pass0.getText().toString();
 		        EditText pass1 = (EditText) findViewById(R.id.reg_password2);
 		        String userPassword1 = pass1.getText().toString();
-				if(userPassword0.equals(userPassword1))
+		        if(userName.equals(""))
+		        	SetMessage("Error", "Please fill in a valid username.");
+		        else if(userEmail.equals(""))
+		        	SetMessage("Error", "Please fill in a valid email.");
+		        else if(userPassword0.equals(""))
+		        	SetMessage("Error", "Please fill in a valid password.");
+		        else if(!userPassword0.equals(userPassword1))
+				{
+		        	SetMessage("Error", "Inserted passwords don't match.");
+				}
+				else if(userPassword0.equals(userPassword1))
 				{
 					Register(userName, userEmail, userPassword0);
-				}
-				else
-				{
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-					alertDialogBuilder.setTitle("Error");
-					alertDialogBuilder
-							.setMessage("Inserted passwords don't match.")
-							.setCancelable(false)
-							.setPositiveButton("OK",
-									new DialogInterface.OnClickListener() {
-										public void onClick(
-												DialogInterface dialog, int id) {
-											dialog.cancel();
-										}
-									});
-
-					AlertDialog alertDialog = alertDialogBuilder.create();
-					alertDialog.show();
 				}
 			}
 		});
 
+    }
+    private void SetMessage(String titel, String message)
+    {
+    	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle(titel);
+		alertDialogBuilder
+				.setMessage(message)
+				.setCancelable(false)
+				.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
     }
     
     private void Register(String name, String email, String password)
@@ -99,22 +109,7 @@ public class RegistrationActivity extends Activity {
 		} 
     	catch (Exception e) {
 			e.printStackTrace();
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle("Failed");
-			alertDialogBuilder
-					.setMessage("Failed to create account, are you currently connected to the internet?")
-					.setCancelable(false)
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog, int id) {
-									dialog.cancel();
-									
-								}
-							});
-
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
+			SetMessage("Failed", "Failed to create account, are you currently connected to the internet?");
 		}
     }
 }
