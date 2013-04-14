@@ -42,27 +42,7 @@ public class RegistrationActivity extends Activity {
 		        String userPassword1 = pass1.getText().toString();
 				if(userPassword0.equals(userPassword1))
 				{
-					if(Register(userName, userEmail, userPassword0));
-					{
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-						alertDialogBuilder.setTitle("Succes");
-						alertDialogBuilder
-								.setMessage("Account created succesfully!")
-								.setCancelable(false)
-								.setPositiveButton("OK",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog, int id) {
-												dialog.cancel();
-												Intent i = new Intent(getApplicationContext(),
-														LoginActivity.class);
-												startActivity(i);
-											}
-										});
-
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.show();
-					}
+					Register(userName, userEmail, userPassword0);
 				}
 				else
 				{
@@ -87,7 +67,7 @@ public class RegistrationActivity extends Activity {
 
     }
     
-    private Boolean Register(String name, String email, String password)
+    private void Register(String name, String email, String password)
     {
     	KillerboneUtils utils = new KillerboneUtils();
     	HttpsRequestType requestType = HttpsRequestType.POST;
@@ -96,13 +76,45 @@ public class RegistrationActivity extends Activity {
     	HttpsRequest request = new HttpsRequest(requestType, requestUrl, requestBody);
     	request.setHeader("Content-Type", "text/xml");
     	HttpsConnector httpsConnector = new HttpsConnector(context.getApplicationContext());
-    	try {
-    		
+    	try {   		
 			httpsConnector.performHttpsRequest(request);
-			return true;
-		} catch (DataException e) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			alertDialogBuilder.setTitle("Succes");
+			alertDialogBuilder
+					.setMessage("Account created succesfully!")
+					.setCancelable(false)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+									Intent i = new Intent(getApplicationContext(),
+											LoginActivity.class);
+									startActivity(i);
+								}
+							});
+
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		} 
+    	catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			alertDialogBuilder.setTitle("Failed");
+			alertDialogBuilder
+					.setMessage("Failed to create account, are you currently connected to the internet?")
+					.setCancelable(false)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+									
+								}
+							});
+
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 		}
     }
 }
