@@ -22,7 +22,9 @@ import services.ServicesContactActivity;
 import core.event.EventList;
 import core.map.MapActivity;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class MainActivity extends Activity {
 
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
+	final Context context = this;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,16 @@ public class MainActivity extends Activity {
 	}
 
 	public void openFriend(View view) {
+		SharedPreferences settings = getSharedPreferences("LocalPrefs",
+				0);
+		
+		if(!settings.getBoolean("loggedInGuest", false))
+		{
 		Intent intent = new Intent(this, FriendActivity.class);
 		startActivity(intent);
+		}
+		else 
+			SetMessage("Not LoggedIn", "Please login to use this feature.");
 	}
 
 	public void gotoServices(View view) {
@@ -98,4 +109,23 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+	
+	private void SetMessage(String titel, String message)
+    {
+    	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle(titel);
+		alertDialogBuilder
+				.setMessage(message)
+				.setCancelable(false)
+				.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+    }
 }
