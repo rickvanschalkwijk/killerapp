@@ -72,6 +72,20 @@
             android:inputType="textPassword"
             android:singleLine="true" />
         <!-- Login button -->
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textColor="#372c24" />
+        
+        <Spinner 
+            android:id="@+id/categorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/category_prompt"
+            android:entries="@array/category_array"
+            />
 
         <Button
             android:id="@+id/btnLogin"

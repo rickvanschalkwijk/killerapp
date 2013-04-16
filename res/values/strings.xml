@@ -21,6 +21,20 @@
     <string name="events_button">Events</string>
     <string name="service_button">Services</string>
     <string name="logout_button">Sign out</string>
+    <string name="category">Category</string>
+    <string name="category_prompt">Choose a category</string>
+    <string-array name="category_array">
+        <item>Family</item>
+        <item>Seniors</item>
+        <item>Youth</item>
+        <item>Low budget</item>
+        <item>Romantic</item>
+        <item>Cultural</item>
+        <item>Party</item>
+        <item>Active</item>
+        <item>Backpacker</item>
+        <item>Non-specific</item>
+    </string-array>
 
     <!-- End Main Activity -->
 
