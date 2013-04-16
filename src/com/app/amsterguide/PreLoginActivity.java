@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class PreLoginActivity extends Activity {
 	private Context context = this;
@@ -35,7 +37,7 @@ public class PreLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		if (selfReferance == null) {
+		if(selfReferance == null){
 			selfReferance = this;
 		}
 
@@ -104,6 +106,9 @@ public class PreLoginActivity extends Activity {
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putBoolean("loggedIn", true);
 					editor.putBoolean("stayLoggedIn", true);
+					Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+					
+					editor.putString("category", String.valueOf(categorySpinner.getSelectedItem()) );
 					editor.commit();
 
 					Intent i = new Intent(context, MainActivity.class);
