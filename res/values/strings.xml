@@ -47,7 +47,7 @@
 
 
     <!-- Begin Map Activity -->
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Map Settings</string>
     <string name="title_activity_map">Map</string>
     <string name="action_filter">Filter</string>
     <string name="action_myposition">Go to my position</string>

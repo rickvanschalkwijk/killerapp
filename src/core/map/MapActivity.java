@@ -61,6 +61,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private BoundedMapView mapView;
 	private int defaultZoomLevel = 13;
 	private static MapActivity selfReferance = null;
+	public ArrayList<String> selectedCategoryIds;
 	public String[] categories = { "music", "art", "nightlife" };
 
 	@Override
@@ -325,7 +326,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			}
 			return true;
 		case R.id.action_map_settings:
-			
+			Intent mapSettingsIntent = new Intent(this, core.map.MapSettingsActivity.class);
+			startActivity(mapSettingsIntent);
 			return true;
 		case R.id.action_help:
 			Intent helpIntent = new Intent(this, util.HelpActivity.class);
@@ -335,9 +337,24 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	public ArrayList<Boolean> getSelectedFilter(ArrayList<Integer> selectedItems){
+		ArrayList<Boolean> isSelected = new ArrayList<Boolean>();
+		
+		for(Integer checkItem : selectedItems){
+			String selected = categories[checkItem];
+			if(selected == null){
+				isSelected.add(false);
+			}else{
+				isSelected.add(true);
+			}
+		}
+		return isSelected;
+	}
 
 	public Dialog filterDialog() {
 		mSelectedItems = new ArrayList<Integer>();
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)		
 				.setMultiChoiceItems(categories, null,
