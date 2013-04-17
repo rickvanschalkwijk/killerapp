@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import org.joda.time.DateTime;
 import org.osmdroid.util.GeoPoint;
 
+import util.KillerboneUtils;
+
 @SuppressWarnings("serial")
 public class Event implements Serializable{
 	public static final String EXTRA = "com.models.EVENT_EXTRA";
@@ -101,7 +103,7 @@ public class Event implements Serializable{
 	
 	@Override
 	public String toString() {
-		return title;
+		return title + "\n" + "Start: " + startDate.toString(KillerboneUtils.KILLERBONE_DATE_FORMAT) + "\n" + "End: " + endDate.toString(KillerboneUtils.KILLERBONE_DATE_FORMAT);
 	}
 
 }

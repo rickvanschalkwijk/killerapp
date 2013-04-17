@@ -21,6 +21,7 @@ import com.app.killerapp.R;
 import services.ServicesContactActivity;
 import core.event.EventList;
 import core.map.MapActivity;
+import core.place.PlaceList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -68,6 +69,11 @@ public class MainActivity extends Activity {
 	
 	public void openEventList(View view) {
 		Intent intent = new Intent(this, EventList.class);
+		startActivity(intent);
+	}
+	
+	public void openPlaceList(View view) {
+		Intent intent = new Intent(this, PlaceList.class);
 		startActivity(intent);
 	}
 	

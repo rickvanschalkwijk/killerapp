@@ -50,6 +50,12 @@
             android:text="@string/events_button"
             android:onClick="openEventList" />
         <Button
+            android:id="@+id/btn_place_list_open"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/places_button"
+            android:onClick="openPlaceList" />
+        <Button
             android:id="@+id/btn_settings_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

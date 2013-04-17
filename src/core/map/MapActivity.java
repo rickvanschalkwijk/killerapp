@@ -1,6 +1,7 @@
 package core.map;
 
 import java.io.File;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,8 +102,16 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
 
 		// this location is central station
-		mapController.animateTo(centralStation);
-
+		if (getIntent().getSerializableExtra("event") != null) {
+			Event event = (Event) getIntent().getSerializableExtra("event");
+			mapController.animateTo(event.getLocation());
+			this.createEventOverlay(event);
+		} else if(getIntent().getSerializableExtra("place") != null ) {
+			Place place = (Place) getIntent().getSerializableExtra("place");
+			mapController.animateTo(place.getLocation());
+		} else {
+			mapController.animateTo(centralStation);
+		}
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 
@@ -356,7 +365,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		mSelectedItems = new ArrayList<Integer>();
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(R.string.categories_title)		
+		builder.setTitle(R.string.categories_title)
 				.setMultiChoiceItems(categories, null,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							@Override
@@ -510,4 +519,5 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 							}).create();
 		}
 	}
+
 }

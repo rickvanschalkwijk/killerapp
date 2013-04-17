@@ -1,14 +1,22 @@
 package core.models;
 
+import java.io.Serializable;
+
 import org.osmdroid.util.GeoPoint;
 
-public class Place {
+import util.KillerboneUtils;
 
+@SuppressWarnings("serial")
+public class Place implements Serializable {
+
+	/**
+	 * 
+	 */
 	private String name;
 	private String description;
 	private GeoPoint location;
-	
-	public Place(){
+
+	public Place() {
 	}
 
 	public Place(String name, String description, GeoPoint location) {
@@ -42,5 +50,9 @@ public class Place {
 		this.location = location;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }
