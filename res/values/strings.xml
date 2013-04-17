@@ -19,6 +19,7 @@
     <string name="companion_button">Travel companions</string>
     <string name="settings_button">Settings</string>
     <string name="events_button">Events</string>
+    <string name="places_button">Places</string>
     <string name="service_button">Services</string>
     <string name="logout_button">Sign out</string>
     <string name="category">Category</string>
@@ -119,5 +120,9 @@
     <string name="show_event">Show Event</string>
     <string name="addfriends">Add Friends</string>
     <string name="friendrequests">Friend Requests</string>
+    
+    <!-- Place List -->
+    <string name="title_place_list">Places</string>
+    <string name="show_place">Show Place</string>
 
 </resources>

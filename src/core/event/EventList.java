@@ -25,8 +25,6 @@ import core.models.Event;
 
 public class EventList extends Activity {
 
-	int position;
-
 	public static List<Event> events = new ArrayList<Event>();
 
 	@Override
@@ -47,6 +45,7 @@ public class EventList extends Activity {
 		listView.setAdapter(adapter);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
+			
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, final int position,
 					long id) {

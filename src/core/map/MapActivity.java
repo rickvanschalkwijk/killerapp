@@ -105,6 +105,9 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			Event event = (Event) getIntent().getSerializableExtra("event");
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
+		} else if(getIntent().getSerializableExtra("place") != null ) {
+			Place place = (Place) getIntent().getSerializableExtra("place");
+			mapController.animateTo(place.getLocation());
 		} else {
 			mapController.animateTo(centralStation);
 		}

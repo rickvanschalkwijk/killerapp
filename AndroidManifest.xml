@@ -108,6 +108,14 @@
                 android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
+            android:name="core.place.PlaceList"
+            android:label="@string/title_place_list" 
+            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.killerapp.MainActivity" />
+        </activity>
+        <activity
             android:name="search.SearchMainActivity"
             android:label="@string/title_activity_search" >
         </activity>
