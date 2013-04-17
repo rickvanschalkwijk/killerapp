@@ -55,7 +55,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private MapController mapController;
 	private String locationProvider = LocationManager.GPS_PROVIDER;
 	private GeoUpdateHandler locationListener;
-	public List<Integer> mSelectedItems;
+	public ArrayList<Integer> mSelectedItems = new ArrayList<Integer>();;
 	final Context context = this;
 	private Location currentLocation;
 	private DefaultResourceProxyImpl resProxy;
@@ -347,26 +347,30 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		}
 	}
 	
-	public ArrayList<Boolean> getSelectedFilter(ArrayList<Integer> selectedItems){
-		ArrayList<Boolean> isSelected = new ArrayList<Boolean>();
-		
+	 public boolean[] getSelectedFilter(ArrayList<Integer> selectedItems){
+		int size = categories.length;
+		boolean[] isSelected = new boolean[size];
+		int i = 0;
 		for(Integer checkItem : selectedItems){
-			String selected = categories[checkItem];
-			if(selected == null){
-				isSelected.add(false);
+			//String selected = categories[checkItem];
+			if(checkItem == null){
+				isSelected[i] = false;
 			}else{
-				isSelected.add(true);
+				isSelected[i]= true;
 			}
+			i++;
 		}
 		return isSelected;
-	}
+	} 
 
 	public Dialog filterDialog() {
-		mSelectedItems = new ArrayList<Integer>();
-		
+		boolean[] booleans = getSelectedFilter(mSelectedItems);
+		for(Boolean bool : booleans){
+			Log.d("bool", bool + "");
+		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)
-				.setMultiChoiceItems(categories, null,
+				.setMultiChoiceItems(categories, booleans,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
