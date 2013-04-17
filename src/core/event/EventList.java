@@ -5,11 +5,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -17,9 +20,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.app.killerapp.R;
 
 import core.databasehandlers.EventDataSource;
+import core.map.MapActivity;
 import core.models.Event;
 
 public class EventList extends Activity {
+
+	int position;
 
 	public static List<Event> events = new ArrayList<Event>();
 
@@ -42,9 +48,10 @@ public class EventList extends Activity {
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> a, View v, int position,
+			public void onItemClick(AdapterView<?> a, View v, final int position,
 					long id) {
-				Dialog dialog = new Dialog(EventList.this, R.style.AppTheme);
+
+				final Dialog dialog = new Dialog(EventList.this, R.style.AppTheme);
 				dialog.setContentView(R.layout.event_dialog);
 				dialog.setTitle("Detailed event info");
 				dialog.setCancelable(true);
@@ -54,8 +61,20 @@ public class EventList extends Activity {
 
 				TextView description = (TextView) dialog
 						.findViewById(R.id.textView2);
-				description.setText(Html.fromHtml( events.get(position).getDescription()));
-
+				description.setText(Html.fromHtml(events.get(position)
+						.getDescription()));
+				
+				Button dialogButton = (Button) dialog.findViewById(R.id.btnShowEvent);
+				dialogButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(EventList.this, MapActivity.class);
+						intent.putExtra("event", events.get(position));
+						startActivity(intent);
+						
+					}
+				});
 				dialog.show();
 			}
 		});
