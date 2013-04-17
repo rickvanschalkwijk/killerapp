@@ -19,7 +19,7 @@
     <string name="companion_button">Travel companions</string>
     <string name="settings_button">Settings</string>
     <string name="events_button">Events</string>
-    <string name="places_button">Places</string>
+    <string name="places_button">Location</string>
     <string name="service_button">Services</string>
     <string name="logout_button">Sign out</string>
     <string name="category">Category</string>
@@ -122,7 +122,7 @@
     <string name="friendrequests">Friend Requests</string>
     
     <!-- Place List -->
-    <string name="title_place_list">Places</string>
-    <string name="show_place">Show Place</string>
+    <string name="title_place_list">Locations</string>
+    <string name="show_place">Show Location</string>
 
 </resources>
