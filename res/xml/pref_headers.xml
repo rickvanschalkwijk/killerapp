@@ -37,4 +37,16 @@
         android:fragment="com.app.killerapp.MapSettingsActivity$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.app.killerapp.MapSettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general" />
+    <header
+        android:fragment="com.app.killerapp.MapSettingsActivity$NotificationPreferenceFragment"
+        android:title="@string/pref_header_notifications" />
+    <header
+        android:fragment="com.app.killerapp.MapSettingsActivity$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_data_sync" />
+
 </preference-headers>

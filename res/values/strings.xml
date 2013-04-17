@@ -65,7 +65,6 @@
 
     <string name="ok">Filter</string>
     <string name="cancel">Cancel</string>
-
     <!-- End Map Activity -->
     <!-- Start Login -->
     <string name="username">Email</string>

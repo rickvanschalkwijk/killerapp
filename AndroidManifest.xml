@@ -109,7 +109,7 @@
         </activity>
         <activity
             android:name="core.place.PlaceList"
-            android:label="@string/title_place_list" 
+            android:label="@string/title_place_list"
             android:parentActivityName="com.app.amsterguide.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -126,6 +126,10 @@
         <activity
             android:name="com.app.killerapp.FriendShipRequestsActivity"
             android:label="@string/title_activity_friend_ship_requests" >
+        </activity>
+        <activity
+            android:name="core.map.MapSettingsActivity"
+            android:label="@string/title_activity_map_settings" >
         </activity>
     </application>
 
