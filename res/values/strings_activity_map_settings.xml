@@ -7,13 +7,13 @@
 	<string name="events_settings_title">Events:</string>
 	
 	<string name="companions_id"></string>
-	<string name="companions_settings_title">Events:</string>
+	<string name="companions_settings_title">Companions:</string>
 	
-		<string name="locations_id"></string>
-	<string name="locations_settings_title">Events:</string>
+	<string name="locations_id"></string>
+	<string name="locations_settings_title">Locations:</string>
 	
-		<string name="guides_id"></string>
-	<string name="guides_settings_title">Events:</string>
+	<string name="guides_id"></string>
+	<string name="guides_settings_title">Guides:</string>
 
     
 </resources>
