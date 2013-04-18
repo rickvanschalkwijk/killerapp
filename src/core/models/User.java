@@ -1,10 +1,19 @@
 package core.models;
 
-public class User {
+import java.io.Serializable;
+
+
+import android.os.Parcel;
+import android.os.Parcelable;
+@SuppressWarnings("serial")
+public class User implements Serializable{
+	public static final String EXTRA = "com.models.USER_EXTRA";
 	private long id;
 	private String email;
 	private String username;
 	private String password;
+	
+	
 	
 	public User(long id, String email, String username, String password) {
 		this.id = id;
@@ -28,6 +37,11 @@ public class User {
 		this.id = id;
 		this.username = username;
 	}
+	
+	
+	
+	
+	
 
 	public long getId() {
 		return id;
@@ -60,4 +74,39 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	/*@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int arg1) {
+		dest.writeLong(id);
+		dest.writeString(email);
+		dest.writeString(username);
+		dest.writeString(password);
+	}
+	
+	public static final Parcelable.Creator<User> CREATOR
+    = new Parcelable.Creator<User>() {
+	public User createFromParcel(Parcel in) {
+	    return new User(in);
+	}
+	
+	public User[] newArray(int size) {
+	    return new User[size];
+	}
+	};
+	
+	private User(final Parcel in) {
+		id = in.readLong();
+		email = in.readString();
+		username = in.readString();
+		password = in.readString();
+	}
+	
+	*/
+
 }

@@ -50,16 +50,16 @@ public class MainActivity extends Activity {
 	}
 
 	public void openFriend(View view) {
-		SharedPreferences settings = getSharedPreferences("LocalPrefs",
-				0);
+		//SharedPreferences settings = getSharedPreferences("LocalPrefs",
+		//		0);
 		
-		if(!settings.getBoolean("loggedInGuest", false))
-		{
+		//if(!settings.getBoolean("loggedInGuest", false))
+		//{
 		Intent intent = new Intent(this, FriendActivity.class);
 		startActivity(intent);
-		}
-		else 
-			SetMessage("Not LoggedIn", "Please login to use this feature.");
+		//}
+		//else 
+			//SetMessage("Not LoggedIn", "Please login to use this feature.");
 	}
 
 	public void gotoServices(View view) {

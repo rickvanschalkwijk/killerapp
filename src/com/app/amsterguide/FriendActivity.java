@@ -3,12 +3,12 @@ package com.app.amsterguide;
 import java.util.List;
 import java.util.regex.Pattern;
 
-
 import com.app.amsterguide.adapters.FriendRowAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
 
 import core.connection.RESTSocialService;
 import core.map.MapActivity;
+import core.event.EventList;
 import core.models.Friendship;
 import core.models.User;
 import android.content.Context;
@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -33,12 +34,14 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.text.AndroidCharacter;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.amsterguide.adapters.FriendRowAdapter;
@@ -53,6 +56,7 @@ public class FriendActivity extends FragmentActivity implements
 
 	private FriendRowAdapter adapter;
 	private static FriendActivity selfReferance = null;
+	private List<Friendship> friendships;
 
 	private FragmentActivity GetThis() {
 		return this;
@@ -63,19 +67,33 @@ public class FriendActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activityfriend);
 		selfReferance = this;
 		dialig = new AddCompanionDialog(this);
-		
+
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		long userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
-		
+
 		adapter = new FriendRowAdapter(this, userId);
 
 		ListView listView = (ListView) findViewById(R.id.friendlist);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> a, View v, int position,
+					long id) {
+				Log.d("eerste friendshipid",
+						String.valueOf(friendships.get(position).getId()));
+
+				Intent intent = new Intent(FriendActivity.this,
+						FriendDetailActivity.class);
+				intent.putExtra("friendship", friendships.get(position));
+				startActivity(intent);
+			}
+		});
+
 		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
@@ -99,11 +117,14 @@ public class FriendActivity extends FragmentActivity implements
 		String authToken = settings.getString("token", "letmein");
 		Log.d("realauthtoken", authToken);
 		Log.d("realID", String.valueOf(userId));
-		return new FriendLoader(getApplicationContext(), userId, authToken, "APPROVED");
+		return new FriendLoader(getApplicationContext(), userId, authToken,
+				"APPROVED");
 	}
 
 	@Override
-	public void onLoadFinished(Loader<List<Friendship>> loader, List<Friendship> result) {
+	public void onLoadFinished(Loader<List<Friendship>> loader,
+			List<Friendship> result) {
+		friendships = result;
 		adapter.setList(result);
 	}
 
@@ -138,11 +159,11 @@ public class FriendActivity extends FragmentActivity implements
 		case R.id.addfriends:
 			dialig.show();
 			break;
-		case R.id.friendrequests:			
+		case R.id.friendrequests:
 			Intent intent = new Intent(this, FriendShipRequestsActivity.class);
 			startActivity(intent);
 			break;
-			default:
+		default:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
 			// to navigate up one level in the application structure. For
@@ -155,7 +176,7 @@ public class FriendActivity extends FragmentActivity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {
 		final private EditText editText;
 		final private AlertDialog alertDialog;
@@ -199,13 +220,15 @@ public class FriendActivity extends FragmentActivity implements
 				} else {
 					canceled = true;
 					Log.d("Send Mail", "Sending add request");
-					SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-					long userId = Long.valueOf(settings.getString("userID", "0"))
-							.longValue();
+					SharedPreferences settings = getSharedPreferences(
+							"LocalPrefs", 0);
+					long userId = Long.valueOf(
+							settings.getString("userID", "0")).longValue();
 					String authToken = settings.getString("token", "letmein");
 					RESTSocialService socialService = new RESTSocialService();
-					canceled = socialService.AddFriendship(userId, authToken, name);
-					
+					canceled = socialService.AddFriendship(userId, authToken,
+							name);
+
 					if (!canceled) {
 						editText.setError("User does not exist or is already invited");
 						show();

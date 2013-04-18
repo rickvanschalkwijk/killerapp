@@ -192,4 +192,32 @@ public class RESTSocialService {
 
 		
 	}
+	
+	public void DeleteFriendship(long userId, String authToken, long friendshipId){
+		String url = KillerboneUtils.deleteFriendshipEndRequestUrl(friendshipId, userId);
+
+		HttpsRequestType type = HttpsRequestType.PUT;
+		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
+
+		//authenticateRequest.setHeader("Content-Type", "text/xml");
+		authenticateRequest.setHeader("AuthToken", authToken);
+
+		HttpsConnector httpsConnector = new HttpsConnector(
+				FriendShipRequestsActivity.getContext());
+		// 3 /1
+		Log.d("URL", url);
+
+		try {
+
+			String response = httpsConnector
+					.performHttpsRequest(authenticateRequest);
+
+			Log.d("Response: ", response);
+
+		} catch (DataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	
+	}
 }

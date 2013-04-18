@@ -23,7 +23,6 @@ public class FriendRowAdapter extends BaseAdapter {
 	public FriendRowAdapter(Context context, long userId) {
 		this.context = context;
 		this.userId = userId;
-		Log.d("adapter", "adapter");
 	}
 
 	@Override
@@ -67,6 +66,7 @@ public class FriendRowAdapter extends BaseAdapter {
 
 		name.setText(user.getUsername());
 		status.setText(friendship.getStatus());
+		
 
 		return convertView;
 	}

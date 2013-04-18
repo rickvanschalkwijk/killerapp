@@ -1,6 +1,15 @@
 package core.models;
 
-public class Friendship {
+import java.io.Serializable;
+
+import android.os.Debug;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
+@SuppressWarnings("serial")
+public class Friendship implements Serializable {
+	public static final String EXTRA = "com.models.FRIENDSHIP_EXTRA";
 	private long id;
 	private User initiator;
 	private User participant;
@@ -13,6 +22,7 @@ public class Friendship {
 		this.status = status;
 	}
 
+	
 	public Friendship() {
 	}
 
@@ -49,6 +59,7 @@ public class Friendship {
 	}
 	
 	public User getOtherUser(long userId){
+		Log.d( String.valueOf(this.getId()) + " id", String.valueOf(this.getId()) + " id");
 		if (this.initiator.getId() == userId){
 			return this.participant;
 		}
@@ -62,4 +73,39 @@ public class Friendship {
 				+ status;
 
 	}
+	/*
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(status);
+	    dest.writeLong(id);
+	    dest.writeParcelable(initiator, flags);
+	    dest.writeParcelable(participant, flags);
+	}
+	
+	// this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Friendship> CREATOR = new Parcelable.Creator<Friendship>() {
+        public Friendship createFromParcel(Parcel in) {
+            return new Friendship(in);
+        }
+
+        public Friendship[] newArray(int size) {
+            return new Friendship[size];
+        }
+    };
+    
+ // example constructor that takes a Parcel and gives you an object populated with it's values
+    private Friendship(Parcel in) {
+    	id = in.readLong();
+    	initiator = in.readParcelable(getClass().getClassLoader());
+    	participant = in.readParcelable(getClass().getClassLoader());
+    	status = in.readString();
+    	
+    }
+*/
 }

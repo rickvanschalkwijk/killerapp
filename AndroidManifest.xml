@@ -48,6 +48,10 @@
             android:label="Register New Account" >
         </activity>
         <activity
+            android:name="com.app.amsterguide.FriendDetailActivity"
+            android:label="@string/title_activity_friend" >
+        </activity>
+        <activity
             android:name="com.app.amsterguide.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.app.amsterguide.MainActivity" >
@@ -126,10 +130,6 @@
         <activity
             android:name="com.app.killerapp.FriendShipRequestsActivity"
             android:label="@string/title_activity_friend_ship_requests" >
-        </activity>
-        <activity
-            android:name="core.map.MapSettingsActivity"
-            android:label="@string/title_activity_map_settings" >
         </activity>
         <activity
             android:name="core.map.MapSettingsActivity"
