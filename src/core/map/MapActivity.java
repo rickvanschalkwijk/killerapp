@@ -1,11 +1,8 @@
 package core.map;
 
 import java.io.File;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
@@ -17,7 +14,6 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -49,10 +45,10 @@ import core.connection.RESTSocialService;
 import core.databasehandlers.EventDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
-import core.models.Category;
 import core.models.Event;
 import core.models.Friendship;
 import core.models.Place;
+import core.models.User;
 import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
@@ -73,6 +69,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public ArrayList<String> selectedCategoryIds;
 	public String[] categories = { "music", "art", "nightlife" };
 	private List<Friendship> friendships;
+	private long userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +160,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		for (Friendship friendship : friendships) {
 			addFriendMarker(friendship);
 		}
+		
+		mapView.invalidate();
 	}
 
 	private void sendLocationToFriends() {
@@ -187,27 +186,35 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	private void addFriendMarker(final Friendship friendship) {
-		/*
-		 * OverlayItem eventOverLayItem = new OverlayItem("Friendship",
-		 * "Some friendship", friendship.getInitiator() ); Drawable eventMarker
-		 * = this.getResources().getDrawable( R.drawable.marker);
-		 * eventOverLayItem.setMarker(eventMarker);
-		 * 
-		 * final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-		 * items.add(eventOverLayItem);
-		 * 
-		 * ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new
-		 * ItemizedIconOverlay<OverlayItem>( items, new
-		 * ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() { private
-		 * Event event = newEvent;
-		 * 
-		 * public boolean onItemSingleTapUp(final int index, final OverlayItem
-		 * item) { createEventOverlay(event); return true; }
-		 * 
-		 * public boolean onItemLongPress(final int index, final OverlayItem
-		 * item) { return true; } }, resProxy);
-		 * this.mapView.getOverlays().add(currentLocationOverlay);
-		 */
+		final User friend = friendship.getOtherUser(userId);
+		
+		GeoPoint friendLocation = new GeoPoint( 52.379211, 4.899426 );
+		//GeoPoint friendLocation = new GeoPoint( friend.getLatitude(), friend.getLongtitude() );
+		OverlayItem friendOverLayItem = new OverlayItem("Friendship", "Some friend", friendLocation);
+		Drawable friendMarker = this.getResources().getDrawable(
+				R.drawable.friend_marker);
+		friendOverLayItem.setMarker(friendMarker);
+
+		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		items.add(friendOverLayItem);
+
+		ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
+				items,
+				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+					private User otherFriend = friend;
+
+					public boolean onItemSingleTapUp(final int index,
+							final OverlayItem item) {
+						Toast.makeText(context, "friend friends friends", Toast.LENGTH_SHORT).show();
+						return true;
+					}
+
+					public boolean onItemLongPress(final int index,
+							final OverlayItem item) {
+						return true;
+					}
+				}, resProxy);
+		this.mapView.getOverlays().add(currentLocationOverlay);
 	}
 
 	private void addEventMarker(final Event newEvent) {
@@ -610,7 +617,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	@Override
 	public Loader<List<Friendship>> onCreateLoader(int id, Bundle args) {
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-		long userId = Long.valueOf(settings.getString("userID", "0"))
+		userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
 		String authToken = settings.getString("token", "letmein");
 		return new FriendLoader(getApplicationContext(), userId, authToken,
@@ -621,6 +628,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public void onLoadFinished(Loader<List<Friendship>> loader,
 			List<Friendship> result) {
 		friendships = result;
+		addFriends();
 	}
 
 	@Override

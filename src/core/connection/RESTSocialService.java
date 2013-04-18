@@ -75,8 +75,22 @@ public class RESTSocialService {
 						long id = Long.valueOf(
 								column.getAttribute("id").getValue())
 								.longValue();
+						User user = new User(id, name);
+						// try{
+						Element locationColumn = column.getChild("location");
+						double latitude = Double.valueOf(locationColumn
+								.getChildText("latitude"));
+						double longtitude = Double.valueOf(locationColumn
+								.getChildText("longitude"));
+						user.setLatitude(latitude);
+						user.setLongtitude(longtitude);
+						Log.d("initiator user lat", latitude + "");
+						Log.d("initiator user long", longtitude + "");
+						// }catch(Exception e){
+						// Log.d("exception", e.toString());
+						// }
+						friendship.setInitiator(user);
 
-						friendship.setInitiator(new User(id, name));
 					}
 					for (int j = 0; j < participantRow.size(); j++) {
 						Element column = (Element) participantRow.get(j);
@@ -85,7 +99,21 @@ public class RESTSocialService {
 								column.getAttribute("id").getValue())
 								.longValue();
 
-						friendship.setParticipant(new User(id, name));
+						User user = new User(id, name);
+						try {
+							double latitude = Double.valueOf(column.getChild(
+									"location").getChildText("latitude"));
+							double longtitude = Double.valueOf(column.getChild(
+									"location").getChildText("longitude"));
+							user.setLatitude(latitude);
+							user.setLongtitude(longtitude);
+							Log.d("participant user lat", latitude + "");
+							Log.d("participant user long", longtitude + "");
+						} catch (Exception e) {
+							Log.d("exception", e.toString());
+						}
+
+						friendship.setParticipant(user);
 					}
 
 					friendships.add(friendship);
@@ -231,12 +259,11 @@ public class RESTSocialService {
 			Context context) {
 		String url = KillerboneUtils.putFriendshipUpdateLocationRequestUrl(
 				friendship.getId(), userId);
-		
 
 		HttpsRequestType type = HttpsRequestType.PUT;
 		String body = KillerboneUtils.composeFriendshipLocationUpdateXml(
 				latitude, longtitude);
-		
+
 		Log.d("setFriendshipCoordinates body", body);
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
 
@@ -244,7 +271,7 @@ public class RESTSocialService {
 		authenticateRequest.setHeader("AuthToken", authToken);
 
 		HttpsConnector httpsConnector = new HttpsConnector(context);
-		
+
 		Log.d("setFriendshipCoordinates URL", url);
 
 		try {
