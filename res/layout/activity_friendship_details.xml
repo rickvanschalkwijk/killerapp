@@ -11,7 +11,8 @@
         android:layout_alignBottom="@+id/btnDelete"
         android:layout_alignParentRight="true"
         android:layout_marginRight="66dp"
-        android:text="Delete" />
+        android:text="Delete" 
+        android:onClick="deleteFriendship"/>
 
     <Button
         android:id="@+id/btnSend"

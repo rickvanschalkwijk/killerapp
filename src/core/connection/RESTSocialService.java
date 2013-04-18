@@ -14,6 +14,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.app.amsterguide.FriendActivity;
+import com.app.amsterguide.FriendDetailActivity;
 import com.app.killerapp.FriendShipRequestsActivity;
 
 import util.KillerboneUtils;
@@ -193,17 +194,18 @@ public class RESTSocialService {
 		
 	}
 	
+	
+	
 	public void DeleteFriendship(long userId, String authToken, long friendshipId){
 		String url = KillerboneUtils.deleteFriendshipEndRequestUrl(friendshipId, userId);
 
-		HttpsRequestType type = HttpsRequestType.PUT;
+		HttpsRequestType type = HttpsRequestType.DELETE;
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
 
-		//authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
-
+		Log.d("authtoken delete", authToken);
 		HttpsConnector httpsConnector = new HttpsConnector(
-				FriendShipRequestsActivity.getContext());
+				FriendDetailActivity.getContext());
 		// 3 /1
 		Log.d("URL", url);
 
@@ -212,7 +214,7 @@ public class RESTSocialService {
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
 
-			Log.d("Response: ", response);
+			Log.d("Response deletefriend ", response);
 
 		} catch (DataException e) {
 			// TODO Auto-generated catch block
