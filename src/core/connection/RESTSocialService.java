@@ -28,7 +28,8 @@ import core.models.User;
 public class RESTSocialService {
 	final private String DEBUG_TAG = "SocialRest";
 
-	public List<Friendship> RetrieveFriendships(long userId, String authToken, String friendStatus, Context context) {
+	public List<Friendship> RetrieveFriendships(long userId, String authToken,
+			String friendStatus, Context context) {
 		HttpsRequestType requestType = HttpsRequestType.GET;
 		String url = KillerboneUtils.getFriendships(userId);
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
@@ -60,12 +61,14 @@ public class RESTSocialService {
 				String status = node.getChildText("status");
 				Friendship friendship = new Friendship();
 				friendship.setStatus(status);
-				friendship.setId(Long.valueOf(node.getAttribute("id").getValue()).longValue());
+				friendship.setId(Long.valueOf(
+						node.getAttribute("id").getValue()).longValue());
 
 				if (status.trim().equals(friendStatus)) {
 					List<Element> initiatorRow = node.getChildren("initiator");
-					List<Element> participantRow = node.getChildren("participant");
-					
+					List<Element> participantRow = node
+							.getChildren("participant");
+
 					for (int j = 0; j < initiatorRow.size(); j++) {
 						Element column = (Element) initiatorRow.get(j);
 						String name = column.getChildText("name");
@@ -134,15 +137,16 @@ public class RESTSocialService {
 
 		return false;
 	}
-	
-	public void ApproveFriendship(long userId, String authToken, long friendshipID)
-	{
-		String url = KillerboneUtils.putFriendshipAcceptRequestUrl(friendshipID, userId);
+
+	public void ApproveFriendship(long userId, String authToken,
+			long friendshipID) {
+		String url = KillerboneUtils.putFriendshipAcceptRequestUrl(
+				friendshipID, userId);
 
 		HttpsRequestType type = HttpsRequestType.PUT;
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
 
-		//authenticateRequest.setHeader("Content-Type", "text/xml");
+		// authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
 		HttpsConnector httpsConnector = new HttpsConnector(
@@ -162,17 +166,17 @@ public class RESTSocialService {
 			e.printStackTrace();
 		}
 
-		
 	}
-	
-	public void DeclineFriendship(long userId, String authToken, long friendshipID)
-	{
-		String url = KillerboneUtils.putFriendshipDeclineRequestUrl(friendshipID, userId);
+
+	public void DeclineFriendship(long userId, String authToken,
+			long friendshipID) {
+		String url = KillerboneUtils.putFriendshipDeclineRequestUrl(
+				friendshipID, userId);
 
 		HttpsRequestType type = HttpsRequestType.PUT;
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
 
-		//authenticateRequest.setHeader("Content-Type", "text/xml");
+		// authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
 		HttpsConnector httpsConnector = new HttpsConnector(
@@ -192,13 +196,12 @@ public class RESTSocialService {
 			e.printStackTrace();
 		}
 
-		
 	}
-	
-	
-	
-	public void DeleteFriendship(long userId, String authToken, long friendshipId){
-		String url = KillerboneUtils.deleteFriendshipEndRequestUrl(friendshipId, userId);
+
+	public void DeleteFriendship(long userId, String authToken,
+			long friendshipId) {
+		String url = KillerboneUtils.deleteFriendshipEndRequestUrl(
+				friendshipId, userId);
 
 		HttpsRequestType type = HttpsRequestType.DELETE;
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
@@ -207,7 +210,6 @@ public class RESTSocialService {
 		Log.d("authtoken delete", authToken);
 		HttpsConnector httpsConnector = new HttpsConnector(
 				FriendDetailActivity.getContext());
-		// 3 /1
 		Log.d("URL", url);
 
 		try {
@@ -220,24 +222,30 @@ public class RESTSocialService {
 		} catch (DataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-	
+		}
+
 	}
-	
-	public void setFriendshipCoordinates(long userId, Friendship friendship, String authToken, double latitude, double longtitude, Context context){
-		String url = KillerboneUtils.putFriendshipUpdateLocationRequestUrl(friendship.getId(), userId);
+
+	public void setFriendshipCoordinates(long userId, Friendship friendship,
+			String authToken, double latitude, double longtitude,
+			Context context) {
+		String url = KillerboneUtils.putFriendshipUpdateLocationRequestUrl(
+				friendship.getId(), userId);
+		
 
 		HttpsRequestType type = HttpsRequestType.PUT;
-		String body = KillerboneUtils.composeFriendshipLocationUpdateXml(latitude, longtitude);
+		String body = KillerboneUtils.composeFriendshipLocationUpdateXml(
+				latitude, longtitude);
+		
+		Log.d("setFriendshipCoordinates body", body);
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
 
 		authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
-		HttpsConnector httpsConnector = new HttpsConnector(
-				context);
-		// 3 /1
-		Log.d("URL", url);
+		HttpsConnector httpsConnector = new HttpsConnector(context);
+		
+		Log.d("setFriendshipCoordinates URL", url);
 
 		try {
 

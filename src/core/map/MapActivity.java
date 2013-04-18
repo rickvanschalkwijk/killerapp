@@ -45,6 +45,7 @@ import com.app.amsterguide.EventActivity;
 import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
 
+import core.connection.RESTSocialService;
 import core.databasehandlers.EventDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
@@ -122,7 +123,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		addMarkers();
-		
+
 		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
@@ -157,48 +158,58 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			addEventMarker(event);
 		}
 	}
-	
-	private void addFriends(){
-		for( Friendship friendship : friendships ){
+
+	private void addFriends() {
+		for (Friendship friendship : friendships) {
 			addFriendMarker(friendship);
 		}
 	}
-	
-	private void sendLocationToFriends( Location currentLocation ){
-		
+
+	private void sendLocationToFriends() {
+		if (currentLocation != null) {
+			RESTSocialService restSocialService = new RESTSocialService();
+			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+			long userId = Long.valueOf(settings.getString("userID", "0"))
+					.longValue();
+			String authToken = settings.getString("token", "letmein");
+			Double longitude = currentLocation.getLongitude();
+			Double latitude = currentLocation.getLatitude();
+
+
+			for (Friendship friendship : friendships) {
+				restSocialService.setFriendshipCoordinates(userId, friendship,
+						authToken, latitude, longitude, context);
+			}
+			Toast.makeText(context, "Location was send to friends", Toast.LENGTH_SHORT);
+		} else {
+			Toast.makeText(context, "Location was not found", Toast.LENGTH_SHORT);
+		}
 	}
 
 	private void addFriendMarker(final Friendship friendship) {
 		/*
-		OverlayItem eventOverLayItem = new OverlayItem("Friendship", "Some friendship",
-				friendship.getInitiator() );
-		Drawable eventMarker = this.getResources().getDrawable(
-				R.drawable.marker);
-		eventOverLayItem.setMarker(eventMarker);
-
-		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-		items.add(eventOverLayItem);
-
-		ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
-				items,
-				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-					private Event event = newEvent;
-
-					public boolean onItemSingleTapUp(final int index,
-							final OverlayItem item) {
-						createEventOverlay(event);
-						return true;
-					}
-
-					public boolean onItemLongPress(final int index,
-							final OverlayItem item) {
-						return true;
-					}
-				}, resProxy);
-		this.mapView.getOverlays().add(currentLocationOverlay);
-		*/
+		 * OverlayItem eventOverLayItem = new OverlayItem("Friendship",
+		 * "Some friendship", friendship.getInitiator() ); Drawable eventMarker
+		 * = this.getResources().getDrawable( R.drawable.marker);
+		 * eventOverLayItem.setMarker(eventMarker);
+		 * 
+		 * final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		 * items.add(eventOverLayItem);
+		 * 
+		 * ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new
+		 * ItemizedIconOverlay<OverlayItem>( items, new
+		 * ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() { private
+		 * Event event = newEvent;
+		 * 
+		 * public boolean onItemSingleTapUp(final int index, final OverlayItem
+		 * item) { createEventOverlay(event); return true; }
+		 * 
+		 * public boolean onItemLongPress(final int index, final OverlayItem
+		 * item) { return true; } }, resProxy);
+		 * this.mapView.getOverlays().add(currentLocationOverlay);
+		 */
 	}
-	
+
 	private void addEventMarker(final Event newEvent) {
 		OverlayItem eventOverLayItem = new OverlayItem("Event", "Some event",
 				newEvent.getLocation());
@@ -391,26 +402,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			}
 			return true;
 		case R.id.action_sendmyposition:
-			try {
-				sendLocationToFriends( currentLocation );
-			} catch (Exception e) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-						context);
-				alertDialogBuilder.setTitle("Location error");
-				alertDialogBuilder
-						.setMessage("Location not found")
-						.setCancelable(false)
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										dialog.cancel();
-									}
-								});
-
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
+			sendLocationToFriends();
 			return true;
 		case R.id.action_map_settings:
 			Intent mapSettingsIntent = new Intent(this,
@@ -629,7 +621,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public void onLoadFinished(Loader<List<Friendship>> loader,
 			List<Friendship> result) {
 		friendships = result;
-		Toast.makeText(context, "Size " + result.size(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "Size " + result.size(), Toast.LENGTH_SHORT)
+				.show();
 	}
 
 	@Override

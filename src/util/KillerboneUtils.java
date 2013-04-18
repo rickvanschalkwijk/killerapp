@@ -126,6 +126,6 @@ public class KillerboneUtils
 	 */
 	public static String composeFriendshipLocationUpdateXml(double latitude, double longitude)
 	{
-		return String.format("<location><latitude>%d</latitude><longitude>%d<longitude></location>", latitude, longitude);
+		return String.format("<location><latitude>%s</latitude><longitude>%s</longitude></location>", String.valueOf(latitude), String.valueOf(longitude));
 	}	
 }
