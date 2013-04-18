@@ -37,11 +37,6 @@ public class User implements Serializable{
 		this.id = id;
 		this.username = username;
 	}
-	
-	
-	
-	
-	
 
 	public long getId() {
 		return id;
@@ -74,39 +69,4 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	/*@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int arg1) {
-		dest.writeLong(id);
-		dest.writeString(email);
-		dest.writeString(username);
-		dest.writeString(password);
-	}
-	
-	public static final Parcelable.Creator<User> CREATOR
-    = new Parcelable.Creator<User>() {
-	public User createFromParcel(Parcel in) {
-	    return new User(in);
-	}
-	
-	public User[] newArray(int size) {
-	    return new User[size];
-	}
-	};
-	
-	private User(final Parcel in) {
-		id = in.readLong();
-		email = in.readString();
-		username = in.readString();
-		password = in.readString();
-	}
-	
-	*/
-
 }

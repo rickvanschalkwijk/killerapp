@@ -59,11 +59,10 @@ public class Friendship implements Serializable {
 	}
 	
 	public User getOtherUser(long userId){
-		Log.d( String.valueOf(this.getId()) + " id", String.valueOf(this.getId()) + " id");
 		if (this.initiator.getId() == userId){
-			return this.participant;
+			return participant;
 		}
-		return this.initiator;
+		return initiator;
 	}
 
 	@Override
@@ -71,41 +70,5 @@ public class Friendship implements Serializable {
 		return "id = " + id + " initiator = " + initiator.getUsername()
 				+ " participant = " + participant.getUsername() + " status = "
 				+ status;
-
 	}
-	/*
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(status);
-	    dest.writeLong(id);
-	    dest.writeParcelable(initiator, flags);
-	    dest.writeParcelable(participant, flags);
-	}
-	
-	// this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
-    public static final Parcelable.Creator<Friendship> CREATOR = new Parcelable.Creator<Friendship>() {
-        public Friendship createFromParcel(Parcel in) {
-            return new Friendship(in);
-        }
-
-        public Friendship[] newArray(int size) {
-            return new Friendship[size];
-        }
-    };
-    
- // example constructor that takes a Parcel and gives you an object populated with it's values
-    private Friendship(Parcel in) {
-    	id = in.readLong();
-    	initiator = in.readParcelable(getClass().getClassLoader());
-    	participant = in.readParcelable(getClass().getClassLoader());
-    	status = in.readString();
-    	
-    }
-*/
 }

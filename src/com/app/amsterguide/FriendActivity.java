@@ -89,7 +89,7 @@ public class FriendActivity extends FragmentActivity implements
 
 				Intent intent = new Intent(FriendActivity.this,
 						FriendDetailActivity.class);
-				intent.putExtra("friendship", friendships.get(position));
+				intent.putExtra(Friendship.EXTRA, friendships.get(position));
 				startActivity(intent);
 			}
 		});
