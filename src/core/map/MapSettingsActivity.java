@@ -2,11 +2,8 @@ package core.map;
 
 import com.app.killerapp.R;
 
-
-import android.R.bool;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.CompoundButton;
@@ -14,39 +11,40 @@ import android.widget.ToggleButton;
 import android.content.SharedPreferences;
 
 public class MapSettingsActivity extends Activity {
-
+	
+	protected ToggleButton toggleEvents;
+	protected ToggleButton toggleCompanions;
+	protected ToggleButton toggleLocations;
+	protected ToggleButton toggleGuides;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_settings);
 		
-		// Restore preferences
-	    //SharedPreferences settings = getSharedPreferences("MapPref", 0);
-	  //  boolean eventsValue = settings.getBoolean("events", false);
-		//Log.d("eventvalue", eventsValue + "");
-		
-		final ToggleButton toggleEvents = (ToggleButton) findViewById(R.id.events);
-		final ToggleButton toggleCompanions = (ToggleButton) findViewById(R.id.companions);
-		final ToggleButton toggleLocations = (ToggleButton) findViewById(R.id.locations);
-		final ToggleButton toggleGuides = (ToggleButton) findViewById(R.id.guides);
+		toggleEvents = (ToggleButton) findViewById(R.id.events);
+		toggleCompanions = (ToggleButton) findViewById(R.id.companions);
+		toggleLocations = (ToggleButton) findViewById(R.id.locations);
+		toggleGuides = (ToggleButton) findViewById(R.id.guides);
 		
 		toggleEvents.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					setPref("events", isChecked);
+					saveBooleanInSP("events", isChecked);
 				}else{
-					setPref("events", isChecked);
+					saveBooleanInSP("events", isChecked);
 				}
 			}
 		});
+		
 		toggleCompanions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					setPref("companions", isChecked);
+					saveBooleanInSP("companions", isChecked);
 				}else{
-					setPref("companions", isChecked);
+					saveBooleanInSP("companions", isChecked);
 				}
 			}
 		});
@@ -54,9 +52,9 @@ public class MapSettingsActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					setPref("locations", isChecked);
+					saveBooleanInSP("locations", isChecked);
 				}else{
-					setPref("locations", isChecked);
+					saveBooleanInSP("locations", isChecked);
 				}
 			}
 		});
@@ -64,9 +62,9 @@ public class MapSettingsActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					setPref("guides", isChecked);
+					saveBooleanInSP("guides", isChecked);
 				}else{
-					setPref("guides", isChecked);
+					saveBooleanInSP("guides", isChecked);
 				}
 			}
 		});
@@ -97,7 +95,30 @@ public class MapSettingsActivity extends Activity {
 		return true;
 	}
 	
-	public void setPref(String key, boolean value){
+	public void setToggleButtons(){
+		toggleEvents.setChecked(getBooleanFromSP("events"));
+		toggleLocations.setChecked(getBooleanFromSP("locations"));
+		toggleCompanions.setChecked(getBooleanFromSP("companions"));
+		toggleGuides.setChecked(getBooleanFromSP("guides"));
+	}
+	
+	/**
+	 * Get the map settings from SP file
+	 * @param String key
+	 * @return boolean value
+	 */
+	public boolean getBooleanFromSP(String key){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 return preferences.getBoolean(key, false);
+	}
+	
+	/**
+	 * Save boolean to SP file
+	 * @param String key
+	 * @param boolean value
+	 * @return void
+	 */
+	public void saveBooleanInSP(String key, boolean value){
 		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
 		 SharedPreferences.Editor editor = preferences.edit();
 	     editor.putBoolean(key, value); // value to store
