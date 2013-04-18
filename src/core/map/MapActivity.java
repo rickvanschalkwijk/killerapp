@@ -180,9 +180,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 				restSocialService.setFriendshipCoordinates(userId, friendship,
 						authToken, latitude, longitude, context);
 			}
-			Toast.makeText(context, "Location was send to friends", Toast.LENGTH_SHORT);
+			Toast.makeText(context, "Location was send to friends", Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(context, "Location was not found", Toast.LENGTH_SHORT);
+			Toast.makeText(context, "Location was not found", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -621,8 +621,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public void onLoadFinished(Loader<List<Friendship>> loader,
 			List<Friendship> result) {
 		friendships = result;
-		Toast.makeText(context, "Size " + result.size(), Toast.LENGTH_SHORT)
-				.show();
 	}
 
 	@Override
