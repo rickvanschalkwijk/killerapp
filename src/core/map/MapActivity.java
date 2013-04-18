@@ -24,6 +24,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -64,12 +65,13 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private static MapActivity selfReferance = null;
 	public ArrayList<String> selectedCategoryIds;
 	public String[] categories = { "music", "art", "nightlife" };
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
 
+	
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
@@ -114,10 +116,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		}
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
-
-		addEvents();
-		addLocations();
-
+		addMarkers();
 	}
 
 	private void addLocations() {
@@ -270,10 +269,20 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
+	
+	public void addMarkers(){
+		if(getBooleanFromSP("events")){
+			addEvents();
+		}
+		if(getBooleanFromSP("locations")){
+			addLocations();
+		}
+	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		addMarkers();
 		locationListener = new GeoUpdateHandler();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				100, 0, locationListener);
@@ -504,6 +513,16 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			return selfReferance.getApplicationContext();
 		}
 		return null;
+	}
+	
+	/**
+	 * Get the map settings from SP file
+	 * @param String key
+	 * @return boolean value
+	 */
+	public boolean getBooleanFromSP(String key){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 return preferences.getBoolean(key, false);
 	}
 
 	private class EnableGpsDialogFragment extends DialogFragment {

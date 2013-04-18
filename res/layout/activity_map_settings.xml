@@ -17,7 +17,8 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="15dp"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On"
+        android:checked="true" />
 
     <ToggleButton
         android:id="@+id/locations"
@@ -27,7 +28,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On" 
+        android:checked="true"/>
 
     <ToggleButton
         android:id="@+id/guides"
@@ -37,7 +39,8 @@
         android:layout_alignLeft="@+id/companions"
         android:layout_marginBottom="54dp"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On" 
+        android:checked="true"/>
 
     <ToggleButton
         android:id="@+id/events"
@@ -47,7 +50,8 @@
         android:layout_alignLeft="@+id/guides"
         android:layout_marginBottom="63dp"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On" 
+        android:checked="true"/>
 
     <TextView
         android:id="@+id/companions_txt"
