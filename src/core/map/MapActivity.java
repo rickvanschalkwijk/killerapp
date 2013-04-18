@@ -282,7 +282,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		addMarkers();
 		locationListener = new GeoUpdateHandler();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				100, 0, locationListener);
@@ -291,7 +290,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
+		addMarkers();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		final boolean gpsEnabled = locationManager
 				.isProviderEnabled(locationProvider);
