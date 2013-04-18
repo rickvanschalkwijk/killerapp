@@ -131,6 +131,10 @@
             android:name="core.map.MapSettingsActivity"
             android:label="@string/title_activity_map_settings" >
         </activity>
+        <activity
+            android:name="core.map.MapSettingsActivity"
+            android:label="@string/title_activity_map_settings" >
+        </activity>
     </application>
 
 </manifest>

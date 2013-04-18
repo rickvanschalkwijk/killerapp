@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MapSettingsActivity" >
+
+    <ToggleButton
+        android:id="@+id/companions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="15dp"
+        android:textOff="Off"
+        android:textOn="On" />
+
+    <ToggleButton
+        android:id="@+id/locations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/guides"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:textOff="Off"
+        android:textOn="On" />
+
+    <ToggleButton
+        android:id="@+id/guides"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/locations"
+        android:layout_alignLeft="@+id/companions"
+        android:layout_marginBottom="54dp"
+        android:textOff="Off"
+        android:textOn="On" />
+
+    <ToggleButton
+        android:id="@+id/events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/guides"
+        android:layout_alignLeft="@+id/guides"
+        android:layout_marginBottom="63dp"
+        android:textOff="Off"
+        android:textOn="On" />
+
+    <TextView
+        android:id="@+id/companions_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/companions"
+        android:layout_alignBottom="@+id/companions"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="29dp"
+        android:text="Companions:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/guides_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/guides"
+        android:layout_alignBottom="@+id/guides"
+        android:layout_alignRight="@+id/events_txt"
+        android:text="Guides:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/events_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/events"
+        android:layout_alignBottom="@+id/events"
+        android:layout_alignLeft="@+id/companions_txt"
+        android:text="Events:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/Locations_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/locations"
+        android:layout_alignBottom="@+id/locations"
+        android:layout_alignLeft="@+id/guides_txt"
+        android:text="Locations:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

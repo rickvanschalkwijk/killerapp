@@ -24,6 +24,7 @@
     <string name="logout_button">Sign out</string>
     <string name="category">Category</string>
     <string name="category_prompt">Choose a category</string>
+
     <string-array name="category_array">
         <item>Family</item>
         <item>Seniors</item>
@@ -65,6 +66,13 @@
 
     <string name="ok">Filter</string>
     <string name="cancel">Cancel</string>
+    
+    <string name="settings_companions">Companions:</string>
+    <string name="settings_events">Events:</string>
+    <string name="settings_locations">Locations:</string>
+    <string name="settings_guides">Guides:</string>
+    
+    
     <!-- End Map Activity -->
     <!-- Start Login -->
     <string name="username">Email</string>
@@ -119,9 +127,10 @@
     <string name="show_event">Show Event</string>
     <string name="addfriends">Add Friends</string>
     <string name="friendrequests">Friend Requests</string>
-    
+
     <!-- Place List -->
     <string name="title_place_list">Locations</string>
     <string name="show_place">Show Location</string>
+    <string name="title_activity_map_settings">Map Settings</string>
 
 </resources>
