@@ -3,6 +3,7 @@ package core.map;
 import com.app.killerapp.R;
 
 
+import android.R.bool;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
+import android.content.SharedPreferences;
 
 public class MapSettingsActivity extends Activity {
 
@@ -17,6 +19,11 @@ public class MapSettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_settings);
+		
+		// Restore preferences
+	    //SharedPreferences settings = getSharedPreferences("MapPref", 0);
+	  //  boolean eventsValue = settings.getBoolean("events", false);
+		//Log.d("eventvalue", eventsValue + "");
 		
 		final ToggleButton toggleEvents = (ToggleButton) findViewById(R.id.events);
 		final ToggleButton toggleCompanions = (ToggleButton) findViewById(R.id.companions);
@@ -27,47 +34,42 @@ public class MapSettingsActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					Log.d("button", "checkt");
+					setPref("events", isChecked);
 				}else{
-					Log.d("button", "not checkt");
+					setPref("events", isChecked);
 				}
-				
 			}
 		});
 		toggleCompanions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					Log.d("button", "checkt");
+					setPref("companions", isChecked);
 				}else{
-					Log.d("button", "not checkt");
+					setPref("companions", isChecked);
 				}
-				
 			}
 		});
 		toggleLocations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					Log.d("button", "checkt");
+					setPref("locations", isChecked);
 				}else{
-					Log.d("button", "not checkt");
+					setPref("locations", isChecked);
 				}
-				
 			}
 		});
 		toggleGuides.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					Log.d("button", "checkt");
+					setPref("guides", isChecked);
 				}else{
-					Log.d("button", "not checkt");
+					setPref("guides", isChecked);
 				}
-				
 			}
 		});
-
 	}
 	
 	@Override
@@ -93,6 +95,15 @@ public class MapSettingsActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.map_settings, menu);
 		return true;
+	}
+	
+	public void setPref(String key, boolean value){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 SharedPreferences.Editor editor = preferences.edit();
+	     editor.putBoolean(key, value); // value to store
+	     editor.commit();
+	     
+	     return;
 	}
 
 }
