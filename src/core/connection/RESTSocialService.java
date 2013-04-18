@@ -10,6 +10,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.app.amsterguide.FriendActivity;
@@ -25,7 +26,7 @@ import core.models.User;
 public class RESTSocialService {
 	final private String DEBUG_TAG = "SocialRest";
 
-	public List<Friendship> RetrieveFriendships(long userId, String authToken, String friendStatus) {
+	public List<Friendship> RetrieveFriendships(long userId, String authToken, String friendStatus, Context context) {
 		HttpsRequestType requestType = HttpsRequestType.GET;
 		String url = KillerboneUtils.getFriendships(userId);
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
@@ -33,8 +34,7 @@ public class RESTSocialService {
 		authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
-		HttpsConnector httpsConnector = new HttpsConnector(
-				FriendActivity.getContext());
+		HttpsConnector httpsConnector = new HttpsConnector(context);
 
 		try {
 			String response = httpsConnector

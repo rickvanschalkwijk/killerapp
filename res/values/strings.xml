@@ -71,7 +71,7 @@
     <string name="settings_events">Events:</string>
     <string name="settings_locations">Locations:</string>
     <string name="settings_guides">Guides:</string>
-    
+    <string name="action_sendmyposition">Send location to friends</string>
     
     <!-- End Map Activity -->
     <!-- Start Login -->

@@ -15,9 +15,11 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 	private long userId;
 	private String authToken;
 	private String friendshipStatus;
+	private Context context;
 	
 	public FriendLoader(Context context, long id, String authToken, String friendStatus) {
 		super(context);
+		this.context = context;
 		this.userId = id;
 		this.authToken = authToken;
 		this.friendshipStatus = friendStatus;
@@ -27,10 +29,10 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 	public List<Friendship> loadInBackground() {
 		Log.d("adapter" , "adapter start");
 		RESTSocialService socialService = new RESTSocialService();
-		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus);
+		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus, context);
 		
 		if (friendshipStatus.contains("PENDING")) {
-			List<Friendship> friendships2 = socialService.RetrieveFriendships(userId, authToken, "SENT");
+			List<Friendship> friendships2 = socialService.RetrieveFriendships(userId, authToken, "SENT", context);
 			for (int i = 0; i < friendships2.size(); i++) {
 				friendships.add(friendships2.get(i));
 			}

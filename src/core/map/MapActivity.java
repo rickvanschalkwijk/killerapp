@@ -32,6 +32,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -39,6 +42,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.app.amsterguide.EventActivity;
+import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
 
 import core.databasehandlers.EventDataSource;
@@ -46,11 +50,13 @@ import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
 import core.models.Category;
 import core.models.Event;
+import core.models.Friendship;
 import core.models.Place;
 import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
-public class MapActivity extends Activity implements IRegisterReceiver {
+public class MapActivity extends FragmentActivity implements IRegisterReceiver,
+		LoaderCallbacks<List<Friendship>> {
 
 	private LocationManager locationManager;
 	private MapController mapController;
@@ -65,13 +71,13 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 	private static MapActivity selfReferance = null;
 	public ArrayList<String> selectedCategoryIds;
 	public String[] categories = { "music", "art", "nightlife" };
-	
+	private List<Friendship> friendships;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
 
-	
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
@@ -82,7 +88,6 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		File file = new File(path, "amsterdam.mbtiles");
 
 		MBTileProvider provider = new MBTileProvider(this, file);
-		// 4.8653,52.3325,4.9604,52.3839
 
 		mapView = new BoundedMapView(this, resProxy, provider);
 		double north = 52.388841;
@@ -108,7 +113,7 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			Event event = (Event) getIntent().getSerializableExtra("event");
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
-		} else if(getIntent().getSerializableExtra("place") != null ) {
+		} else if (getIntent().getSerializableExtra("place") != null) {
 			Place place = (Place) getIntent().getSerializableExtra("place");
 			mapController.animateTo(place.getLocation());
 		} else {
@@ -117,6 +122,8 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		addMarkers();
+		
+		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
 	private void addLocations() {
@@ -150,7 +157,48 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			addEventMarker(event);
 		}
 	}
+	
+	private void addFriends(){
+		for( Friendship friendship : friendships ){
+			addFriendMarker(friendship);
+		}
+	}
+	
+	private void sendLocationToFriends( Location currentLocation ){
+		
+	}
 
+	private void addFriendMarker(final Friendship friendship) {
+		/*
+		OverlayItem eventOverLayItem = new OverlayItem("Friendship", "Some friendship",
+				friendship.getInitiator() );
+		Drawable eventMarker = this.getResources().getDrawable(
+				R.drawable.marker);
+		eventOverLayItem.setMarker(eventMarker);
+
+		final ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		items.add(eventOverLayItem);
+
+		ItemizedIconOverlay<OverlayItem> currentLocationOverlay = new ItemizedIconOverlay<OverlayItem>(
+				items,
+				new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+					private Event event = newEvent;
+
+					public boolean onItemSingleTapUp(final int index,
+							final OverlayItem item) {
+						createEventOverlay(event);
+						return true;
+					}
+
+					public boolean onItemLongPress(final int index,
+							final OverlayItem item) {
+						return true;
+					}
+				}, resProxy);
+		this.mapView.getOverlays().add(currentLocationOverlay);
+		*/
+	}
+	
 	private void addEventMarker(final Event newEvent) {
 		OverlayItem eventOverLayItem = new OverlayItem("Event", "Some event",
 				newEvent.getLocation());
@@ -269,12 +317,12 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
-	
-	public void addMarkers(){
-		if(getBooleanFromSP("events")){
+
+	public void addMarkers() {
+		if (getBooleanFromSP("events")) {
 			addEvents();
 		}
-		if(getBooleanFromSP("locations")){
+		if (getBooleanFromSP("locations")) {
 			addLocations();
 		}
 	}
@@ -342,8 +390,31 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 				alertDialog.show();
 			}
 			return true;
+		case R.id.action_sendmyposition:
+			try {
+				sendLocationToFriends( currentLocation );
+			} catch (Exception e) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						context);
+				alertDialogBuilder.setTitle("Location error");
+				alertDialogBuilder
+						.setMessage("Location not found")
+						.setCancelable(false)
+						.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										dialog.cancel();
+									}
+								});
+
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+			return true;
 		case R.id.action_map_settings:
-			Intent mapSettingsIntent = new Intent(this, core.map.MapSettingsActivity.class);
+			Intent mapSettingsIntent = new Intent(this,
+					core.map.MapSettingsActivity.class);
 			startActivity(mapSettingsIntent);
 			return true;
 		case R.id.action_help:
@@ -354,26 +425,26 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	 public boolean[] getSelectedFilter(ArrayList<Integer> selectedItems){
+
+	public boolean[] getSelectedFilter(ArrayList<Integer> selectedItems) {
 		int size = categories.length;
 		boolean[] isSelected = new boolean[size];
 		int i = 0;
-		for(Integer checkItem : selectedItems){
-			//String selected = categories[checkItem];
-			if(checkItem == null){
+		for (Integer checkItem : selectedItems) {
+			// String selected = categories[checkItem];
+			if (checkItem == null) {
 				isSelected[i] = false;
-			}else{
-				isSelected[i]= true;
+			} else {
+				isSelected[i] = true;
 			}
 			i++;
 		}
 		return isSelected;
-	} 
+	}
 
 	public Dialog filterDialog() {
 		boolean[] booleans = getSelectedFilter(mSelectedItems);
-		for(Boolean bool : booleans){
+		for (Boolean bool : booleans) {
 			Log.d("bool", bool + "");
 		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -513,15 +584,17 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get the map settings from SP file
-	 * @param String key
+	 * 
+	 * @param String
+	 *            key
 	 * @return boolean value
 	 */
-	public boolean getBooleanFromSP(String key){
-		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
-		 return preferences.getBoolean(key, false);
+	public boolean getBooleanFromSP(String key) {
+		SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		return preferences.getBoolean(key, false);
 	}
 
 	private class EnableGpsDialogFragment extends DialogFragment {
@@ -540,6 +613,29 @@ public class MapActivity extends Activity implements IRegisterReceiver {
 								}
 							}).create();
 		}
+	}
+
+	@Override
+	public Loader<List<Friendship>> onCreateLoader(int id, Bundle args) {
+		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+		long userId = Long.valueOf(settings.getString("userID", "0"))
+				.longValue();
+		String authToken = settings.getString("token", "letmein");
+		return new FriendLoader(getApplicationContext(), userId, authToken,
+				"APPROVED");
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<Friendship>> loader,
+			List<Friendship> result) {
+		friendships = result;
+		Toast.makeText(context, "Size " + result.size(), Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<Friendship>> arg0) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
