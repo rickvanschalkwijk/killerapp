@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -64,14 +63,7 @@ public class PreLoginActivity extends Activity {
 		showLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-				if (loginLayout.getVisibility() == LinearLayout.GONE)
-				{
-					loginLayout.setVisibility(LinearLayout.VISIBLE);
-				}
-				else
-				{
-					loginLayout.setVisibility(LinearLayout.GONE);
-				}
+				loginLayout.setVisibility(LinearLayout.VISIBLE);
 			}
 		});
 
