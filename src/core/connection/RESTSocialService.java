@@ -21,6 +21,7 @@ import util.KillerboneUtils;
 import core.connection.https.HttpsConnector;
 import core.connection.https.HttpsRequest;
 import core.connection.https.HttpsRequestType;
+import core.map.MapActivity;
 import core.models.Friendship;
 import core.models.User;
 
@@ -222,4 +223,33 @@ public class RESTSocialService {
 		}	
 	
 	}
+	
+	public void setFriendshipCoordinates(long userId, Friendship friendship, String authToken, double latitude, double longtitude, Context context){
+		String url = KillerboneUtils.putFriendshipUpdateLocationRequestUrl(friendship.getId(), userId);
+
+		HttpsRequestType type = HttpsRequestType.PUT;
+		String body = KillerboneUtils.composeFriendshipLocationUpdateXml(latitude, longtitude);
+		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
+
+		authenticateRequest.setHeader("Content-Type", "text/xml");
+		authenticateRequest.setHeader("AuthToken", authToken);
+
+		HttpsConnector httpsConnector = new HttpsConnector(
+				context);
+		// 3 /1
+		Log.d("URL", url);
+
+		try {
+
+			String response = httpsConnector
+					.performHttpsRequest(authenticateRequest);
+
+			Log.d("Response: ", response);
+
+		} catch (DataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
