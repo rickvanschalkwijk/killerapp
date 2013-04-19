@@ -33,6 +33,7 @@ public class SplashActivity extends Activity {
 	
 	protected int _splashTime = 1500;
 	private Thread splashThread;
+	private static SplashActivity selfReferance = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -42,6 +43,10 @@ public class SplashActivity extends Activity {
 		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
 		Thread thread = new Thread(databaseLoaderThread);
 		thread.start();
+		
+		if(selfReferance == null){
+			selfReferance = this;
+		}
 		
 		final SplashActivity sPlashActivity  = this;
 		
@@ -92,5 +97,12 @@ public class SplashActivity extends Activity {
 			}
 		}
 		return true;
+	}
+	
+	public static Context getContext() {
+		if (selfReferance != null) {			
+			return selfReferance.getApplicationContext();
+		}
+		return null;
 	}
 }

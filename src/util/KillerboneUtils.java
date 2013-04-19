@@ -62,29 +62,39 @@ public class KillerboneUtils
 		return KILLERBONE_FULL_URL + "friendship/" + String.valueOf(friendshipId) + "/location/" + String.valueOf(userId);
 	}
 	
-	public static String getAllEvents()
+	public static String getAllEventsUrl()
 	{
-		return KILLERBONE_FULL_URL + "/events";
+		return KILLERBONE_FULL_URL + "events";
 	}
 	
-	public static String getNewEvents(long timestamp)
+	public static String getNewEventsUrl(long timestamp)
 	{
-		return KILLERBONE_FULL_URL + "/events/new/" + String.valueOf(timestamp);
+		return KILLERBONE_FULL_URL + "events/new/" + String.valueOf(timestamp);
 	}
 	
-	public static String getAllEventCategories()
+	public static String getAllEventCategoriesUrl()
 	{
-		return KILLERBONE_FULL_URL + "/events/categories";
+		return KILLERBONE_FULL_URL + "events/categories";
 	}	
 	
-	public static String getAllEventsFromCategory(String categoryId)
+	public static String getAllEventsFromCategoryUrl(String categoryId)
 	{
-		return KILLERBONE_FULL_URL + "/events/" + categoryId;
+		return KILLERBONE_FULL_URL + "events/" + categoryId;
 	}
 	
-	public static String getNewEventsFromCategory(String categoryId, long timestamp)
+	public static String getNewEventsFromCategoryUrl(String categoryId, long timestamp)
 	{
-		return KILLERBONE_FULL_URL + "/events/" + categoryId + "/new/" + String.valueOf(timestamp);
+		return KILLERBONE_FULL_URL + "events/" + categoryId + "/new/" + String.valueOf(timestamp);
+	}
+	
+	public static String getAllLocationsUrl()
+	{
+		return KILLERBONE_FULL_URL + "locations";
+	}
+	
+	public static String getNewLocationsUrl(long timestamp)
+	{
+		return KILLERBONE_FULL_URL + "locations/new/" + String.valueOf(timestamp);
 	}
 	
 	//-----------------------------------------------------------------------//

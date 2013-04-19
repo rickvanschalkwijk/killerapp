@@ -1,7 +1,6 @@
 package core.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import org.joda.time.DateTime;
 import org.osmdroid.util.GeoPoint;
@@ -11,13 +10,14 @@ import util.KillerboneUtils;
 @SuppressWarnings("serial")
 public class Event implements Serializable{
 	public static final String EXTRA = "com.models.EVENT_EXTRA";
+	private int id;
 	private String title;
 	private String description;
 	private String category;
 	private DateTime startDate;
 	private DateTime endDate;
 	private GeoPoint location;
-	private BigDecimal price;
+	private String price;
 	private boolean isFree;
 
 	public Event() {
@@ -25,7 +25,7 @@ public class Event implements Serializable{
 
 	public Event(String title, String description, String category,
 			DateTime startDate, DateTime endDate, GeoPoint location,
-			BigDecimal price, boolean isFree) {
+			String price, boolean isFree) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -35,6 +35,14 @@ public class Event implements Serializable{
 		this.location = location;
 		this.price = price;
 		this.isFree = isFree;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -85,11 +93,11 @@ public class Event implements Serializable{
 		this.location = location;
 	}
 
-	public BigDecimal getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 

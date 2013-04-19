@@ -29,7 +29,7 @@ public class RESTEventService {
 	
 	public List<Category> getAllCategories() throws DataException, IOException, JDOMException {
 
-		String url = KillerboneUtils.getAllEventCategories();
+		String url = KillerboneUtils.getAllEventCategoriesUrl();
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
 				"");
 		authenticateRequest.setHeader("Content-Type", "text/xml");

@@ -2,7 +2,8 @@ package core.databasehandlers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -20,6 +21,8 @@ import com.app.killerapp.R;
 import android.content.Context;
 import android.util.Log;
 
+import core.connection.DataException;
+import core.connection.killerbone.EventLoaderService;
 import core.models.Event;
 
 public class XMLParser {
@@ -41,42 +44,48 @@ public class XMLParser {
 	private static final String FREE_TAG = "free";
 	private static final String PRICE_TAG = "price";
 
-	public void getEventsXML(Context context) {
-		InputStream stream = context.getResources().openRawResource(
-				R.raw.dummyevents);
+	public void getEventsXML(Context context) throws DataException {
 		SAXBuilder builder = new SAXBuilder();
 		EventDataSource eventDataSource = new EventDataSource(context);
-		
 
 		try {
-			Document document = builder.build(stream);
+			EventLoaderService eventLoaderService = new EventLoaderService();
+			Reader reader = new StringReader(
+					eventLoaderService.getAllEventsXml(context));
+			Document document = builder.build(reader);
 			Element rootnode = document.getRootElement();
 			List<Element> list = rootnode.getChildren(EVENT_TAG);
 
 			for (Element node : list) {
 				Event event = new Event();
+				event.setId(Integer
+						.parseInt(node.getAttribute("id").getValue()));
+				Log.d(LOGTAG, "ID: " + event.getId());
 				event.setTitle(node.getChildText(TITLE_TAG));
 				event.setDescription(node.getChildText(DESCRIPTION_TAG));
 				event.setCategory(node.getChildText(CATEGORY_TAG));
-				Double latitude = (Double.parseDouble(node.getChild(
-						LOCATION_TAG).getChildText(LOCATION_LATITUDE)));
-				Double longitude = (Double.parseDouble(node.getChild(
-						LOCATION_TAG).getChildText(LOCATION_LONGITUDE)));
+
+				Double latitude = (Double.parseDouble(node
+						.getChild(LOCATION_TAG).getChildText(LOCATION_LATITUDE)
+						.trim()));
+				Double longitude = (Double.parseDouble(node
+						.getChild(LOCATION_TAG)
+						.getChildText(LOCATION_LONGITUDE).trim()));
 				location = new GeoPoint(latitude, longitude);
 				event.setLocation(location);
 
-				DateTime dtStart = new DateTime(parseDateTime(node.getChild(
-						DURATION_TAG).getChildText(DURATION_START).trim()));
+				DateTime dtStart = new DateTime(parseDateTime(node
+						.getChild(DURATION_TAG).getChildText(DURATION_START)
+						.trim()));
 				event.setStartDate(dtStart);
-				DateTime dtEnd = new DateTime(parseDateTime(node.getChild(
-						DURATION_TAG).getChildText(DURATION_END).trim()));
+				DateTime dtEnd = new DateTime(parseDateTime(node
+						.getChild(DURATION_TAG).getChildText(DURATION_END)
+						.trim()));
 				event.setEndDate(dtEnd);
 				event.setFree(Boolean.parseBoolean(node.getChildText(FREE_TAG)));
-				BigDecimal price = new BigDecimal(node.getChildText(PRICE_TAG));
-				event.setPrice(price);
+				event.setPrice(node.getChildText(PRICE_TAG));
 				eventDataSource.open();
 				eventDataSource.addEvent(event);
-				Log.i(LOGTAG, "Item aan events table toegevoegd");
 				eventDataSource.close();
 			}
 		} catch (JDOMException e) {

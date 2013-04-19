@@ -31,14 +31,15 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 
 	private static final String LOGTAG = "IP13HVA";
 	
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
 	private static final String DATABASE_NAME = "offlineStorage.db";
 	public static final String TABLE_EVENTS = "events";
+	public static final String TABLE_LOCATIONS = "locations";
 	public static final String TABLE_USERS = "users";
-	public static final String TABLE_PLACES = "places";
-	public static final String TABLE_SERVICES = "services";
 	public static final String TABLE_APPLICATION = "application";
+
+
 	
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_TITLE =  "title";
@@ -50,13 +51,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_LATITUDE = "latitude";
 	public static final String COLUMN_PRICE =  "price";
 	public static final String COLUMN_ISFREE = "free";
-	
-	public static final String COLUMN_EMAIL = "email";
-	public static final String COLUMN_USERNAME = "username";
-	public static final String COLUMN_PASSWORD = "password";
-	
-	public static final String COLUMN_KEY = "key";
-	public static final String COLUMN_VALUE = "value";
 	
 	private static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
 			+ TABLE_EVENTS + " ("
@@ -72,26 +66,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_ISFREE + " NUMERIC "
 			+ ")";
 	
-	private static final String CREATE_USERS_TABLE = "CREATE TABLE "
-			+ TABLE_USERS + " (" 
-			+ COLUMN_ID + " INTEGER, "
-			+ COLUMN_EMAIL + " TEXT, "
-			+ COLUMN_USERNAME + " TEXT, "
-			+ COLUMN_PASSWORD + " TEXT "
-			+ ")";
-	
-	private static final String CREATE_PLACES_TABLE = "CREATE TABLE " 
-			+ TABLE_PLACES + " ("
+	private static final String CREATE_LOCATIONS_TABLE = "CREATE TABLE " 
+			+ TABLE_LOCATIONS + " ("
 			+ COLUMN_TITLE + " TEXT, "
 			+ COLUMN_DESCRIPTION + " TEXT, "
 			+ COLUMN_LONGITUDE + " REAL, "
 			+ COLUMN_LATITUDE + " REAL "
-			+ ")";
-	
-	private static final String CREATE_APPLICATION_TABLE = "CREATE TABLE " 
-			+ TABLE_APPLICATION + " (" 
-			+ COLUMN_KEY + " TEXT, " 
-			+ COLUMN_VALUE + " TEXT "  
 			+ ")";
 	
 	
@@ -115,12 +95,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_EVENTS_TABLE);
 		Log.i(LOGTAG, "Created events table");
-		db.execSQL(CREATE_USERS_TABLE);
-		Log.i(LOGTAG, "Created users table");
-		db.execSQL(CREATE_PLACES_TABLE);
+		db.execSQL(CREATE_LOCATIONS_TABLE);
 		Log.i(LOGTAG, "Created places table");
-		db.execSQL(CREATE_APPLICATION_TABLE);
-		 Log.i(LOGTAG, "Created application table");
 	}
 
 	//update database
@@ -128,7 +104,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATIONS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPLICATION);
 		onCreate(db);
 	}

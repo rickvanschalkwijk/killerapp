@@ -50,12 +50,12 @@ public class PlaceDataSource {
 		values.put(DatabaseOpenHelper.COLUMN_LONGITUDE, place.getLocation()
 				.getLongitudeE6() / 1E6);
 
-		database.insert(DatabaseOpenHelper.TABLE_PLACES, null, values);
+		database.insert(DatabaseOpenHelper.TABLE_LOCATIONS, null, values);
 	}
 
 	public List<Place> getAllPlaces() {
 		List<Place> places = new ArrayList<Place>();
-		Cursor cursor = database.query(DatabaseOpenHelper.TABLE_PLACES,
+		Cursor cursor = database.query(DatabaseOpenHelper.TABLE_LOCATIONS,
 				columns, null, null, null, null, null);
 		if (cursor.getCount() > 0) {
 			while (cursor.moveToNext()) {
@@ -81,7 +81,7 @@ public class PlaceDataSource {
 	}
 
 	public void clearTable() {
-		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_PLACES);
+		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_LOCATIONS);
 	}
 
 }

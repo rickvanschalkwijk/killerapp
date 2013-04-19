@@ -30,8 +30,7 @@ public class EventDataSource {
 			DatabaseOpenHelper.COLUMN_END_DATE,
 			DatabaseOpenHelper.COLUMN_LATITUDE,
 			DatabaseOpenHelper.COLUMN_LONGITUDE,
-			DatabaseOpenHelper.COLUMN_PRICE, 
-			DatabaseOpenHelper.COLUMN_ISFREE };
+			DatabaseOpenHelper.COLUMN_PRICE, DatabaseOpenHelper.COLUMN_ISFREE };
 
 	SQLiteOpenHelper dbhelper;
 	SQLiteDatabase database;
@@ -41,16 +40,23 @@ public class EventDataSource {
 	}
 
 	public void open() {
-		Log.i(LOGTAG, "Database opened");
 		database = dbhelper.getWritableDatabase();
 	}
 
 	public void close() {
-		Log.i(LOGTAG, "Database closed");
 		dbhelper.close();
 	}
 
 	public void addEvent(Event event) {
+		Cursor cursor = database.rawQuery("SELECT * FROM "
+				+ DatabaseOpenHelper.TABLE_EVENTS + " WHERE "
+				+ DatabaseOpenHelper.COLUMN_ID + " = " + event.getId(), null);
+		if (cursor != null) {
+			database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_EVENTS
+					+ " WHERE " + DatabaseOpenHelper.COLUMN_ID + " = "
+					+ event.getId());
+		}
+
 		ContentValues values = new ContentValues();
 
 		values.put(DatabaseOpenHelper.COLUMN_TITLE, event.getTitle());
@@ -65,7 +71,7 @@ public class EventDataSource {
 				.getLatitudeE6() / 1E6);
 		values.put(DatabaseOpenHelper.COLUMN_LONGITUDE, event.getLocation()
 				.getLongitudeE6() / 1E6);
-		values.put(DatabaseOpenHelper.COLUMN_PRICE, event.getPrice().toString());
+		values.put(DatabaseOpenHelper.COLUMN_PRICE, event.getPrice());
 		values.put(DatabaseOpenHelper.COLUMN_ISFREE, event.isFree());
 
 		database.insert(DatabaseOpenHelper.TABLE_EVENTS, null, values);
@@ -80,56 +86,69 @@ public class EventDataSource {
 				Event event = new Event();
 				event.setTitle(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_TITLE)));
-				
+
 				event.setDescription(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_DESCRIPTION)));
-				
+
 				event.setCategory(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_CATEGORY)));
-				
-				DateTime dtStart = new DateTime(parseDateTime(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_START_DATE)).trim()));
+
+				DateTime dtStart = new DateTime(
+						parseDateTime(cursor
+								.getString(
+										cursor.getColumnIndex(DatabaseOpenHelper.COLUMN_START_DATE))
+								.trim()));
 				event.setStartDate(dtStart);
-				
-				DateTime dtEnd = new DateTime(parseDateTime(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_END_DATE)).trim()));
+
+				DateTime dtEnd = new DateTime(
+						parseDateTime(cursor
+								.getString(
+										cursor.getColumnIndex(DatabaseOpenHelper.COLUMN_END_DATE))
+								.trim()));
 				event.setEndDate(dtEnd);
-				
+
 				Double latitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LATITUDE));
 				Double longitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LONGITUDE));
 				event.setLocation(new GeoPoint(latitude, longitude));
-				
-				event.setPrice(new BigDecimal(cursor.getDouble(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_PRICE))));
-				
+
+				event.setPrice(cursor.getString(cursor
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_PRICE)));
+
 				event.setFree(Boolean.parseBoolean(cursor.getString(cursor
-						.getColumnIndex(DatabaseOpenHelper.COLUMN_ISFREE))));				
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_ISFREE))));
 				events.add(event);
-				Log.i(LOGTAG, "Retrieved event from db");
 			}
 		}
 		cursor.close();
 		return events;
 	}
-	
-	public List<Event> getFilterEvents(Array categories){
+
+	public List<Event> getFilterEvents(Array categories) {
 		List<Event> events = new ArrayList<Event>();
 		Cursor cursor = database.query(DatabaseOpenHelper.TABLE_EVENTS,
 				columns, null, null, null, null, null);
 		return events;
 	}
-	
-	
+
 	private static DateTime parseDateTime(String input) {
 		String pattern = KillerboneUtils.KILLERBONE_DATE_FORMAT;
 		DateTime dateTime = DateTime.parse(input,
 				DateTimeFormat.forPattern(pattern));
 		return dateTime;
 	}
-	
+
 	public void clearTable() {
 		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_EVENTS);
+	}
+
+	public boolean DatabaseHasRows() {
+		Cursor cursor = database.rawQuery("SELECT * FROM "
+				+ DatabaseOpenHelper.TABLE_EVENTS, null);
+		if (cursor.getCount() > 0) {
+			return true;
+		}
+		return false;
 	}
 }
