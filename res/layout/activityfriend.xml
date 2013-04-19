@@ -12,8 +12,7 @@
         android:id="@+id/friendlist"
         android:layout_width="match_parent"
         android:layout_height="276dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/actionbar" >
+        android:layout_alignParentBottom="true" >
 
     </ListView>
 
