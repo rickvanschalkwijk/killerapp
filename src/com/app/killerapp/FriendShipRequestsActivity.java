@@ -3,6 +3,7 @@ package com.app.killerapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.amsterguide.FriendActivity;
 import com.app.amsterguide.loaders.FriendLoader;
 
 import core.models.Friendship;
@@ -10,11 +11,13 @@ import core.models.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -85,4 +88,15 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 
 	}
 
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	    	Intent intent = new Intent(this, FriendActivity.class);
+			startActivity(intent);
+	        return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
 }
