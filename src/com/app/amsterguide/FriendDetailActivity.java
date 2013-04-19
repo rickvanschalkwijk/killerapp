@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.killerapp.R;
 
@@ -54,6 +55,8 @@ public class FriendDetailActivity extends Activity {
     	RESTSocialService socialService = new RESTSocialService();
     	socialService.DeleteFriendship(userId, authToken, friendship.getId());
     	Intent intent = new Intent(this, FriendActivity.class);
+    	Toast.makeText(context, "Friendship deleted",
+				Toast.LENGTH_SHORT).show();
 		startActivity(intent);
     }
 }
