@@ -160,7 +160,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		for (Friendship friendship : friendships) {
 			addFriendMarker(friendship);
 		}
-		
+
 		mapView.invalidate();
 	}
 
@@ -173,24 +173,24 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			String authToken = settings.getString("token", "letmein");
 			Double longitude = currentLocation.getLongitude();
 			Double latitude = currentLocation.getLatitude();
-
-
 			for (Friendship friendship : friendships) {
 				restSocialService.setFriendshipCoordinates(userId, friendship,
 						authToken, latitude, longitude, context);
 			}
-			Toast.makeText(context, "Location was send to friends", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Location was send to friends",
+					Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(context, "Location was not found", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Location was not found",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	private void addFriendMarker(final Friendship friendship) {
 		final User friend = friendship.getOtherUser(userId);
-		
-		GeoPoint friendLocation = new GeoPoint( 52.379211, 4.899426 );
-		//GeoPoint friendLocation = new GeoPoint( friend.getLatitude(), friend.getLongtitude() );
-		OverlayItem friendOverLayItem = new OverlayItem("Friendship", "Some friend", friendLocation);
+		GeoPoint friendLocation = new GeoPoint(friend.getLatitude(),
+				friend.getLongtitude());
+		OverlayItem friendOverLayItem = new OverlayItem("Friendship",
+				"Some friend", friendLocation);
 		Drawable friendMarker = this.getResources().getDrawable(
 				R.drawable.friend_marker);
 		friendOverLayItem.setMarker(friendMarker);
@@ -205,7 +205,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 					public boolean onItemSingleTapUp(final int index,
 							final OverlayItem item) {
-						Toast.makeText(context, "friend friends friends", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, friend.getUsername(),
+								Toast.LENGTH_SHORT).show();
 						return true;
 					}
 
@@ -617,8 +618,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	@Override
 	public Loader<List<Friendship>> onCreateLoader(int id, Bundle args) {
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-		userId = Long.valueOf(settings.getString("userID", "0"))
-				.longValue();
+		userId = Long.valueOf(settings.getString("userID", "0")).longValue();
 		String authToken = settings.getString("token", "letmein");
 		return new FriendLoader(getApplicationContext(), userId, authToken,
 				"APPROVED");
