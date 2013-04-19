@@ -123,7 +123,7 @@
     <!-- Event List -->
     <string name="title_event_list">Events</string>
     <string name="title_activity_pre_login">PreLoginActivity</string>
-    <string name="title_activity_friend_ship_requests">FriendShipRequestsActivity</string>
+    <string name="title_activity_friend_ship_requests">Friendship Requests</string>
     <string name="show_event">Show Event</string>
     <string name="addfriends">Add Friends</string>
     <string name="friendrequests">Friend Requests</string>

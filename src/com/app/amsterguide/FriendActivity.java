@@ -192,7 +192,7 @@ public class FriendActivity extends FragmentActivity implements
 		}
 
 		private AlertDialog buildAlertDialog(Context context) {
-			return new AlertDialog.Builder(context).setTitle("Title")
+			return new AlertDialog.Builder(context).setTitle("Add travel accompany")
 					.setMessage("Enter email address").setView(editText)
 					.setNeutralButton("Submit", null)
 					.setNegativeButton("Cancel", new OnClickListener() {
