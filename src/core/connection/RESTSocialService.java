@@ -76,7 +76,7 @@ public class RESTSocialService {
 								column.getAttribute("id").getValue())
 								.longValue();
 						User user = new User(id, name);
-						// try{
+						try{
 						Element locationColumn = column.getChild("location");
 						double latitude = Double.valueOf(locationColumn
 								.getChildText("latitude"));
@@ -86,9 +86,9 @@ public class RESTSocialService {
 						user.setLongtitude(longtitude);
 						Log.d("initiator user lat", latitude + "");
 						Log.d("initiator user long", longtitude + "");
-						// }catch(Exception e){
-						// Log.d("exception", e.toString());
-						// }
+						 }catch(Exception e){
+						 Log.d("exception", e.toString());
+						 }
 						friendship.setInitiator(user);
 
 					}
