@@ -348,6 +348,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		if (getBooleanFromSP("locations")) {
 			addLocations();
 		}
+		
+		if( friendships != null ){
+			addFriends();
+		}
+		
 	}
 
 	@Override
@@ -417,6 +422,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			sendLocationToFriends();
 			return true;
 		case R.id.action_map_settings:
+			Log.d("blaat", "saejdsajfklasjfkdlajdafskla");
 			Intent mapSettingsIntent = new Intent(this,
 					core.map.MapSettingsActivity.class);
 			startActivity(mapSettingsIntent);
@@ -598,7 +604,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	 */
 	public boolean getBooleanFromSP(String key) {
 		SharedPreferences preferences = getSharedPreferences("MapPref", 0);
-		return preferences.getBoolean(key, false);
+		return preferences.getBoolean(key, true);
 	}
 
 	private class EnableGpsDialogFragment extends DialogFragment {
