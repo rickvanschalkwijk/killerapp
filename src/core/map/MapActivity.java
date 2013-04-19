@@ -43,6 +43,7 @@ import com.app.killerapp.R;
 
 import core.connection.RESTSocialService;
 import core.databasehandlers.EventDataSource;
+import core.databasehandlers.PlaceDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
 import core.models.Event;
@@ -125,7 +126,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	private void addLocations() {
-		ArrayList<Place> places = PlaceUtil.getDummyData();
+		PlaceDataSource placeDataSource = new PlaceDataSource(context);
+		placeDataSource.open();
+		List<Place> places = placeDataSource.getAllPlaces();
+		placeDataSource.close();
 
 		for (Place place : places) {
 			addPlaceMarker(place);
