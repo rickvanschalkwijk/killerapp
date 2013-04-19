@@ -20,7 +20,8 @@ public class PlaceDataSource {
 	private static final String[] columns = { DatabaseOpenHelper.COLUMN_TITLE,
 			DatabaseOpenHelper.COLUMN_DESCRIPTION,
 			DatabaseOpenHelper.COLUMN_LATITUDE,
-			DatabaseOpenHelper.COLUMN_LONGITUDE };
+			DatabaseOpenHelper.COLUMN_LONGITUDE,
+			DatabaseOpenHelper.COLUMN_IMAGEURL };
 
 	SQLiteOpenHelper dbhelper;
 	SQLiteDatabase database;
@@ -40,6 +41,18 @@ public class PlaceDataSource {
 	}
 
 	public void addPlace(Place place) {
+		if (DatabaseHasRows()) {
+			Cursor cursor = database.rawQuery("SELECT * FROM "
+					+ DatabaseOpenHelper.TABLE_LOCATIONS + " WHERE "
+					+ DatabaseOpenHelper.COLUMN_ID + " = " + place.getId(),
+					null);
+			if (cursor != null) {
+				database.execSQL("DELETE FROM "
+						+ DatabaseOpenHelper.TABLE_LOCATIONS + " WHERE "
+						+ DatabaseOpenHelper.COLUMN_ID + " = " + place.getId());
+			}
+		}
+
 		ContentValues values = new ContentValues();
 
 		values.put(DatabaseOpenHelper.COLUMN_TITLE, place.getName());
@@ -49,6 +62,7 @@ public class PlaceDataSource {
 				.getLatitudeE6() / 1E6);
 		values.put(DatabaseOpenHelper.COLUMN_LONGITUDE, place.getLocation()
 				.getLongitudeE6() / 1E6);
+		values.put(DatabaseOpenHelper.COLUMN_IMAGEURL, place.getImageUrl());
 
 		database.insert(DatabaseOpenHelper.TABLE_LOCATIONS, null, values);
 	}
@@ -71,6 +85,8 @@ public class PlaceDataSource {
 				Double longitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LONGITUDE));
 				place.setLocation(new GeoPoint(latitude, longitude));
+				place.setImageUrl(cursor.getString(cursor
+						.getColumnIndex(DatabaseOpenHelper.COLUMN_IMAGEURL)));
 
 				places.add(place);
 				Log.i(LOGTAG, "Retrieved place from db");
@@ -82,6 +98,15 @@ public class PlaceDataSource {
 
 	public void clearTable() {
 		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_LOCATIONS);
+	}
+
+	public boolean DatabaseHasRows() {
+		Cursor cursor = database.rawQuery("SELECT * FROM "
+				+ DatabaseOpenHelper.TABLE_LOCATIONS, null);
+		if (cursor.getCount() > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

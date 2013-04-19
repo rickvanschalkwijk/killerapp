@@ -31,7 +31,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 
 	private static final String LOGTAG = "IP13HVA";
 	
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	
 	private static final String DATABASE_NAME = "offlineStorage.db";
 	public static final String TABLE_EVENTS = "events";
@@ -51,6 +51,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_LATITUDE = "latitude";
 	public static final String COLUMN_PRICE =  "price";
 	public static final String COLUMN_ISFREE = "free";
+	public static final String COLUMN_IMAGEURL = "imageurl";
 	
 	private static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
 			+ TABLE_EVENTS + " ("
@@ -68,10 +69,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	
 	private static final String CREATE_LOCATIONS_TABLE = "CREATE TABLE " 
 			+ TABLE_LOCATIONS + " ("
+			+ COLUMN_ID + " INTEGER, "
 			+ COLUMN_TITLE + " TEXT, "
 			+ COLUMN_DESCRIPTION + " TEXT, "
 			+ COLUMN_LONGITUDE + " REAL, "
-			+ COLUMN_LATITUDE + " REAL "
+			+ COLUMN_LATITUDE + " REAL, "
+			+ COLUMN_IMAGEURL + " TEXT "
 			+ ")";
 	
 	

@@ -48,13 +48,16 @@ public class EventDataSource {
 	}
 
 	public void addEvent(Event event) {
-		Cursor cursor = database.rawQuery("SELECT * FROM "
-				+ DatabaseOpenHelper.TABLE_EVENTS + " WHERE "
-				+ DatabaseOpenHelper.COLUMN_ID + " = " + event.getId(), null);
-		if (cursor != null) {
-			database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_EVENTS
-					+ " WHERE " + DatabaseOpenHelper.COLUMN_ID + " = "
-					+ event.getId());
+		if (DatabaseHasRows()) {
+			Cursor cursor = database.rawQuery("SELECT * FROM "
+					+ DatabaseOpenHelper.TABLE_EVENTS + " WHERE "
+					+ DatabaseOpenHelper.COLUMN_ID + " = " + event.getId(),
+					null);
+			if (cursor != null) {
+				database.execSQL("DELETE FROM "
+						+ DatabaseOpenHelper.TABLE_EVENTS + " WHERE "
+						+ DatabaseOpenHelper.COLUMN_ID + " = " + event.getId());
+			}
 		}
 
 		ContentValues values = new ContentValues();

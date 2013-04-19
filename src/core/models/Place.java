@@ -12,26 +12,36 @@ public class Place implements Serializable {
 	/**
 	 * 
 	 */
-	private String name;
+	private int id;
+	private String title;
 	private String description;
 	private GeoPoint location;
+	private String imageUrl;
 
 	public Place() {
 	}
 
 	public Place(String name, String description, GeoPoint location) {
 		super();
-		this.name = name;
+		this.title = name;
 		this.description = description;
 		this.location = location;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
-		return name;
+		return title;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.title = name;
 	}
 
 	public String getDescription() {
@@ -50,9 +60,17 @@ public class Place implements Serializable {
 		this.location = location;
 	}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public String toString() {
-		return name;
+		return title;
 	}
 
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 public class DatabaseLoaderThread implements Runnable {
 
 	EventDataSource eventDataSource;
+	PlaceDataSource placeDataSource;
 	Context context;
 
 	public DatabaseLoaderThread(Context context) {
@@ -23,10 +24,23 @@ public class DatabaseLoaderThread implements Runnable {
 			try {
 				parser.getEventsXML(context);
 			} catch (DataException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			eventDataSource.close();
+		}
+		
+		placeDataSource = new PlaceDataSource(context);
+		placeDataSource.open();
+		if(placeDataSource.DatabaseHasRows()) {
+			placeDataSource.close();
+		} else {
+			XMLParser parser = new XMLParser();
+			try {
+				parser.getPlacesXML(context);
+			} catch (DataException e) {
+				e.printStackTrace();
+			}
+			placeDataSource.close();
 		}
 	}
 }
