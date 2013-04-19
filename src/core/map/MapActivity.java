@@ -285,7 +285,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 				context);
 		alertDialogBuilder.setTitle(place.getName());
 		alertDialogBuilder
-				.setMessage(place.getDescription())
+				.setMessage( Html.fromHtml(place.getDescription()) )
 				.setCancelable(true)
 				.setNegativeButton(R.string.cancel,
 						new DialogInterface.OnClickListener() {
