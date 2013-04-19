@@ -62,11 +62,8 @@ public class FriendRowAdapter extends BaseAdapter {
 		User user = friendship.getOtherUser(userId);
 
 		TextView name = (TextView) convertView.findViewById(R.id.txtName);
-		TextView status = (TextView) convertView.findViewById(R.id.txtStatus);
 
-		name.setText(user.getUsername());
-		status.setText(friendship.getStatus());
-		
+		name.setText(user.getUsername());		
 
 		return convertView;
 	}
