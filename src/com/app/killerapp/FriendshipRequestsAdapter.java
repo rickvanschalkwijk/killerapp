@@ -123,6 +123,7 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 				item.getId());
 		Log.d("Approving auth: ", auth);
 		Log.d("Approving: ", item.toString());
+		searchArrayList.remove(item);
 		notifyDataSetChanged();
 		return null;
 	}
@@ -133,6 +134,7 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 		RESTSocialService socialService = new RESTSocialService();
 		socialService.DeclineFriendship(item.getParticipant().getId(), auth, item.getId());
 		Log.d("Trying to Deny: ", item.toString());
+		searchArrayList.remove(item);
 		notifyDataSetChanged();
 		return null;
 	}
