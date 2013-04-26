@@ -97,9 +97,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_EVENTS_TABLE);
-		Log.i(LOGTAG, "Created events table");
 		db.execSQL(CREATE_LOCATIONS_TABLE);
-		Log.i(LOGTAG, "Created places table");
 	}
 
 	//update database

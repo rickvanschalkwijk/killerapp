@@ -31,12 +31,10 @@ public class PlaceDataSource {
 	}
 
 	public void open() {
-		Log.i(LOGTAG, "Database opened");
 		database = dbhelper.getWritableDatabase();
 	}
 
 	public void close() {
-		Log.i(LOGTAG, "Database closed");
 		dbhelper.close();
 	}
 
