@@ -75,6 +75,7 @@ public class PreLoginActivity extends Activity {
 						0);
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putBoolean("loggedInGuest", true);
+				editor.putBoolean("loggedIn", false);
 				editor.commit();
 				Intent intent = new Intent(getApplicationContext(),
 						MainActivity.class);
