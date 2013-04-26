@@ -49,23 +49,12 @@ public class PreLoginActivity extends Activity {
 
 		setContentView(R.layout.activity_pre_login);
 
-		LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-		loginLayout.setVisibility(LinearLayout.GONE);
-
 		// Show the Up button in the action bar.
 		setupActionBar();
 		hideActionBar();
 
-		Button showLogin = (Button) findViewById(R.id.btn_show_login);
 		Button logginAsGuest = (Button) findViewById(R.id.btn_login_as_guest);
 		Button register = (Button) findViewById(R.id.btn_register);
-
-		showLogin.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
-				loginLayout.setVisibility(LinearLayout.VISIBLE);
-			}
-		});
 
 		logginAsGuest.setOnClickListener(new View.OnClickListener() {
 
