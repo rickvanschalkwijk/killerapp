@@ -85,8 +85,6 @@ public class FriendActivity extends FragmentActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-						String.valueOf(friendships.get(position).getId()));
-
 				Intent intent = new Intent(FriendActivity.this,
 						FriendDetailActivity.class);
 				intent.putExtra(Friendship.EXTRA, friendships.get(position));
@@ -174,16 +172,16 @@ public class FriendActivity extends FragmentActivity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-	    	Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-	        return true;
-	    }
 
-	    return super.onKeyDown(keyCode, event);
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+			return true;
+		}
+
+		return super.onKeyDown(keyCode, event);
 	}
 
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {
@@ -201,7 +199,8 @@ public class FriendActivity extends FragmentActivity implements
 		}
 
 		private AlertDialog buildAlertDialog(Context context) {
-			return new AlertDialog.Builder(context).setTitle("Add travel accompany")
+			return new AlertDialog.Builder(context)
+					.setTitle("Add travel accompany")
 					.setMessage("Enter email address").setView(editText)
 					.setNeutralButton("Submit", null)
 					.setNegativeButton("Cancel", new OnClickListener() {
