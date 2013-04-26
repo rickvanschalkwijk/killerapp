@@ -120,20 +120,22 @@
                 android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
-            android:name="search.SearchMainActivity"
-            android:label="@string/title_activity_search" >
-        </activity>
-        <activity
-            android:name="search.SearchResultActivity"
-            android:label="@string/title_activity_search_result" >
-        </activity>
-        <activity
             android:name="com.app.killerapp.FriendShipRequestsActivity"
             android:label="@string/title_activity_friend_ship_requests" >
         </activity>
         <activity
             android:name="core.map.MapSettingsActivity"
             android:label="@string/title_activity_map_settings" >
+        </activity>
+        <activity
+            android:name="search.SearchActivity"
+            android:label="@string/title_activity_search_result" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 
