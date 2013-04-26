@@ -49,7 +49,8 @@
         </activity>
         <activity
             android:name="com.app.amsterguide.FriendDetailActivity"
-            android:label="@string/title_activity_friend" >
+            android:label="@string/title_activity_friend"
+            android:parentActivityName="com.app.amsterguide.FriendActivity" >
         </activity>
         <activity
             android:name="com.app.amsterguide.SettingsActivity"
@@ -121,7 +122,8 @@
         </activity>
         <activity
             android:name="com.app.killerapp.FriendShipRequestsActivity"
-            android:label="@string/title_activity_friend_ship_requests" >
+            android:label="@string/title_activity_friend_ship_requests"
+            android:parentActivityName="com.app.amsterguide.FriendActivity" >
         </activity>
         <activity
             android:name="core.map.MapSettingsActivity"
