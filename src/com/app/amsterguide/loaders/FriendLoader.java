@@ -27,7 +27,6 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 
 	@Override
 	public List<Friendship> loadInBackground() {
-		Log.d("adapter" , "adapter start");
 		RESTSocialService socialService = new RESTSocialService();
 		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus, context);
 		

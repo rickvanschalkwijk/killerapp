@@ -85,7 +85,6 @@ public class FriendActivity extends FragmentActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position,
 					long id) {
-				Log.d("eerste friendshipid",
 						String.valueOf(friendships.get(position).getId()));
 
 				Intent intent = new Intent(FriendActivity.this,
@@ -116,8 +115,6 @@ public class FriendActivity extends FragmentActivity implements
 		long userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
 		String authToken = settings.getString("token", "letmein");
-		Log.d("realauthtoken", authToken);
-		Log.d("realID", String.valueOf(userId));
 		return new FriendLoader(getApplicationContext(), userId, authToken,
 				"APPROVED");
 	}
@@ -231,7 +228,6 @@ public class FriendActivity extends FragmentActivity implements
 					show();
 				} else {
 					canceled = true;
-					Log.d("Send Mail", "Sending add request");
 					SharedPreferences settings = getSharedPreferences(
 							"LocalPrefs", 0);
 					long userId = Long.valueOf(

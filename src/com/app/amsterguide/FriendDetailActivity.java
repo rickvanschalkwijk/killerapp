@@ -38,7 +38,6 @@ public class FriendDetailActivity extends Activity {
 		userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
 		authToken = settings.getString("token", "letmein");
-		Log.d("realauthtoken", authToken);
 		
 		User otherUser = friendship.getOtherUser(userId);
 		name.setText(String.valueOf( otherUser.getUsername()));

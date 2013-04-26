@@ -31,7 +31,6 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 		this.auth = auth;
 		this.mInflater = LayoutInflater.from(context);
 		this.context = context;
-		Log.d("FriendReqAdapter", "Constructing");
 	}
 
 	public void setList(List<Friendship> results) {
@@ -59,22 +58,15 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.d("FriendReqAdapter: ", "Starting Getview");
 		ViewHolderStatus holder;
 		if (convertView == null) {
 			holder = new ViewHolderStatus();
 
 			// Search if status is already changed
-			Log.d("FriendReqAdapter: ",
-					"Statug: " + searchArrayList.get(position).getStatus());
-			Log.d("FriendReqAdapter: ", "position: " + position);
 			Friendship frTemp = searchArrayList.get(position);
-			Log.d("FriendReqAdapter: ",
-					"Friendship summary: " + frTemp.toString());
 
 			if (frTemp.getStatus().trim().contains("PENDING")
 					|| frTemp.getStatus().trim().contains("SENT")) {
-				Log.d("FriendReqAdapter: ", "Pending statement");
 				convertView = mInflater.inflate(R.layout.company_request_row,
 						null);
 
@@ -121,8 +113,6 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 		RESTSocialService socialService = new RESTSocialService();
 		socialService.ApproveFriendship(item.getParticipant().getId(), auth,
 				item.getId());
-		Log.d("Approving auth: ", auth);
-		Log.d("Approving: ", item.toString());
 		searchArrayList.remove(item);
 		notifyDataSetChanged();
 		return null;
@@ -133,7 +123,6 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 		Friendship item = (Friendship) v.getTag();
 		RESTSocialService socialService = new RESTSocialService();
 		socialService.DeclineFriendship(item.getParticipant().getId(), auth, item.getId());
-		Log.d("Trying to Deny: ", item.toString());
 		searchArrayList.remove(item);
 		notifyDataSetChanged();
 		return null;

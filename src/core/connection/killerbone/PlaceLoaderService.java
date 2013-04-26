@@ -19,17 +19,16 @@ final private String DEBUG_TAG = "EventLoaderService";
 		HttpsRequest allLocationsRequest = new HttpsRequest(requestType, url, "");
 		HttpsConnector httpsConnector = new HttpsConnector(context);
 		
-//		try {
+		try {
 			String response = httpsConnector.performHttpsRequest(allLocationsRequest);
-			Log.d(DEBUG_TAG, response);
 			
 			return response;
-//		} catch (DataException e) {
-//			Log.e(DEBUG_TAG, e.getMessage());
-//		} catch (Exception e) {
-//			Log.e(DEBUG_TAG, e.toString());
-//		}
-//		return null;
+		} catch (DataException e) {
+			Log.e(DEBUG_TAG, e.getMessage());
+		} catch (Exception e) {
+			Log.e(DEBUG_TAG, e.toString());
+		}
+		return null;
 	}
 	
 	public String getNewLocationsXml(Context context, long timestamp)
@@ -42,8 +41,6 @@ final private String DEBUG_TAG = "EventLoaderService";
 		
 		try {
 			String response = httpsConnector.performHttpsRequest(newLocationsRequest);
-			Log.d(DEBUG_TAG, response);
-			
 			return response;
 		} catch (DataException e) {
 			Log.e(DEBUG_TAG, e.getMessage());

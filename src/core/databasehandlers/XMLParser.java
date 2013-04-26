@@ -62,7 +62,6 @@ public class XMLParser {
 				Event event = new Event();
 				event.setId(Integer
 						.parseInt(node.getAttribute("id").getValue()));
-				Log.d(LOGTAG, "ID: " + event.getId());
 				event.setTitle(node.getChildText(TITLE_TAG));
 				event.setDescription(node.getChildText(DESCRIPTION_TAG));
 				event.setCategory(node.getChildText(CATEGORY_TAG));
@@ -115,7 +114,6 @@ public class XMLParser {
 				Place place = new Place();
 				place.setId(Integer
 						.parseInt(node.getAttribute("id").getValue()));
-				Log.d(LOGTAG, "ID: " + place.getId());
 				place.setName(node.getChildText(TITLE_TAG));
 				place.setDescription(node.getChildText(DESCRIPTION_TAG));
 				Double latitude = (Double.parseDouble(node.getChildText(
