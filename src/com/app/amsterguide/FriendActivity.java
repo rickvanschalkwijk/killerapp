@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.app.amsterguide.adapters.FriendRowAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
 
+import core.connection.CheckConnection;
 import core.connection.RESTSocialService;
 import core.map.MapActivity;
 import core.event.EventList;
@@ -71,6 +72,7 @@ public class FriendActivity extends FragmentActivity implements
 
 		setContentView(R.layout.activityfriend);
 		selfReferance = this;
+
 		dialig = new AddCompanionDialog(this);
 
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
@@ -93,11 +95,7 @@ public class FriendActivity extends FragmentActivity implements
 		});
 
 		getSupportLoaderManager().initLoader(0, null, this);
-	}
 
-	private void startFriendShipRequestsActivity() {
-		Intent intent = new Intent(this, FriendShipRequestsActivity.class);
-		startActivity(intent);
 	}
 
 	public static Context getContext() {
@@ -151,6 +149,11 @@ public class FriendActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (!CheckConnection.isOnline(getContext())) {
+			makeToast("No internet connection");
+			return false;
+		}
+
 		switch (item.getItemId()) {
 		case R.id.addfriends:
 			dialig.show();
