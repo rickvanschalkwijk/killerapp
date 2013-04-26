@@ -91,7 +91,7 @@ public class RegistrationActivity extends Activity {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle("Succes");
 			alertDialogBuilder
-					.setMessage("Account created succesfully!")
+					.setMessage("Account created succesfully! We've send you a activation e-mail")
 					.setCancelable(false)
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
@@ -99,7 +99,7 @@ public class RegistrationActivity extends Activity {
 										DialogInterface dialog, int id) {
 									dialog.cancel();
 									Intent i = new Intent(getApplicationContext(),
-											LoginActivity.class);
+											PreLoginActivity.class);
 									startActivity(i);
 								}
 							});
@@ -109,7 +109,7 @@ public class RegistrationActivity extends Activity {
 		} 
     	catch (Exception e) {
 			e.printStackTrace();
-			SetMessage("Failed", "Failed to create account, are you currently connected to the internet?");
+			SetMessage("Failed", "Failed to create account, You're name or email is already in use");
 		}
     }
 }
