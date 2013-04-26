@@ -89,7 +89,6 @@ public class PlaceDataSource {
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_IMAGEURL)));
 
 				places.add(place);
-				Log.i(LOGTAG, "Retrieved place from db");
 			}
 		}
 		cursor.close();
