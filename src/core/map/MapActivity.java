@@ -358,6 +358,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	@Override
 	protected void onResume() {
 		super.onResume();
+		addMarkers();
 		locationListener = new GeoUpdateHandler();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				100, 0, locationListener);
