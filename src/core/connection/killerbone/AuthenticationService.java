@@ -44,7 +44,6 @@ public class AuthenticationService
 		
 		try {
 			String response = httpsConnector.performHttpsRequest(authenticateRequest);
-			Log.d(DEBUG_TAG, response);
 			
 			// Convert response to xml document
 			SAXBuilder builder = new SAXBuilder();

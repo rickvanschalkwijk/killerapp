@@ -423,7 +423,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			sendLocationToFriends();
 			return true;
 		case R.id.action_map_settings:
-			Log.d("blaat", "saejdsajfklasjfkdlajdafskla");
 			Intent mapSettingsIntent = new Intent(this,
 					core.map.MapSettingsActivity.class);
 			startActivity(mapSettingsIntent);
@@ -455,9 +454,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 	public Dialog filterDialog() {
 		boolean[] booleans = getSelectedFilter(mSelectedItems);
-		for (Boolean bool : booleans) {
-			Log.d("bool", bool + "");
-		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)
 				.setMultiChoiceItems(categories, booleans,

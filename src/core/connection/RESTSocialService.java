@@ -42,7 +42,6 @@ public class RESTSocialService {
 		try {
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
-			Log.d(DEBUG_TAG, response);
 
 			// Convert response to xml document
 			SAXBuilder builder = new SAXBuilder();
@@ -76,19 +75,18 @@ public class RESTSocialService {
 								column.getAttribute("id").getValue())
 								.longValue();
 						User user = new User(id, name);
-						try{
-						Element locationColumn = column.getChild("location");
-						double latitude = Double.valueOf(locationColumn
-								.getChildText("latitude"));
-						double longtitude = Double.valueOf(locationColumn
-								.getChildText("longitude"));
-						user.setLatitude(latitude);
-						user.setLongtitude(longtitude);
-						Log.d("initiator user lat", latitude + "");
-						Log.d("initiator user long", longtitude + "");
-						 }catch(Exception e){
-						 Log.d("exception", e.toString());
-						 }
+						try {
+							Element locationColumn = column
+									.getChild("location");
+							double latitude = Double.valueOf(locationColumn
+									.getChildText("latitude"));
+							double longtitude = Double.valueOf(locationColumn
+									.getChildText("longitude"));
+							user.setLatitude(latitude);
+							user.setLongtitude(longtitude);
+						} catch (Exception e) {
+							Log.d("exception", e.toString());
+						}
 						friendship.setInitiator(user);
 
 					}
@@ -107,8 +105,6 @@ public class RESTSocialService {
 									"location").getChildText("longitude"));
 							user.setLatitude(latitude);
 							user.setLongtitude(longtitude);
-							Log.d("participant user lat", latitude + "");
-							Log.d("participant user long", longtitude + "");
 						} catch (Exception e) {
 							Log.d("exception", e.toString());
 						}
@@ -148,18 +144,13 @@ public class RESTSocialService {
 		HttpsConnector httpsConnector = new HttpsConnector(
 				FriendActivity.getContext());
 
-		Log.d("BODY", authenticateRequest.getBody());
-
 		try {
 
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
 
-			Log.d("Response: ", response);
-
 			return true;
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -179,18 +170,11 @@ public class RESTSocialService {
 
 		HttpsConnector httpsConnector = new HttpsConnector(
 				FriendShipRequestsActivity.getContext());
-		// 3 /1
-		Log.d("URL", url);
 
 		try {
-
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
-
-			Log.d("Response: ", response);
-
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -209,18 +193,10 @@ public class RESTSocialService {
 
 		HttpsConnector httpsConnector = new HttpsConnector(
 				FriendShipRequestsActivity.getContext());
-		// 3 /1
-		Log.d("URL", url);
-
 		try {
-
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
-
-			Log.d("Response: ", response);
-
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -235,20 +211,12 @@ public class RESTSocialService {
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, "");
 
 		authenticateRequest.setHeader("AuthToken", authToken);
-		Log.d("authtoken delete", authToken);
 		HttpsConnector httpsConnector = new HttpsConnector(
 				FriendDetailActivity.getContext());
-		Log.d("URL", url);
-
 		try {
-
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
-
-			Log.d("Response deletefriend ", response);
-
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -264,25 +232,16 @@ public class RESTSocialService {
 		String body = KillerboneUtils.composeFriendshipLocationUpdateXml(
 				latitude, longtitude);
 
-		Log.d("setFriendshipCoordinates body", body);
 		HttpsRequest authenticateRequest = new HttpsRequest(type, url, body);
 
 		authenticateRequest.setHeader("Content-Type", "text/xml");
 		authenticateRequest.setHeader("AuthToken", authToken);
 
 		HttpsConnector httpsConnector = new HttpsConnector(context);
-
-		Log.d("setFriendshipCoordinates URL", url);
-
 		try {
-
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
-
-			Log.d("Response: ", response);
-
 		} catch (DataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

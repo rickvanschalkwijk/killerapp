@@ -22,17 +22,14 @@ public class EventLoaderService
 		HttpsRequest allEventsRequest = new HttpsRequest(requestType, url, "");
 		HttpsConnector httpsConnector = new HttpsConnector(context);
 		
-//		try {
+		try {
 			String response = httpsConnector.performHttpsRequest(allEventsRequest);
-			Log.d(DEBUG_TAG, response);
 			
 			return response;
-//		} catch (DataException e) {
-//			Log.e(DEBUG_TAG, e.getMessage());
-//		} catch (Exception e) {
-//			Log.e(DEBUG_TAG, e.toString());
-//		}
-//		return null;
+		} catch (Exception e) {
+			Log.e(DEBUG_TAG, e.toString());
+		}
+		return null;
 	}
 	
 	public String getNewEventsXml(Context context, long timestamp)
@@ -45,8 +42,6 @@ public class EventLoaderService
 		
 		try {
 			String response = httpsConnector.performHttpsRequest(newEventsRequest);
-			Log.d(DEBUG_TAG, response);
-			
 			return response;
 		} catch (DataException e) {
 			Log.e(DEBUG_TAG, e.getMessage());

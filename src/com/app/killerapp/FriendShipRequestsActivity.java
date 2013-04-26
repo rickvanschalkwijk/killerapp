@@ -76,8 +76,6 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 					tempL.add(result.get(i));
 				}
 			}		
-			Log.d("FriendReqAdapter: ", "List set to adapter. Length: " + tempL.size() );
-			Log.d("FriendReqAdapter: ", "userid: " + userID );
 			comReqAdap.setList(tempL);
 		}	
 	}
