@@ -117,7 +117,7 @@
     <!-- Start Search Activity -->
     <string name="title_activity_search">Search</string>
     <string name="title_activity_search_result">Search Result</string>
-    <string name="search_hint">Search Locations or Events</string>
+    <string name="search_hint">Search Events</string>
     <!-- End Search Activity -->
 
 

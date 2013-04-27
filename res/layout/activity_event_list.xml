@@ -6,6 +6,16 @@
     android:layout_marginRight="10dp"
     android:orientation="vertical" >
 
+    <EditText
+        android:id="@+id/inputSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_hint"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
     <ListView
         android:id="@+id/listEvents"
         android:layout_width="fill_parent"
