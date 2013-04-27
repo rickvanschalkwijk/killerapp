@@ -9,22 +9,11 @@
     android:background="@drawable/prelogin_background_blur"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:text="@string/menu_title" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
         android:orientation="vertical" >
 
         <Button
@@ -34,6 +23,7 @@
             android:onClick="openMap"
             android:background="@drawable/rounded_menu_map_layer"
             android:textColor="#4d4d4d"
+            android:layout_marginBottom="10dp"
             android:text="@string/map_button" />
 
         <Button
@@ -41,20 +31,17 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="openFriend"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_travel_accompanions_layer"
             android:text="@string/companion_button" />
-
-        <Button
-            android:id="@+id/btn_services_open"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:onClick="gotoServices"
-            android:text="@string/service_button" />
 
         <Button
             android:id="@+id/btn_event_list_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="openEventList"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_events_layer"
             android:text="@string/events_button" />
 
         <Button
@@ -62,12 +49,25 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="openPlaceList"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_events_layer"
             android:text="@string/places_button" />
+        
+        <Button
+            android:id="@+id/btn_services_open"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="gotoServices"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_services_layer"
+            android:text="@string/service_button" />
 
         <Button
             android:id="@+id/btn_settings_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_settings_layer"
             android:text="@string/settings_button" />
 
         <Button
@@ -75,6 +75,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="signOut"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_menu_sign_out_layer"
             android:text="@string/logout_button" />
     </LinearLayout>
 
