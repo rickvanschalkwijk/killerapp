@@ -65,7 +65,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	private Location currentLocation;
 	private DefaultResourceProxyImpl resProxy;
 	private BoundedMapView mapView;
-	private int defaultZoomLevel = 13;
+	private int defaultZoomLevel = 15;
 	private static MapActivity selfReferance = null;
 	public ArrayList<String> selectedCategoryIds;
 	public String[] categories = { "music", "art", "nightlife" };
@@ -105,8 +105,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		mapController.setZoom(defaultZoomLevel);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-		GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
-
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
@@ -116,6 +114,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			Place place = (Place) getIntent().getSerializableExtra("place");
 			mapController.animateTo(place.getLocation());
 		} else {
+			GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
 			mapController.animateTo(centralStation);
 		}
 		// Set the MapView as the root View for this Activity; done!
