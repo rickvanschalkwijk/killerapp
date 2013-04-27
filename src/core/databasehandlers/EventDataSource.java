@@ -86,7 +86,7 @@ public class EventDataSource {
 		List<Event> events = new ArrayList<Event>();
 		Cursor cursor = database.query(DatabaseOpenHelper.TABLE_EVENTS,
 				columns, null, null, null, null, null);
-		if (cursor.getCount() > 0) {
+		if (DatabaseHasRows()) {
 			while (cursor.moveToNext()) {
 				Event event = new Event();
 				event.setTitle(cursor.getString(cursor

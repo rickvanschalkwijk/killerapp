@@ -40,7 +40,7 @@ public class PlaceList extends Activity {
 
 		final ListView listView = (ListView) findViewById(R.id.listPlaces);
 		ArrayAdapter<Place> adapter = new ArrayAdapter<Place>(this,
-				R.layout.text_view, places);
+				R.layout.event_list_item, places);
 		listView.setAdapter(adapter);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {

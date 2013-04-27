@@ -23,52 +23,59 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.app.amsterguide.PreLoginActivity"
-            android:label="AmsterGuide" >
+            android:label="AmsterGuide"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.app.amsterguide.SplashActivity"
             android:label="AmsterGuide"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait"> 
+            android:screenOrientation="portrait" > 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.app.amsterguide.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.app.amsterguide.LoginActivity"
-            android:label="Login to your Account" >
+            android:label="Login to your Account"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.app.amsterguide.RegistrationActivity"
-            android:label="Register New Account" >
+            android:label="Register New Account"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.app.amsterguide.FriendDetailActivity"
             android:label="@string/title_activity_friend"
-            android:parentActivityName="com.app.amsterguide.FriendActivity" >
+            android:parentActivityName="com.app.amsterguide.FriendActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.app.amsterguide.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
             android:name="com.app.killerapp.util.MenuActivity"
-            android:label="@string/title_activity_menu" >
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="core.map.MapActivity"
             android:label="@string/title_activity_map"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -76,7 +83,8 @@
         <activity
             android:name="util.HelpActivity"
             android:label="@string/title_activity_help"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -84,7 +92,8 @@
         <activity
             android:name="com.app.amsterguide.FriendActivity"
             android:label="@string/title_activity_friend"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -92,7 +101,8 @@
         <activity
             android:name="com.app.amsterguide.EventActivity"
             android:label="@string/title_activity_event"
-            android:parentActivityName="core.map.MapActivity" >
+            android:parentActivityName="core.map.MapActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="core.map.MapActivity" />
@@ -100,7 +110,8 @@
         <activity
             android:name="services.ServicesContactActivity"
             android:label="@string/title_activity_services_contact"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -108,7 +119,9 @@
         <activity
             android:name="core.event.EventList"
             android:label="@string/title_event_list"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" 
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -116,7 +129,8 @@
         <activity
             android:name="core.place.PlaceList"
             android:label="@string/title_place_list"
-            android:parentActivityName="com.app.amsterguide.MainActivity" >
+            android:parentActivityName="com.app.amsterguide.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -124,15 +138,18 @@
         <activity
             android:name="com.app.amsterguide.FriendShipRequestsActivity"
             android:label="@string/title_activity_friend_ship_requests"
-            android:parentActivityName="com.app.amsterguide.FriendActivity" >
+            android:parentActivityName="com.app.amsterguide.FriendActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="core.map.MapSettingsActivity"
-            android:label="@string/title_activity_map_settings" >
+            android:label="@string/title_activity_map_settings"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="search.SearchActivity"
-            android:label="@string/title_activity_search_result" >
+            android:label="@string/title_activity_search_result"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
