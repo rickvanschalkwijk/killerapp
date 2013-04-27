@@ -16,18 +16,15 @@
 
 package com.app.amsterguide;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MotionEvent;
+
 import com.app.killerapp.R;
 
 import core.databasehandlers.DatabaseLoaderThread;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Context;
-import android.content.Intent;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.view.MotionEvent;
 
 public class SplashActivity extends Activity {
 	
@@ -39,7 +36,6 @@ public class SplashActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); 
 		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
 		Thread thread = new Thread(databaseLoaderThread);
 		thread.start();
