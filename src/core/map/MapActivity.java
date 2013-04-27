@@ -180,10 +180,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 						authToken, latitude, longitude, context);
 			}
 			Toast.makeText(context, "Location was send to friends",
-					Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(context, "Location was not found",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Location was not send to friends, is your GPS working?",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -289,8 +289,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
-								// user cancels
-								// return to underlaing activity
+
 							}
 						});
 
