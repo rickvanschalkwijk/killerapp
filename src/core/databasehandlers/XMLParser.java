@@ -110,7 +110,6 @@ public class XMLParser {
 				event.setPrice(node.getChildText(PRICE_TAG));
 				eventDataSource.open();
 				eventDataSource.addEvent(event);
-				eventDataSource.close();
 			}
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
