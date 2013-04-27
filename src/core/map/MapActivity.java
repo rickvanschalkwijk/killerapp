@@ -209,7 +209,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 					public boolean onItemSingleTapUp(final int index,
 							final OverlayItem item) {
-						Toast.makeText(context, friend.getUsername(),
+						Toast.makeText(context, friend.getUsername() + " " + friend.getRefreshDate(),
 								Toast.LENGTH_SHORT).show();
 						return true;
 					}

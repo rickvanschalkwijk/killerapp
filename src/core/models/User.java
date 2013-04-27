@@ -14,6 +14,7 @@ public class User implements Serializable{
 	private String password;
 	private double latitude;
 	private double longtitude;
+	private String refreshDate;
 	
 	
 	
@@ -38,6 +39,14 @@ public class User implements Serializable{
 	public User(long id, String username) {
 		this.id = id;
 		this.username = username;
+	}
+
+	public String getRefreshDate() {
+		return refreshDate;
+	}
+
+	public void setRefreshDate(String refreshDate) {
+		this.refreshDate = refreshDate;
 	}
 
 	public long getId() {

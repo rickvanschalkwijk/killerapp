@@ -82,8 +82,14 @@ public class RESTSocialService {
 									.getChildText("latitude"));
 							double longtitude = Double.valueOf(locationColumn
 									.getChildText("longitude"));
+							String date = locationColumn
+									.getAttributeValue("refreshDate");
+
+							user.setRefreshDate(date);
 							user.setLatitude(latitude);
 							user.setLongtitude(longtitude);
+							Log.d("initiator user lat", latitude + "");
+							Log.d("initiator user long", longtitude + "");
 						} catch (Exception e) {
 							Log.d("exception", e.toString());
 						}
@@ -103,6 +109,10 @@ public class RESTSocialService {
 									"location").getChildText("latitude"));
 							double longtitude = Double.valueOf(column.getChild(
 									"location").getChildText("longitude"));
+							String date = column.getChild("location")
+									.getAttributeValue("refreshDate");
+							Log.d("User date thingy", date);
+							user.setRefreshDate(date);
 							user.setLatitude(latitude);
 							user.setLongtitude(longtitude);
 						} catch (Exception e) {

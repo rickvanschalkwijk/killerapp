@@ -41,7 +41,11 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+		if(settings.getBoolean("loggedIn", false))
+			setContentView(R.layout.activity_main);
+		else
+			setContentView(R.layout.activity_main_guest);
 	}
 
 	public void openMap(View view) {

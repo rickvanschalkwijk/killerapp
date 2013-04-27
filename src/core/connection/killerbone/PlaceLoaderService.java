@@ -9,7 +9,7 @@ import core.connection.https.HttpsRequest;
 import core.connection.https.HttpsRequestType;
 
 public class PlaceLoaderService {
-final private String DEBUG_TAG = "EventLoaderService";
+final private String DEBUG_TAG = "PlaceLoaderService";
 	
 	public String getAllLocationsXml(Context context) throws DataException
 	{

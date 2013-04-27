@@ -18,20 +18,29 @@ public class DatabaseLoaderThread implements Runnable {
 		eventDataSource = new EventDataSource(context);
 		eventDataSource.open();
 		if (eventDataSource.DatabaseHasRows()) {
+			XMLParser parser = new XMLParser();
+			try {
+				parser.getEventsXML(context, true);
+			} catch (DataException e) {
+				e.printStackTrace();
+			}
+			eventDataSource.deleteExpiredEvents();
 			eventDataSource.close();
 		} else {
 			XMLParser parser = new XMLParser();
 			try {
-				parser.getEventsXML(context);
+				parser.getEventsXML(context, false);
 			} catch (DataException e) {
 				e.printStackTrace();
 			}
 			eventDataSource.close();
 		}
 		
+
+
 		placeDataSource = new PlaceDataSource(context);
 		placeDataSource.open();
-		if(placeDataSource.DatabaseHasRows()) {
+		if (placeDataSource.DatabaseHasRows()) {
 			placeDataSource.close();
 		} else {
 			XMLParser parser = new XMLParser();

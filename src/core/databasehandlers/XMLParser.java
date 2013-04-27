@@ -16,8 +16,9 @@ import org.osmdroid.util.GeoPoint;
 
 import util.KillerboneUtils;
 
-
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import android.util.Log;
 
 import core.connection.DataException;
@@ -29,6 +30,8 @@ import core.models.Place;
 public class XMLParser {
 
 	private GeoPoint location;
+	
+	private SharedPreferences sharedPreferences; 
 
 	private static final String LOGTAG = "IP13HVA";
 
@@ -45,15 +48,32 @@ public class XMLParser {
 	private static final String FREE_TAG = "free";
 	private static final String PRICE_TAG = "price";
 	private static final String IMAGEURL_TAG = "imageUrl";
+	
 
-	public void getEventsXML(Context context) throws DataException {
+	public void getEventsXML(Context context, boolean update)
+			throws DataException {
 		SAXBuilder builder = new SAXBuilder();
 		EventDataSource eventDataSource = new EventDataSource(context);
-
 		try {
+			
+			sharedPreferences = context.getSharedPreferences("timestamp", 0);
+			SharedPreferences.Editor editor= sharedPreferences.edit();
+			
 			EventLoaderService eventLoaderService = new EventLoaderService();
-			Reader reader = new StringReader(
-					eventLoaderService.getAllEventsXml(context));
+			Reader reader;
+			if (update) {
+				Long timestamp = sharedPreferences.getLong("timestamp", 0);
+				reader = new StringReader(eventLoaderService.getNewEventsXml(
+						context, timestamp));
+				editor.putLong("timestamp", System.currentTimeMillis());
+				editor.commit();
+			} else {
+				reader = new StringReader(
+						eventLoaderService.getAllEventsXml(context));
+				editor.putLong("timestamp", System.currentTimeMillis());
+				editor.commit();
+			}
+			
 			Document document = builder.build(reader);
 			Element rootnode = document.getRootElement();
 			List<Element> list = rootnode.getChildren(EVENT_TAG);

@@ -2,7 +2,9 @@ package core.databasehandlers;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -153,5 +155,11 @@ public class EventDataSource {
 			return true;
 		}
 		return false;
+	}
+
+	public void deleteExpiredEvents() {
+		String currentDate = new SimpleDateFormat(KillerboneUtils.KILLERBONE_DATE_FORMAT).format(new Date());
+		Log.d(LOGTAG, currentDate);		
+		database.execSQL("DELETE FROM " + DatabaseOpenHelper.TABLE_EVENTS + " WHERE " + DatabaseOpenHelper.COLUMN_END_DATE + " < '" + currentDate + "'");
 	}
 }
