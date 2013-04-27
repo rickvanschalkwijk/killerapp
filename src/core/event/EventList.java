@@ -7,12 +7,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,6 +29,7 @@ import core.models.Event;
 public class EventList extends Activity {
 
 	public static List<Event> events = new ArrayList<Event>();
+	ArrayAdapter<Event> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,42 +40,65 @@ public class EventList extends Activity {
 		eventDataSource.open();
 		events.clear();
 		events = eventDataSource.getAllEvents();
-		//eventDataSource.close();
+		// eventDataSource.close();
 
 		final ListView listView = (ListView) findViewById(R.id.listEvents);
+		EditText inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-		ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(this,
-				R.layout.text_view, events);
+		adapter = new ArrayAdapter<Event>(this, R.layout.event_list_item,
+				events);
 		listView.setAdapter(adapter);
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(AdapterView<?> a, View v, final int position,
-					long id) {
+		inputSearch.addTextChangedListener(new TextWatcher() {
 
-				final Dialog dialog = new Dialog(EventList.this, R.style.AppTheme);
+			@Override
+			public void onTextChanged(CharSequence cs, int arg1, int arg2,
+					int arg3) {
+				// When user changed the Text
+				EventList.this.adapter.getFilter().filter(cs);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> a, View v,
+					final int position, long id) {
+
+				final Dialog dialog = new Dialog(EventList.this,
+						R.style.AppTheme);
 				dialog.setContentView(R.layout.event_dialog);
 				dialog.setTitle("Detailed event info");
 				dialog.setCancelable(true);
 
 				TextView name = (TextView) dialog.findViewById(R.id.textView1);
-				name.setText(events.get(position).getTitle());
+				name.setText(Html.fromHtml(events.get(position).getTitle()));
 
 				TextView description = (TextView) dialog
 						.findViewById(R.id.textView2);
 				description.setText(Html.fromHtml(events.get(position)
 						.getDescription()));
-				
-				Button dialogButton = (Button) dialog.findViewById(R.id.btnShowEvent);
+
+				Button dialogButton = (Button) dialog
+						.findViewById(R.id.btnShowEvent);
 				dialogButton.setOnClickListener(new OnClickListener() {
-					
+
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(EventList.this, MapActivity.class);
+						Intent intent = new Intent(EventList.this,
+								MapActivity.class);
 						intent.putExtra("event", events.get(position));
 						startActivity(intent);
-						
+
 					}
 				});
 				dialog.show();
