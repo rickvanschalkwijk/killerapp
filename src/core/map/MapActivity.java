@@ -164,11 +164,13 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		}
 	}
 
-	private void addFriends() {
-		for (Friendship friendship : friendships) {
-			addFriendMarker(friendship);
-		}
+	private void addFriends() {	
+		if (friendships != null) {
+			for (Friendship friendship : friendships) {
+				addFriendMarker(friendship);
+			}
 
+		}
 		mapView.invalidate();
 	}
 
@@ -399,9 +401,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			return true;
 		case R.id.action_myposition:
 			try {
-				mapController.setZoom(17);
 				mapController.animateTo(new GeoPoint(currentLocation
 						.getLatitude(), currentLocation.getLongitude()));
+				mapController.setZoom(17);
 			} catch (Exception e) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						context);
