@@ -175,7 +175,7 @@ public class FriendActivity extends FragmentActivity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+/*
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -185,7 +185,7 @@ public class FriendActivity extends FragmentActivity implements
 		}
 
 		return super.onKeyDown(keyCode, event);
-	}
+	}*/
 
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {
 		final private EditText editText;

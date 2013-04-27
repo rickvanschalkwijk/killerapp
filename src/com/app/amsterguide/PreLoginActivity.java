@@ -18,6 +18,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +39,7 @@ public class PreLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		if(selfReferance == null){
+		if (selfReferance == null) {
 			selfReferance = this;
 		}
 
@@ -94,11 +96,13 @@ public class PreLoginActivity extends Activity {
 				boolean isAuthenticated = authenticateUser(username, password);
 				if (isAuthenticated) {
 					SharedPreferences.Editor editor = settings.edit();
+					editor.putBoolean("loggedInGuest", false);
 					editor.putBoolean("loggedIn", true);
 					editor.putBoolean("stayLoggedIn", true);
 					Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-					
-					editor.putString("category", String.valueOf(categorySpinner.getSelectedItem()) );
+
+					editor.putString("category",
+							String.valueOf(categorySpinner.getSelectedItem()));
 					editor.commit();
 
 					Intent i = new Intent(context, MainActivity.class);
@@ -177,5 +181,15 @@ public class PreLoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.pre_login, menu);
 		return true;
 	}
-
+/*
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			super.onStop();
+			this.finish();
+			Log.d("exit button", "pressed");
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+*/
 }
