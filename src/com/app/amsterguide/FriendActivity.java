@@ -8,50 +8,31 @@ import com.app.amsterguide.loaders.FriendLoader;
 
 import core.connection.CheckConnection;
 import core.connection.RESTSocialService;
-import core.map.MapActivity;
-import core.event.EventList;
 import core.models.Friendship;
-import core.models.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.text.AndroidCharacter;
-import android.text.Html;
-import android.util.Log;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.app.amsterguide.adapters.FriendRowAdapter;
-import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.FriendShipRequestsActivity;
 import com.app.killerapp.R;
-
-import core.models.User;
 
 public class FriendActivity extends FragmentActivity implements
 		LoaderCallbacks<List<Friendship>> {
@@ -174,17 +155,6 @@ public class FriendActivity extends FragmentActivity implements
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-			return true;
-		}
-
-		return super.onKeyDown(keyCode, event);
 	}
 
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {

@@ -15,6 +15,7 @@ public class DatabaseLoaderThread implements Runnable {
 
 	@Override
 	public void run() {
+		
 		eventDataSource = new EventDataSource(context);
 		eventDataSource.open();
 		if (eventDataSource.DatabaseHasRows()) {
@@ -41,11 +42,17 @@ public class DatabaseLoaderThread implements Runnable {
 		placeDataSource = new PlaceDataSource(context);
 		placeDataSource.open();
 		if (placeDataSource.DatabaseHasRows()) {
+			XMLParser parser = new XMLParser();
+			try {
+				parser.getPlacesXML(context, true);
+			} catch (DataException e) {
+				e.printStackTrace();
+			}
 			placeDataSource.close();
 		} else {
 			XMLParser parser = new XMLParser();
 			try {
-				parser.getPlacesXML(context);
+				parser.getPlacesXML(context, false);
 			} catch (DataException e) {
 				e.printStackTrace();
 			}
