@@ -28,7 +28,7 @@ import core.databasehandlers.DatabaseLoaderThread;
 
 public class SplashActivity extends Activity {
 	
-	protected int _splashTime = 1500;
+	protected int _splashTime = 5500;
 	private Thread splashThread;
 	private static SplashActivity selfReferance = null;
 	
