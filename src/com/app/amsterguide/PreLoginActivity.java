@@ -181,15 +181,4 @@ public class PreLoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.pre_login, menu);
 		return true;
 	}
-/*
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			super.onStop();
-			this.finish();
-			Log.d("exit button", "pressed");
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-*/
 }

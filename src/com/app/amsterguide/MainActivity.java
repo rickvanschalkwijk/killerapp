@@ -139,44 +139,4 @@ public class MainActivity extends Activity {
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
-/*
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-
-			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-			// If user is not logged in, return to login activity
-			if (settings.getBoolean("loggedInGuest", true)) {
-				Intent intent = new Intent(this, PreLoginActivity.class);
-				startActivity(intent);
-			} else if (settings.getBoolean("loggedIn", true))
-			{
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-						context);
-				alertDialogBuilder.setTitle("Sign out");
-				alertDialogBuilder
-						.setMessage("Do you want to sign out?")
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										signOut(getWindow().getDecorView()
-												.findViewById(
-														android.R.id.content));
-									}
-								})
-						.setNegativeButton("Cancel",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										dialog.cancel();
-									}
-								});
-
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
-		}
-		return super.onKeyDown(keyCode, event);
-	}*/
 }

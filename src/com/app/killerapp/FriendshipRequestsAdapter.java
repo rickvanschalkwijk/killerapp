@@ -1,14 +1,11 @@
 package com.app.killerapp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import core.connection.RESTSocialService;
 import core.models.Friendship;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,16 +18,12 @@ public class FriendshipRequestsAdapter extends BaseAdapter {
 
 	private static List<Friendship> searchArrayList;
 	private LayoutInflater mInflater;
-	private final Context context;
-	private long id;
 	private String auth;
 
 	public FriendshipRequestsAdapter(Context context, long id, String auth) {
 
-		this.id = id;
 		this.auth = auth;
 		this.mInflater = LayoutInflater.from(context);
-		this.context = context;
 	}
 
 	public void setList(List<Friendship> results) {
