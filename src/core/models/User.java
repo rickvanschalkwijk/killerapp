@@ -1,10 +1,6 @@
 package core.models;
 
 import java.io.Serializable;
-
-
-import android.os.Parcel;
-import android.os.Parcelable;
 @SuppressWarnings("serial")
 public class User implements Serializable{
 	public static final String EXTRA = "com.models.USER_EXTRA";

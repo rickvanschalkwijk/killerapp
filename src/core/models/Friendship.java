@@ -2,11 +2,6 @@ package core.models;
 
 import java.io.Serializable;
 
-import android.os.Debug;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
 @SuppressWarnings("serial")
 public class Friendship implements Serializable {
 	public static final String EXTRA = "com.models.FRIENDSHIP_EXTRA";
