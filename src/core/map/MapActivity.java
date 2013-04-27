@@ -426,6 +426,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		boolean[] isSelected = new boolean[size];
 		int i = 0;
 		for (Integer checkItem : selectedItems) {
+			
 			// String selected = categories[checkItem];
 			if (checkItem == null) {
 				isSelected[i] = false;
@@ -446,9 +447,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which, boolean isChecked) {
-								if (isChecked) {
+								if (isChecked) {								
 									mSelectedItems.add(which);
-								} else if (mSelectedItems.contains(which)) {
+								} else if (mSelectedItems.contains(which)) {									
 									mSelectedItems.remove(Integer
 											.valueOf(which));
 								}
@@ -461,7 +462,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 									int which) {
 								if (mSelectedItems.isEmpty()) {
 									Toast.makeText(context,
-											"You did'nt select anything!",
+											"You didn't select anything!",
 											Toast.LENGTH_SHORT).show();
 								} else {
 									mapView.getOverlays().clear();
