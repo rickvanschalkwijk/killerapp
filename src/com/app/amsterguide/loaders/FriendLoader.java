@@ -30,8 +30,7 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 		RESTSocialService socialService = new RESTSocialService();
 		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus, context);
 		
-		if (friendships == null || friendships.size() == 0)
-		{
+		if (friendships == null){
 			return null;
 		}
 		

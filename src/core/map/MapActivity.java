@@ -120,8 +120,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		}
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
-		addMarkers();
-
 		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
@@ -342,13 +340,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
-		if (getBooleanFromSP("events")) {
-			addEvents();
-		}
-		if (getBooleanFromSP("locations")) {
-			addLocations();
-		}
-		
+		addLocations();
+
 		if( friendships != null ){
 			addFriends();
 		}
@@ -590,18 +583,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			return selfReferance.getApplicationContext();
 		}
 		return null;
-	}
-
-	/**
-	 * Get the map settings from SP file
-	 * 
-	 * @param String
-	 *            key
-	 * @return boolean value
-	 */
-	public boolean getBooleanFromSP(String key) {
-		SharedPreferences preferences = getSharedPreferences("MapPref", 0);
-		return preferences.getBoolean(key, true);
 	}
 
 	private class EnableGpsDialogFragment extends DialogFragment {
