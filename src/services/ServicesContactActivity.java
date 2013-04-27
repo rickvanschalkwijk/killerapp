@@ -5,12 +5,10 @@ import com.app.killerapp.R;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.NavUtils;
@@ -20,10 +18,7 @@ import android.os.Build;
 
 public class ServicesContactActivity extends Activity {
 
-	private ArrayAdapter<String> listAdapter;
 	ListView mainListView;
-	private LayoutInflater mInflater;
-
 	static String[] DETAILS;
 	static String[] PHONE;
 

@@ -1,9 +1,6 @@
 package util;
 
 import com.app.killerapp.R;
-import com.app.killerapp.R.layout;
-import com.app.killerapp.R.menu;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

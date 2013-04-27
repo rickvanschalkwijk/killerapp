@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.osmdroid.util.GeoPoint;
 
-import util.KillerboneUtils;
-
 @SuppressWarnings("serial")
 public class Place implements Serializable {
 
