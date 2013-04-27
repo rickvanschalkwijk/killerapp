@@ -31,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.app.killerapp.FriendShipRequestsActivity;
 import com.app.killerapp.R;
 
 public class FriendActivity extends FragmentActivity implements

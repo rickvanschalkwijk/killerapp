@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.app.amsterguide.FriendActivity;
 import com.app.amsterguide.FriendDetailActivity;
-import com.app.killerapp.FriendShipRequestsActivity;
+import com.app.amsterguide.FriendShipRequestsActivity;
 
 import util.KillerboneUtils;
 import core.connection.https.HttpsConnector;

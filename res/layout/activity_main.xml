@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -31,42 +32,47 @@
             android:layout_height="wrap_content"
             android:onClick="openMap"
             android:text="@string/map_button" />
+
         <Button
             android:id="@+id/btn_companions_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="openFriend"
             android:text="@string/companion_button" />
+
         <Button
             android:id="@+id/btn_services_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_button"
-            android:onClick="gotoServices" />
+            android:onClick="gotoServices"
+            android:text="@string/service_button" />
+
         <Button
             android:id="@+id/btn_event_list_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/events_button"
-            android:onClick="openEventList" />
+            android:onClick="openEventList"
+            android:text="@string/events_button" />
+
         <Button
             android:id="@+id/btn_place_list_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/places_button"
-            android:onClick="openPlaceList" />
+            android:onClick="openPlaceList"
+            android:text="@string/places_button" />
+
         <Button
             android:id="@+id/btn_settings_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_button" />
-        
+
         <Button
             android:id="@+id/btn_logout_open"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="signOut"
             android:text="@string/logout_button" />
-
     </LinearLayout>
+
 </RelativeLayout>

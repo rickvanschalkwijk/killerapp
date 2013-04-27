@@ -122,7 +122,7 @@
                 android:value="com.app.killerapp.MainActivity" />
         </activity>
         <activity
-            android:name="com.app.killerapp.FriendShipRequestsActivity"
+            android:name="com.app.amsterguide.FriendShipRequestsActivity"
             android:label="@string/title_activity_friend_ship_requests"
             android:parentActivityName="com.app.amsterguide.FriendActivity" >
         </activity>

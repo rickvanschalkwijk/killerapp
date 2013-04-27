@@ -1,6 +1,10 @@
-package com.app.killerapp;
+package com.app.amsterguide.adapters;
 
 import java.util.List;
+
+import com.app.killerapp.R;
+import com.app.killerapp.R.id;
+import com.app.killerapp.R.layout;
 
 import core.connection.RESTSocialService;
 import core.models.Friendship;
