@@ -108,6 +108,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
+			addEventMarker(event);
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
 		} else if (getIntent().getSerializableExtra("place") != null) {
@@ -290,14 +291,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 							public void onClick(DialogInterface dialog, int id) {
 								// user cancels
 								// return to underlaing activity
-							}
-						})
-				.setPositiveButton(R.string.event_more_information,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								Toast.makeText(context,
-										R.string.event_more_information,
-										Toast.LENGTH_SHORT).show();
 							}
 						});
 
