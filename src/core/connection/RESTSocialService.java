@@ -43,6 +43,8 @@ public class RESTSocialService {
 			String response = httpsConnector
 					.performHttpsRequest(authenticateRequest);
 
+			Log.d("response", response);
+			
 			// Convert response to xml document
 			SAXBuilder builder = new SAXBuilder();
 			Document xmlDocument = builder.build(new StringReader(response));

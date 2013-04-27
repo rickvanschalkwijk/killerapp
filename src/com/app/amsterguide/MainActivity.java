@@ -37,12 +37,12 @@ public class MainActivity extends Activity {
 	public static final String PREFS_NAME = "LocalPrefs";
 	public static boolean startUp = true;
 	final Context context = this;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-		if(settings.getBoolean("loggedIn", false))
+		if (settings.getBoolean("loggedIn", false))
 			setContentView(R.layout.activity_main);
 		else
 			setContentView(R.layout.activity_main_guest);
@@ -54,39 +54,43 @@ public class MainActivity extends Activity {
 	}
 
 	public void openFriend(View view) {
-		//SharedPreferences settings = getSharedPreferences("LocalPrefs",
-		//		0);
-		
-		//if(!settings.getBoolean("loggedInGuest", false))
-		//{
+		// SharedPreferences settings = getSharedPreferences("LocalPrefs",
+		// 0);
+
+		// if(!settings.getBoolean("loggedInGuest", false))
+		// {
 		Intent intent = new Intent(this, FriendActivity.class);
 		startActivity(intent);
-		//}
-		//else 
-			//SetMessage("Not LoggedIn", "Please login to use this feature.");
+		// }
+		// else
+		// SetMessage("Not LoggedIn", "Please login to use this feature.");
 	}
 
 	public void gotoServices(View view) {
 		Intent intent = new Intent(this, ServicesContactActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void openEventList(View view) {
 		Intent intent = new Intent(this, EventList.class);
 		startActivity(intent);
 	}
-	
+
 	public void openPlaceList(View view) {
 		Intent intent = new Intent(this, PlaceList.class);
 		startActivity(intent);
 	}
-	
-	public void signOut(View view){
+
+	public void signOut(View view) {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
+
+		editor.remove("userID");
+		editor.remove("token");
 		editor.putBoolean("stayLoggedIn", false);
 		editor.commit();
-		
+		Log.e("user sign out", settings.getString("userID", "Empty"));
+
 		Intent intent = new Intent(this, PreLoginActivity.class);
 		startActivity(intent);
 	}
@@ -119,23 +123,19 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-	
-	private void SetMessage(String titel, String message)
-    {
-    	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+	private void SetMessage(String titel, String message) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
 		alertDialogBuilder.setTitle(titel);
-		alertDialogBuilder
-				.setMessage(message)
-				.setCancelable(false)
-				.setPositiveButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(
-									DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
+		alertDialogBuilder.setMessage(message).setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-    }
+	}
 }
