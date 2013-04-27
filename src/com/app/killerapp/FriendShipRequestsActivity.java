@@ -68,7 +68,7 @@ public class FriendShipRequestsActivity extends FragmentActivity implements
 
 	@Override
 	public void onLoadFinished(Loader<List<Friendship>> loader, List<Friendship> result) {
-		if (result.size() > 0) {
+		if (result != null && result.size() > 0) {
 			
 			List<Friendship> tempL = new ArrayList<Friendship>();
 			for (int i = 0; i < result.size(); i++) {
