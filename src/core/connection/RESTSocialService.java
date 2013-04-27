@@ -77,6 +77,8 @@ public class RESTSocialService {
 								column.getAttribute("id").getValue())
 								.longValue();
 						User user = new User(id, name);
+						String email = column.getChildText("email");
+						user.setEmail(email);
 						try {
 							Element locationColumn = column
 									.getChild("location");
@@ -106,6 +108,8 @@ public class RESTSocialService {
 								.longValue();
 
 						User user = new User(id, name);
+						String email = column.getChildText("email");
+						user.setEmail(email);
 						try {
 							double latitude = Double.valueOf(column.getChild(
 									"location").getChildText("latitude"));

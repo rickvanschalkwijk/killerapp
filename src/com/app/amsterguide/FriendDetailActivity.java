@@ -33,7 +33,7 @@ public class FriendDetailActivity extends Activity {
     	friendship = (Friendship) getIntent().getSerializableExtra( Friendship.EXTRA );
     	
     	TextView name = (TextView) findViewById(R.id.fullname);
-    	
+    	TextView email = (TextView) findViewById(R.id.txtUserEmail);
     	SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		userId = Long.valueOf(settings.getString("userID", "0"))
 				.longValue();
@@ -41,6 +41,7 @@ public class FriendDetailActivity extends Activity {
 		
 		User otherUser = friendship.getOtherUser(userId);
 		name.setText(String.valueOf( otherUser.getUsername()));
+		email.setText(otherUser.getEmail());
     }
     
     public static Context getContext() {
