@@ -53,6 +53,7 @@ public class RegistrationActivity extends Activity {
 				else if(userPassword0.equals(userPassword1))
 				{
 					Register(userName, userEmail, userPassword0);
+					
 				}
 			}
 		});
@@ -99,7 +100,7 @@ public class RegistrationActivity extends Activity {
 										DialogInterface dialog, int id) {
 									dialog.cancel();
 									Intent i = new Intent(getApplicationContext(),
-											PreLoginActivity.class);
+											LoginActivity.class);
 									startActivity(i);
 								}
 							});
