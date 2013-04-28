@@ -78,7 +78,7 @@ public class PlaceDataSource {
 
 				place.setDescription(cursor.getString(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_DESCRIPTION)));
-				place.setCategory(cursor.getString(cursor.getColumnIndex(DatabaseOpenHelper.COLUMN_CATEGORY)));
+				//place.setCategory(cursor.getString(cursor.getColumnIndex(DatabaseOpenHelper.COLUMN_CATEGORY)));
 				Double latitude = cursor.getDouble(cursor
 						.getColumnIndex(DatabaseOpenHelper.COLUMN_LATITUDE));
 				Double longitude = cursor.getDouble(cursor
