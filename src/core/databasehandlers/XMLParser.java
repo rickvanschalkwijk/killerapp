@@ -161,6 +161,7 @@ public class XMLParser {
 						.parseInt(node.getAttribute("id").getValue()));
 				place.setName(node.getChildText(TITLE_TAG));
 				place.setDescription(node.getChildText(DESCRIPTION_TAG));
+				place.setCategory(node.getChildText(CATEGORY_TAG));
 				Double latitude = (Double.parseDouble(node.getChildText(
 						LOCATION_LATITUDE).trim()));
 				Double longitude = (Double.parseDouble(node.getChildText(
