@@ -29,7 +29,8 @@ import core.models.Event;
 public class EventList extends Activity {
 
 	public static List<Event> events = new ArrayList<Event>();
-	ArrayAdapter<Event> adapter;
+	EventListAdapter adapter;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,7 @@ public class EventList extends Activity {
 		final ListView listView = (ListView) findViewById(R.id.listEvents);
 		EditText inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-		adapter = new ArrayAdapter<Event>(this, R.layout.event_list_item,
-				events);
+		adapter = new EventListAdapter(this, events);
 		listView.setAdapter(adapter);
 
 		inputSearch.addTextChangedListener(new TextWatcher() {
