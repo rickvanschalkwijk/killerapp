@@ -1,9 +1,10 @@
 package core.databasehandlers;
 
+import core.connection.CheckConnection;
 import core.connection.DataException;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+//import android.net.ConnectivityManager;
+//import android.net.NetworkInfo;
 
 public class DatabaseLoaderThread implements Runnable {
 
@@ -18,7 +19,8 @@ public class DatabaseLoaderThread implements Runnable {
 	@Override
 	public void run() {
 		eventDataSource = new EventDataSource(context);
-		if (isOnline(context)) {
+
+		if (CheckConnection.isOnline(context)) {
 			eventDataSource.open();
 			if (eventDataSource.DatabaseHasRows()) {
 				XMLParser parser = new XMLParser();
@@ -62,15 +64,5 @@ public class DatabaseLoaderThread implements Runnable {
 			eventDataSource.deleteExpiredEvents();
 			eventDataSource.close();
 		}
-	}
-
-	public boolean isOnline(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnected()) {
-			return true;
-		}
-		return false;
 	}
 }
