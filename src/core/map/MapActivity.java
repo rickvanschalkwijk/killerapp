@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.entity.FileEntity;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.util.BoundingBoxE6;
@@ -68,14 +69,20 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	private int defaultZoomLevel = 15;
 	private static MapActivity selfReferance = null;
 	public ArrayList<String> selectedCategoryIds;
-	public String[] categories = { "music", "art", "nightlife" };
-	private List<Friendship> friendships;
+	private List<Friendship> friendships = new ArrayList<Friendship>();
 	private long userId;
+
+	private List<FilterEntry> filterEntries = new ArrayList<MapActivity.FilterEntry>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
+
+		// Create filter entries
+		filterEntries.add(new FilterEntry("Nightlife", 0, false, "singles_social"));
+		filterEntries.add(new FilterEntry("Music", 1, false, "music"));
+		filterEntries.add(new FilterEntry("Art", 2, false, "art"));
 
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
@@ -108,7 +115,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
-			addEventMarker(event);
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
 		} else if (getIntent().getSerializableExtra("place") != null) {
@@ -141,7 +147,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		eventDataSource.close();
 
 		for (Event event : events) {
-			if (filter.contains(event.getCategory())) {
+			if (filter.contains(event.getCategory())) {			
 				addEventMarker(event);
 			}
 		}
@@ -158,11 +164,13 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		}
 	}
 
-	private void addFriends() {
-		for (Friendship friendship : friendships) {
-			addFriendMarker(friendship);
-		}
+	private void addFriends() {	
+		if (friendships != null) {
+			for (Friendship friendship : friendships) {
+				addFriendMarker(friendship);
+			}
 
+		}
 		mapView.invalidate();
 	}
 
@@ -207,7 +215,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 					public boolean onItemSingleTapUp(final int index,
 							final OverlayItem item) {
-						Toast.makeText(context, friend.getUsername() + " " + friend.getRefreshDate(),
+						Toast.makeText(
+								context,
+								friend.getUsername() + " "
+										+ friend.getRefreshDate(),
 								Toast.LENGTH_SHORT).show();
 						return true;
 					}
@@ -283,13 +294,21 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 				context);
 		alertDialogBuilder.setTitle(place.getName());
 		alertDialogBuilder
-				.setMessage( Html.fromHtml(place.getDescription()) )
+				.setMessage(Html.fromHtml(place.getDescription()))
 				.setCancelable(true)
 				.setNegativeButton(R.string.cancel,
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 
+							}
+						})
+				.setPositiveButton(R.string.event_more_information,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								Toast.makeText(context,
+										R.string.event_more_information,
+										Toast.LENGTH_SHORT).show();
 							}
 						});
 
@@ -333,10 +352,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public void addMarkers() {
 		addLocations();
 
-		if( friendships != null ){
+		if (friendships != null) {
 			addFriends();
 		}
-		
+
 	}
 
 	@Override
@@ -381,9 +400,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			return true;
 		case R.id.action_myposition:
 			try {
-				mapController.setZoom(17);
 				mapController.animateTo(new GeoPoint(currentLocation
 						.getLatitude(), currentLocation.getLongitude()));
+				mapController.setZoom(17);
 			} catch (Exception e) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						context);
@@ -420,38 +439,32 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		}
 	}
 
-	public boolean[] getSelectedFilter(ArrayList<Integer> selectedItems) {
-		int size = categories.length;
-		boolean[] isSelected = new boolean[size];
-		int i = 0;
-		for (Integer checkItem : selectedItems) {
-			
-			// String selected = categories[checkItem];
-			if (checkItem == null) {
-				isSelected[i] = false;
-			} else {
-				isSelected[i] = true;
-			}
-			i++;
+	public String[] GetFilterNames() {
+		String[] entrynames = new String[filterEntries.size()];
+		for (int i = 0; i < entrynames.length; i++) {
+			entrynames[i] = filterEntries.get(i).name;
 		}
-		return isSelected;
+		return entrynames;
+	}
+
+	public boolean[] GetFilterValues() {
+		boolean[] entrynames = new boolean[filterEntries.size()];
+		for (int i = 0; i < entrynames.length; i++) {
+			entrynames[i] = filterEntries.get(i).isSelected();
+		}
+		return entrynames;
 	}
 
 	public Dialog filterDialog() {
-		boolean[] booleans = getSelectedFilter(mSelectedItems);
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)
-				.setMultiChoiceItems(categories, booleans,
+				.setMultiChoiceItems(GetFilterNames(), GetFilterValues(),
 						new DialogInterface.OnMultiChoiceClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which, boolean isChecked) {
-								if (isChecked) {								
-									mSelectedItems.add(which);
-								} else if (mSelectedItems.contains(which)) {									
-									mSelectedItems.remove(Integer
-											.valueOf(which));
-								}
+								filterEntries.get(which).setSelected(isChecked);
 							}
 						})
 				.setPositiveButton(R.string.ok,
@@ -459,7 +472,15 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								if (mSelectedItems.isEmpty()) {
+
+								boolean nothingSelected = true;
+								for (int i = 0; i < filterEntries.size(); i++) {
+									if (filterEntries.get(i).isSelected()) {
+										nothingSelected = false;
+									}
+								}
+
+								if (nothingSelected) {
 									Toast.makeText(context,
 											"You didn't select anything!",
 											Toast.LENGTH_SHORT).show();
@@ -469,11 +490,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 									ArrayList<String> selectedCategoryIds = new ArrayList<String>();
 
-									for (Integer selectedItem : mSelectedItems) {
-										String selectedCategory = categories[selectedItem];
-										if (selectedCategory != null) {
+									for (int i = 0; i < filterEntries.size(); i++) {
+										if (filterEntries.get(i).isSelected()) {
 											selectedCategoryIds
-													.add(selectedCategory);
+													.add(filterEntries.get(i).eventName);
 										}
 									}
 									addFilterEvents(selectedCategoryIds);
@@ -617,4 +637,36 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 	}
 
+	class FilterEntry {
+		private String name;
+		private int position;
+		private boolean selected;
+		private String eventName;
+		public FilterEntry(String name, int position, boolean selected, String eventName) {
+			this.name = name;
+			this.position = position;
+			this.setSelected(selected);
+			this.eventName = eventName;
+		}
+
+		public String getName() {
+			return name;
+		}
+		
+		public String getEventName() {
+			return eventName;
+		}
+
+		public int getPosition() {
+			return position;
+		}
+
+		public boolean isSelected() {
+			return selected;
+		}
+
+		public void setSelected(boolean selected) {
+			this.selected = selected;
+		}
+	}
 }

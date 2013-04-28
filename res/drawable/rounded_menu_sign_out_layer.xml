@@ -4,7 +4,7 @@
         android:id="@+id/rounded_corners_map"
         android:drawable="@drawable/rounded_menu_button_states"/>
     <item android:left="20dp">
-        <bitmap android:src="@drawable/icon_map" android:gravity="left" />
+        <bitmap android:src="@drawable/icon_sign_out" android:gravity="left" />
     </item>
 
 </layer-list>
