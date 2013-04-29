@@ -82,6 +82,9 @@ public class PreLoginActivity extends Activity {
 				startActivity(registerIntent);
 			}
 		});
+		
+		Spinner selectCat = (Spinner)findViewById(R.id.categorySpinner);
+		selectCat.setSelection(9);
 
 		Button login = (Button) findViewById(R.id.btnLogin);
 		login.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +132,9 @@ public class PreLoginActivity extends Activity {
 			}
 		});
 	}
+	
+	
+	
 
 	private boolean authenticateUser(String email, String password) {
 		AuthenticationService authService = new AuthenticationService();
