@@ -101,6 +101,10 @@ public class FriendActivity extends FragmentActivity implements
 			List<Friendship> result) {
 		friendships = result;
 		adapter.setList(result);
+		
+		if (result == null || result.isEmpty()) {			
+			makeToast("No travel accompanies found");
+		}
 	}
 
 	@Override
@@ -205,7 +209,8 @@ public class FriendActivity extends FragmentActivity implements
 		public void onDismiss(DialogInterface dialog) {
 			if (!canceled) {
 				final String name = editText.getText().toString();
-				if (!rfc2822.matcher(name).matches()) {
+				String lowerName = name.toLowerCase();
+				if (!rfc2822.matcher(lowerName).matches()) {
 					editText.setError("Email address is not valid");
 					show();
 				} else {
@@ -217,12 +222,15 @@ public class FriendActivity extends FragmentActivity implements
 					String authToken = settings.getString("token", "letmein");
 					RESTSocialService socialService = new RESTSocialService();
 					canceled = socialService.AddFriendship(userId, authToken,
-							name);
+							lowerName);
 
 					if (!canceled) {
 						editText.setError("User does not exist or is already invited");
 						show();
+					}else {
+						editText.setText("");
 					}
+					
 					// Send request to server
 				}
 			}
