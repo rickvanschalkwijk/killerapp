@@ -86,9 +86,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
-		// String packageDir = "/com.app.killerapp";
-		// TODO: change path to
-		// Environment.getExternalStorageDirectory().getPath()
 		String path = "/mnt/sdcard/osmdroid/";
 		File file = new File(path, "amsterdam.mbtiles");
 
@@ -156,7 +153,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		locationDataSource.close();
 
 		for(Place place : places){
-			Log.d("place", place + "");
 			if(filter.contains(place.getCategory())){
 				addPlaceMarker(place);
 			}
@@ -348,12 +344,23 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
-		addLocations();
-
+		if(getBooleanFromSP("locations")){
+			addLocations();
+		}
 		if (friendships != null) {
 			addFriends();
 		}
 
+	}
+	
+	/**
+	 * Get the map settings from SP file
+	 * @param String key
+	 * @return boolean value
+	 */
+	public boolean getBooleanFromSP(String key){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 return preferences.getBoolean(key, true);
 	}
 
 	@Override
