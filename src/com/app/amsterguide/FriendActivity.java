@@ -12,6 +12,7 @@ import core.models.Friendship;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,6 +101,10 @@ public class FriendActivity extends FragmentActivity implements
 			List<Friendship> result) {
 		friendships = result;
 		adapter.setList(result);
+		
+		if (result == null || result.isEmpty()) {			
+			makeToast("No travel accompanies found");
+		}
 	}
 
 	@Override
@@ -142,6 +147,10 @@ public class FriendActivity extends FragmentActivity implements
 			Intent intent = new Intent(this, FriendShipRequestsActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.pendingfriends:
+			Intent intentz = new Intent(this, FriendPendingActivity.class);
+			startActivity(intentz);
+			break;
 		default:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
@@ -154,6 +163,16 @@ public class FriendActivity extends FragmentActivity implements
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	class AddCompanionDialog implements OnDismissListener, OnCancelListener {
@@ -194,7 +213,8 @@ public class FriendActivity extends FragmentActivity implements
 		public void onDismiss(DialogInterface dialog) {
 			if (!canceled) {
 				final String name = editText.getText().toString();
-				if (!rfc2822.matcher(name).matches()) {
+				String lowerName = name.toLowerCase();
+				if (!rfc2822.matcher(lowerName).matches()) {
 					editText.setError("Email address is not valid");
 					show();
 				} else {
@@ -206,12 +226,15 @@ public class FriendActivity extends FragmentActivity implements
 					String authToken = settings.getString("token", "letmein");
 					RESTSocialService socialService = new RESTSocialService();
 					canceled = socialService.AddFriendship(userId, authToken,
-							name);
+							lowerName);
 
 					if (!canceled) {
 						editText.setError("User does not exist or is already invited");
 						show();
+					}else {
+						editText.setText("");
 					}
+					
 					// Send request to server
 				}
 			}

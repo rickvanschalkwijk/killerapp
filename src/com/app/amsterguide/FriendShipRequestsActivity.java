@@ -6,9 +6,6 @@ import java.util.List;
 import com.app.amsterguide.adapters.FriendshipRequestsAdapter;
 import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
-import com.app.killerapp.R.id;
-import com.app.killerapp.R.layout;
-
 import core.models.Friendship;
 import android.os.Bundle;
 import android.content.Context;

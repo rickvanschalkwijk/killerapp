@@ -64,15 +64,15 @@
         <item>Nightlife</item>
     </string-array>
 
+    <string name="OK">Ok</string>
     <string name="ok">Filter</string>
     <string name="cancel">Cancel</string>
-    
     <string name="settings_companions">Companions:</string>
     <string name="settings_events">Events:</string>
     <string name="settings_locations">Locations:</string>
     <string name="settings_guides">Guides:</string>
     <string name="action_sendmyposition">Send location to friends</string>
-    
+
     <!-- End Map Activity -->
     <!-- Start Login -->
     <string name="username">Email</string>
@@ -110,7 +110,7 @@
     <string name="title_activity_friend">Travel companions</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_services_contact">Services</string>
-	<string name="friend_delete">Delete</string>
+    <string name="friend_delete">Delete</string>
     <!-- HTTPS Client -->
     <string name="store_pass">valkering</string>
 
@@ -119,6 +119,7 @@
     <string name="title_activity_search_result">Search Result</string>
     <string name="search_hint_events">Search Events</string>
     <string name="search_hint_locations">Search Locations</string>
+    <string name="search_hint">Search Locations or Events</string>
     <!-- End Search Activity -->
 
 
@@ -134,5 +135,7 @@
     <string name="title_place_list">Locations</string>
     <string name="show_place">Show Location</string>
     <string name="title_activity_map_settings">Map Settings</string>
+    <string name="title_activity_friend_pending">Pending Travel Accompanies</string>
+    <string name="pendingfriends">Pending Friends</string>
 
 </resources>

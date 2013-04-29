@@ -29,7 +29,7 @@ import android.widget.TextView;
 public class PlaceList extends Activity {
 
 	public static List<Place> places = new ArrayList<Place>();
-	ArrayAdapter<Place> adapter;
+	PlaceListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,11 @@ public class PlaceList extends Activity {
 		placeDataSource.open();
 		places.clear();
 		places = placeDataSource.getAllPlaces();
-		placeDataSource.close();
 
 		final ListView listView = (ListView) findViewById(R.id.listPlaces);
 		EditText inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-		adapter = new ArrayAdapter<Place>(this, R.layout.event_list_item,
-				places);
+		adapter = new PlaceListAdapter(this, places);
 		listView.setAdapter(adapter);
 
 		inputSearch.addTextChangedListener(new TextWatcher() {

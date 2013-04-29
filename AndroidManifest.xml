@@ -29,10 +29,11 @@
         <activity
             android:name="com.app.amsterguide.SplashActivity"
             android:label="AmsterGuide"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait" > 
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -120,8 +121,8 @@
             android:name="core.event.EventList"
             android:label="@string/title_event_list"
             android:parentActivityName="com.app.amsterguide.MainActivity"
-            android:screenOrientation="portrait" 
-            android:windowSoftInputMode="stateHidden">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -130,7 +131,8 @@
             android:name="core.place.PlaceList"
             android:label="@string/title_place_list"
             android:parentActivityName="com.app.amsterguide.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.killerapp.MainActivity" />
@@ -145,6 +147,14 @@
             android:name="core.map.MapSettingsActivity"
             android:label="@string/title_activity_map_settings"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.app.amsterguide.FriendPendingActivity"
+            android:label="@string/title_activity_friend_pending"
+            android:parentActivityName="com.app.amsterguide.FriendActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.amsterguide.FriendActivity" />
         </activity>
     </application>
 

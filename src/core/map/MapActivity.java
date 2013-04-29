@@ -44,7 +44,7 @@ import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
 
 import core.connection.RESTSocialService;
-import core.databasehandlers.EventDataSource;
+import core.databasehandlers.FriendshipDataSource;
 import core.databasehandlers.PlaceDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
@@ -52,7 +52,6 @@ import core.models.Event;
 import core.models.Friendship;
 import core.models.Place;
 import core.models.User;
-import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 public class MapActivity extends FragmentActivity implements IRegisterReceiver,
@@ -72,6 +71,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public ArrayList<String> selectedCategoryIds;
 	private List<Friendship> friendships = new ArrayList<Friendship>();
 	private long userId;
+	public static boolean startUp = true;
 
 	private List<FilterEntry> filterEntries = new ArrayList<MapActivity.FilterEntry>();
 
@@ -79,21 +79,106 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
-
-		// Create filter entries
-		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
-		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
-		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
-
+		if(startUp)
+		{
+		SharedPreferences settings = getSharedPreferences("LocalPrefs",
+				0);
+		String category = settings.getString("category", "");
+		if(category.equals("Family"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, true, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, true, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, true, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Seniors"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Youth"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Low budget"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Romantic"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Cultural"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Party"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Active"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Backpacker"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Non-specific"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		startUp = false;
+		}
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
-		// String packageDir = "/com.app.killerapp";
-		// TODO: change path to
-		// Environment.getExternalStorageDirectory().getPath()
 		String path = "/mnt/sdcard/osmdroid/";
 		File file = new File(path, "amsterdam.mbtiles");
 
@@ -119,6 +204,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
+			addEventMarker(event);
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
 		} else if (getIntent().getSerializableExtra("place") != null) {
@@ -128,9 +214,19 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
 			mapController.animateTo(centralStation);
 		}
+		addMarkers();
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		getSupportLoaderManager().initLoader(0, null, this);
+	}
+
+	private void initializeFilters() {
+		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 	}
 
 	private void addLocations() {
@@ -149,34 +245,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		locationDataSource.open();
 		List<Place> places = locationDataSource.getAllPlaces();
 		locationDataSource.close();
+
 		for(Place place : places){
 			if(filter.contains(place.getCategory())){
 				addPlaceMarker(place);
 			}
-		}
-	}
-	
-	private void addFilterEvents(ArrayList<String> filter) {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			if (filter.contains(event.getCategory())) {			
-				addEventMarker(event);
-			}
-		}
-	}
-
-	private void addEvents() {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			addEventMarker(event);
 		}
 	}
 
@@ -231,11 +304,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 					public boolean onItemSingleTapUp(final int index,
 							final OverlayItem item) {
+
 						Toast.makeText(
 								context,
 								friend.getUsername() + " "
-										+ friend.getRefreshDate(),
-								Toast.LENGTH_SHORT).show();
+										+ friend.getRefreshDate(),Toast.LENGTH_SHORT).show();
 						return true;
 					}
 
@@ -274,6 +347,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 					}
 				}, resProxy);
 		this.mapView.getOverlays().add(currentLocationOverlay);
+		this.mapView.invalidate();
 	}
 
 	private void addPlaceMarker(final Place newPlace) {
@@ -319,12 +393,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 							}
 						})
-				.setPositiveButton(R.string.event_more_information,
+				.setPositiveButton(R.string.OK,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								Toast.makeText(context,
-										R.string.event_more_information,
-										Toast.LENGTH_SHORT).show();
+								
 							}
 						});
 
@@ -366,12 +438,27 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
-		addLocations();
-
+		Log.d("location settigns", getBooleanFromSP("locations") + "");
+		if(getBooleanFromSP("locations")){
+			addLocations();
+			
+		}else{
+			mapView.getOverlays().clear();
+		}
 		if (friendships != null) {
 			addFriends();
 		}
 
+	}
+	
+	/**
+	 * Get the map settings from SP file
+	 * @param String key
+	 * @return boolean value
+	 */
+	public boolean getBooleanFromSP(String key){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 return preferences.getBoolean(key, true);
 	}
 
 	@Override
@@ -483,7 +570,13 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			}
 			return true;
 		case R.id.action_sendmyposition:
-			sendLocationToFriends();
+			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+			if (!settings.getBoolean("loggedIn", false)){
+				sendLocationToFriends();
+			} else {
+				Toast.makeText(context, "You need to be logged in for this function", Toast.LENGTH_SHORT).show();
+			}
+			
 			return true;
 		case R.id.action_map_settings:
 			Intent mapSettingsIntent = new Intent(this,
@@ -516,7 +609,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public Dialog filterDialog() {
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)
 				.setMultiChoiceItems(GetFilterNames(), GetFilterValues(),
@@ -542,8 +634,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 								if (nothingSelected) {
 									Toast.makeText(context,
-											"You didn't select anything!",
+											"No filters selected!",
 											Toast.LENGTH_SHORT).show();
+									addLocations();
 								} else {
 									mapView.getOverlays().clear();
 									mapView.invalidate();
@@ -680,6 +773,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		userId = Long.valueOf(settings.getString("userID", "0")).longValue();
 		String authToken = settings.getString("token", "letmein");
+		FriendshipDataSource friendshipDataSource = new FriendshipDataSource(context);
+		friendshipDataSource.open();
 		return new FriendLoader(getApplicationContext(), userId, authToken,
 				"APPROVED");
 	}

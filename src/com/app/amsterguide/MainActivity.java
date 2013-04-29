@@ -32,6 +32,7 @@ import com.app.killerapp.R;
 
 import core.event.EventList;
 import core.map.MapActivity;
+import core.map.MapSettingsActivity;
 import core.place.PlaceList;
 
 public class MainActivity extends Activity {
@@ -48,11 +49,9 @@ public class MainActivity extends Activity {
 		if (!settings.getBoolean("loggedIn", false)){
 			Button companionButton = (Button) findViewById(R.id.btn_companions_open);
 			companionButton.setEnabled(false);
-		}
-			
-			
+		}		
 	}
-
+	
 	public void openMap(View view) {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
@@ -83,6 +82,11 @@ public class MainActivity extends Activity {
 
 	public void openPlaceList(View view) {
 		Intent intent = new Intent(this, PlaceList.class);
+		startActivity(intent);
+	}
+	
+	public void openSettings(View view){
+		Intent intent = new Intent(this, MapSettingsActivity.class);
 		startActivity(intent);
 	}
 
@@ -127,6 +131,22 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+		if(settings.getBoolean("loggedIn", false))
+		{
+			finish();
+			System.exit(0);
+		}
+		else if((settings.getBoolean("loggedInGuest", false)))
+		{
+			Intent intent = new Intent(this, PreLoginActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	private void SetMessage(String titel, String message) {
