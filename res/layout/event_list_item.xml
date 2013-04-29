@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
-    
+
     <TextView
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"
+        android:text="tesnvjxcznvkclxjvklcxjvklcx kjlgfsjgflskdfgjsdlgjflskjfdlgkfsdjkgflsjdklgfjslksdgt"
         android:textSize="17sp"
+        android:layout_marginRight="40dp"
         android:textStyle="bold" />
 
     <TextView
@@ -17,10 +18,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/nameText"
-        android:text="test"
+        android:layout_marginLeft="25dp"
         android:textSize="14sp"
-        android:textStyle="italic" 
-        android:layout_marginLeft="25dp"/>
+        android:textStyle="italic" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right" >
+
+        <ImageView
+            android:id="@+id/viewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/events_button"
+            android:src="@drawable/icon_next" />
+    </LinearLayout>
 
 </RelativeLayout>
