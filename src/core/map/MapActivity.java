@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -378,8 +379,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		super.onResume();
 		addMarkers();
 		locationListener = new GeoUpdateHandler();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				100, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
 	}
 
 	@Override
@@ -390,10 +390,24 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		final boolean gpsEnabled = locationManager
 				.isProviderEnabled(locationProvider);
 		if (!gpsEnabled) {
-			new EnableGpsDialogFragment().show(getFragmentManager(),
-					"enableGpsDialog");
+			turnGPSOn();
 		}
 	}
+	
+	private void turnGPSOn(){
+	    String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+	    if(!provider.contains("gps")){ //if gps is disabled
+	        final Intent poke = new Intent();
+	        poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider"); 
+	        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+	        poke.setData(Uri.parse("3")); 
+	        sendBroadcast(poke);
+	        
+			new EnableGpsDialogFragment().show(getFragmentManager(),
+					"enableGpsDialog");
+	    }
+	}	
 
 	@Override
 	protected void onStop() {
