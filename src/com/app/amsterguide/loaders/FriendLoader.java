@@ -3,6 +3,7 @@ package com.app.amsterguide.loaders;
 import java.util.List;
 
 import core.connection.RESTSocialService;
+import core.databasehandlers.FriendshipDataSource;
 import core.models.Friendship;
 
 import android.content.Context;
@@ -28,8 +29,11 @@ public class FriendLoader  extends AsyncTaskLoader<List<Friendship>> {
 	@Override
 	public List<Friendship> loadInBackground() {
 		RESTSocialService socialService = new RESTSocialService();
-		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus, context);
 		
+		FriendshipDataSource friendshipDataSource = new FriendshipDataSource(context);
+		friendshipDataSource.open();
+		
+		List<Friendship> friendships = socialService.RetrieveFriendships(userId, authToken, friendshipStatus, context);
 		if (friendships == null){
 			return null;
 		}
