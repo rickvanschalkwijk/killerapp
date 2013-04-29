@@ -13,7 +13,9 @@ public class User implements Serializable{
 	private String refreshDate;
 	
 	
-	
+	public User(){
+		
+	}
 	public User(long id, String email, String username, String password) {
 		this.id = id;
 		this.email = email;
