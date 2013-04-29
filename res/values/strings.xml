@@ -64,6 +64,7 @@
         <item>Nightlife</item>
     </string-array>
 
+    <string name="OK">Ok</string>
     <string name="ok">Filter</string>
     <string name="cancel">Cancel</string>
     <string name="settings_companions">Companions:</string>
