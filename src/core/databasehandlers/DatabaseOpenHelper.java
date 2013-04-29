@@ -31,12 +31,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 
 	private static final String LOGTAG = "IP13HVA";
 	
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	
 	private static final String DATABASE_NAME = "offlineStorage.db";
 	public static final String TABLE_EVENTS = "events";
 	public static final String TABLE_LOCATIONS = "locations";
 	public static final String TABLE_USERS = "users";
+	public static final String TABLE_FRIENDSHIPS = "friendships";
 	public static final String TABLE_APPLICATION = "application";
 
 
@@ -52,6 +53,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_PRICE =  "price";
 	public static final String COLUMN_ISFREE = "free";
 	public static final String COLUMN_IMAGEURL = "imageurl";
+	public static final String COLUMN_INITIATOR_ID = "initiator_id";
+	public static final String COLUMN_PARTICIPANT_ID = "participant_id";
+	public static final String COLUMN_STATUS = "status";
+	public static final String COLUMN_USERNAME = "username";
+	public static final String COLUMN_EMAIL = "email";
+	public static final String COLUMN_REFRESH_DATE = "refresh_date";
 	
 	private static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
 			+ TABLE_EVENTS + " ("
@@ -78,6 +85,24 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 			+ COLUMN_IMAGEURL + " TEXT "
 			+ ")";
 	
+	private static final String CREATE_FRIENDSHIPS_TABLE = "CREATE TABLE " 
+			+ TABLE_FRIENDSHIPS + " ("
+			+ COLUMN_ID + " INTEGER, "
+			+ COLUMN_STATUS + " TEXT, "
+			+ COLUMN_INITIATOR_ID + " INTEGER, "
+			+ COLUMN_PARTICIPANT_ID + " INTEGER "
+			+ ")";
+	
+	private static final String CREATE_USER_TABLE = "CREATE TABLE "
+			+ TABLE_USERS + " ("
+			+ COLUMN_ID + " INTEGER, "
+			+ COLUMN_USERNAME + " TEXT, " 
+			+ COLUMN_EMAIL + " TEXT, "
+			+ COLUMN_LONGITUDE + " REAL, "
+			+ COLUMN_LATITUDE + " REAL, "
+			+ COLUMN_REFRESH_DATE + " TEXT "
+			+ ")";
+	
 	
 	public static DatabaseOpenHelper getInstance(Context ctx) {
 	      
@@ -99,6 +124,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_EVENTS_TABLE);
 		db.execSQL(CREATE_LOCATIONS_TABLE);
+		db.execSQL(CREATE_FRIENDSHIPS_TABLE);
+		db.execSQL(CREATE_USER_TABLE);
 	}
 
 	//update database
@@ -107,6 +134,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATIONS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDSHIPS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPLICATION);
 		onCreate(db);
 	}

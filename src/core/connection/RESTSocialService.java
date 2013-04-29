@@ -21,6 +21,7 @@ import util.KillerboneUtils;
 import core.connection.https.HttpsConnector;
 import core.connection.https.HttpsRequest;
 import core.connection.https.HttpsRequestType;
+import core.databasehandlers.FriendshipDataSource;
 import core.map.MapActivity;
 import core.models.Friendship;
 import core.models.User;
@@ -30,6 +31,12 @@ public class RESTSocialService {
 
 	public List<Friendship> RetrieveFriendships(long userId, String authToken,
 			String friendStatus, Context context) {
+		boolean operationFailed = false;
+		FriendshipDataSource friendshipDataSource = new FriendshipDataSource(
+				context);
+		friendshipDataSource.open();
+		List<Friendship> friendships = new ArrayList<Friendship>();
+
 		HttpsRequestType requestType = HttpsRequestType.GET;
 		String url = KillerboneUtils.getFriendships(userId);
 		HttpsRequest authenticateRequest = new HttpsRequest(requestType, url,
@@ -44,16 +51,18 @@ public class RESTSocialService {
 					.performHttpsRequest(authenticateRequest);
 
 			Log.d("response", response);
-			
+
 			// Convert response to xml document
 			SAXBuilder builder = new SAXBuilder();
 			Document xmlDocument = builder.build(new StringReader(response));
 			Element rootNode = xmlDocument.getRootElement();
 
-			List<Friendship> friendships = new ArrayList<Friendship>();
 			// Parse users
 
 			List<Element> listFriend = rootNode.getChildren("friendship");
+			friendshipDataSource.open();
+			friendshipDataSource.clearFriendshipTable();
+			friendshipDataSource.clearUserTable();
 
 			for (int i = 0; i < listFriend.size(); i++) {
 
@@ -92,8 +101,6 @@ public class RESTSocialService {
 							user.setRefreshDate(date);
 							user.setLatitude(latitude);
 							user.setLongtitude(longtitude);
-							Log.d("initiator user lat", latitude + "");
-							Log.d("initiator user long", longtitude + "");
 						} catch (Exception e) {
 							Log.d("exception", e.toString());
 						}
@@ -117,7 +124,6 @@ public class RESTSocialService {
 									"location").getChildText("longitude"));
 							String date = column.getChild("location")
 									.getAttributeValue("refreshDate");
-							Log.d("User date thingy", date);
 							user.setRefreshDate(date);
 							user.setLatitude(latitude);
 							user.setLongtitude(longtitude);
@@ -127,19 +133,26 @@ public class RESTSocialService {
 
 						friendship.setParticipant(user);
 					}
-
+					friendshipDataSource.addFriendship(friendship);
 					friendships.add(friendship);
 				}
 			}
+
 			return friendships;
 		} catch (DataException e) {
 			Log.e(DEBUG_TAG, e.getMessage());
+			operationFailed = true;
 		} catch (JDOMException e) {
 			Log.e(DEBUG_TAG, e.getMessage());
 		} catch (IOException e) {
 			Log.e(DEBUG_TAG, e.getMessage());
 		} catch (Exception e) {
 			Log.e(DEBUG_TAG, e.toString());
+		}
+		if (operationFailed) {
+			friendshipDataSource.open();
+			friendships = friendshipDataSource.getAllFriendships();
+			return friendships;
 		}
 
 		return null;

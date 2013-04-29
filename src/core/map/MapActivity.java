@@ -45,6 +45,7 @@ import com.app.killerapp.R;
 
 import core.connection.RESTSocialService;
 import core.databasehandlers.EventDataSource;
+import core.databasehandlers.FriendshipDataSource;
 import core.databasehandlers.PlaceDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
@@ -631,6 +632,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		userId = Long.valueOf(settings.getString("userID", "0")).longValue();
 		String authToken = settings.getString("token", "letmein");
+		FriendshipDataSource friendshipDataSource = new FriendshipDataSource(context);
+		friendshipDataSource.open();
 		return new FriendLoader(getApplicationContext(), userId, authToken,
 				"APPROVED");
 	}
