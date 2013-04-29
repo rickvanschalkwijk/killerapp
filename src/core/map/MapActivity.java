@@ -77,12 +77,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
-<<<<<<< Updated upstream
 
-		// Create filter entries
-		initializeFilters();
-		
-=======
 		SharedPreferences settings = getSharedPreferences("LocalPrefs",
 				0);
 		String category = settings.getString("category", "");
@@ -177,7 +172,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 		}
 
->>>>>>> Stashed changes
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
