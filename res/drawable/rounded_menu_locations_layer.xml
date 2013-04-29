@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/rounded_corners_map"
+        android:drawable="@drawable/rounded_menu_button_states"/>
+    <item android:left="20dp">
+        <bitmap android:src="@drawable/icon_locations" android:gravity="left" />
+    </item>
+
+</layer-list>
