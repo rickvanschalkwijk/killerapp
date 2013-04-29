@@ -100,7 +100,7 @@ public class RegistrationActivity extends Activity {
 										DialogInterface dialog, int id) {
 									dialog.cancel();
 									Intent i = new Intent(getApplicationContext(),
-											LoginActivity.class);
+											PreLoginActivity.class);
 									startActivity(i);
 								}
 							});
