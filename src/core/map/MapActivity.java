@@ -80,19 +80,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		setupActionBar();
 
 		// Create filter entries
-		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
-		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
-		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		initializeFilters();
 
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
-		// String packageDir = "/com.app.killerapp";
-		// TODO: change path to
-		// Environment.getExternalStorageDirectory().getPath()
 		String path = "/mnt/sdcard/osmdroid/";
 		File file = new File(path, "amsterdam.mbtiles");
 
@@ -118,6 +110,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
+			addEventMarker(event);
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
 		} else if (getIntent().getSerializableExtra("place") != null) {
@@ -130,6 +123,15 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		getSupportLoaderManager().initLoader(0, null, this);
+	}
+
+	private void initializeFilters() {
+		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 	}
 
 	private void addLocations() {
@@ -150,34 +152,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		locationDataSource.close();
 
 		for(Place place : places){
-			Log.d("place", place + "");
 			if(filter.contains(place.getCategory())){
 				addPlaceMarker(place);
 			}
-		}
-	}
-	
-	private void addFilterEvents(ArrayList<String> filter) {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			if (filter.contains(event.getCategory())) {			
-				addEventMarker(event);
-			}
-		}
-	}
-
-	private void addEvents() {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			addEventMarker(event);
 		}
 	}
 
@@ -275,6 +252,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 					}
 				}, resProxy);
 		this.mapView.getOverlays().add(currentLocationOverlay);
+		this.mapView.invalidate();
 	}
 
 	private void addPlaceMarker(final Place newPlace) {
@@ -320,12 +298,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 							}
 						})
-				.setPositiveButton(R.string.event_more_information,
+				.setPositiveButton(R.string.OK,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								Toast.makeText(context,
-										R.string.event_more_information,
-										Toast.LENGTH_SHORT).show();
+								
 							}
 						});
 
@@ -367,12 +343,23 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
-		addLocations();
-
+		if(getBooleanFromSP("locations")){
+			addLocations();
+		}
 		if (friendships != null) {
 			addFriends();
 		}
 
+	}
+	
+	/**
+	 * Get the map settings from SP file
+	 * @param String key
+	 * @return boolean value
+	 */
+	public boolean getBooleanFromSP(String key){
+		 SharedPreferences preferences = getSharedPreferences("MapPref", 0);
+		 return preferences.getBoolean(key, true);
 	}
 
 	@Override
