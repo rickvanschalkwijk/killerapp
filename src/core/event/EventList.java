@@ -42,7 +42,6 @@ public class EventList extends Activity {
 		eventDataSource.open();
 		events.clear();
 		events = eventDataSource.getAllEvents();
-		// eventDataSource.close();
 
 		final ListView listView = (ListView) findViewById(R.id.listEvents);
 		EditText inputSearch = (EditText) findViewById(R.id.inputSearch);

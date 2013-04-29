@@ -1,51 +1,62 @@
-package core.event;
+package core.place;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.List;
+
 import util.KillerboneUtils;
+
 import com.app.killerapp.R;
-import core.models.Event;
+import core.models.Place;
 import android.content.Context;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class EventListAdapter extends BaseAdapter implements Filterable {
+public class PlaceListAdapter extends BaseAdapter implements Filterable {
 	private final Context context;
-	List<Event> eventList;
-	List<Event> originalEventList;
+	List<Place> placeList;
+	List<Place> originalPlaceList;
 
-	public EventListAdapter(Context context, List<Event> eventList) {
+	public PlaceListAdapter(Context context, List<Place> placeList) {
 		this.context = context;
-		this.eventList = eventList;
+		this.placeList = placeList;
 	}
 
+	@Override
+	public int getCount() {
+		return placeList.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater
-				.inflate(R.layout.event_list_item, parent, false);
+				.inflate(R.layout.place_list_item, parent, false);
 
 		TextView name = (TextView) rowView.findViewById(R.id.nameText);
-		name.setText(Html.fromHtml(eventList.get(position).getTitle()));
+		name.setText(Html.fromHtml(placeList.get(position).getName()));
 
-		TextView start = (TextView) rowView.findViewById(R.id.startText);
-		start.setText(eventList.get(position).getStartDate()
-				.toString(KillerboneUtils.KILLERBONE_DATE_FORMAT));
 		return rowView;
-
 	}
 
+	@Override
 	public Filter getFilter() {
 		Filter filter = new Filter() {
 
@@ -53,7 +64,7 @@ public class EventListAdapter extends BaseAdapter implements Filterable {
 			@Override
 			protected void publishResults(CharSequence constraint,
 					FilterResults results) {
-				eventList = (List<Event>) results.values; // has the filtered
+				placeList = (List<Place>) results.values; // has the filtered
 															// values
 				notifyDataSetChanged(); // notifies the data with new filtered
 										// values
@@ -62,30 +73,30 @@ public class EventListAdapter extends BaseAdapter implements Filterable {
 			@Override
 			protected FilterResults performFiltering(CharSequence charSequence) {
 				FilterResults results = new FilterResults();
-				List<Event> filteredArrayList = new ArrayList<Event>();
+				List<Place> filteredArrayList = new ArrayList<Place>();
 				Log.d("FIlter", "aangeroepen");
 
-				if (originalEventList == null) {
-					originalEventList = new ArrayList<Event>(eventList);
+				if (originalPlaceList == null) {
+					originalPlaceList = new ArrayList<Place>(placeList);
 				}
 
 				// If there's nothing to filter on, return the original data for
 				// the list
 				if (charSequence == null || charSequence.length() == 0) {
-					results.values = originalEventList;
-					results.count = originalEventList.size();
+					results.values = originalPlaceList;
+					results.count = originalPlaceList.size();
 					Log.d("Filter", "Maak originele array aan als Reference");
 
 				} else {
 					charSequence = charSequence.toString().toLowerCase();
 
-					for (Event event : originalEventList) {
+					for (Place place : originalPlaceList) {
 						// In this loop, you'll filter through originalData and
 						// compare each item to charSequence.
 						// If you find a match, add it to your new ArrayList
-						String data = event.getTitle().toLowerCase();
+						String data = place.getName().toLowerCase();
 						if (data.toLowerCase().contains(charSequence)) {
-							filteredArrayList.add(event);
+							filteredArrayList.add(place);
 						}
 					}
 					results.values = filteredArrayList;
@@ -98,18 +109,4 @@ public class EventListAdapter extends BaseAdapter implements Filterable {
 		return filter;
 	}
 
-	@Override
-	public int getCount() {
-		return eventList.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return position;
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
 }
