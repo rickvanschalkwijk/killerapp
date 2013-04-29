@@ -390,25 +390,56 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		final boolean gpsEnabled = locationManager
 				.isProviderEnabled(locationProvider);
 		if (!gpsEnabled) {
-			turnGPSOn();
+			turnGPSOn(locationManager);
 		}
 	}
-	
-	private void turnGPSOn(){
+
+	private void turnGPSOn(LocationManager locationManager){
 	    String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-
-	    if(!provider.contains("gps")){ //if gps is disabled
-	        final Intent poke = new Intent();
-	        poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider"); 
-	        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-	        poke.setData(Uri.parse("3")); 
-	        sendBroadcast(poke);
-	        
-			new EnableGpsDialogFragment().show(getFragmentManager(),
-					"enableGpsDialog");
+	    boolean gpsEnabled = false;
+	    
+	    // EXPLOITING THE POWER MANAGEMENT WIDGET (!) -> Last Resort    
+	    try
+	    {
+		    if(!provider.contains("gps")){ //if gps is disabled
+		        final Intent poke = new Intent();
+		        poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider"); 
+		        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+		        poke.setData(Uri.parse("3")); 
+		        sendBroadcast(poke);
+		    }
+		    
+		    gpsEnabled = locationManager.isProviderEnabled(locationProvider);
+		    if (!gpsEnabled)
+		    {
+		    	new EnableGpsDialogFragment().show(getFragmentManager(), "enableGpsDialog");
+		    }
 	    }
-	}	
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    	// Gotha catch them all 
+	    	// TODO: handle this (!)
+	    	
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+					context);
+			alertDialogBuilder.setTitle("GPS Usage");
+			alertDialogBuilder
+					.setMessage("Please enable GPS before using maps.")
+					.setCancelable(false)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							});
 
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+	    }
+	}
+	
 	@Override
 	protected void onStop() {
 		super.onStop();
