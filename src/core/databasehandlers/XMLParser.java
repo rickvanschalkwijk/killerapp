@@ -171,7 +171,6 @@ public class XMLParser {
 				place.setImageUrl(node.getChildText(IMAGEURL_TAG));
 				placeDataSource.open();
 				placeDataSource.addPlace(place);
-				placeDataSource.close();
 			}
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block

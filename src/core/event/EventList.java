@@ -36,6 +36,7 @@ public class EventList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_list);
+		
 
 		EventDataSource eventDataSource = new EventDataSource(this);
 		eventDataSource.open();
