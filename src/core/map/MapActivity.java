@@ -148,7 +148,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		locationDataSource.open();
 		List<Place> places = locationDataSource.getAllPlaces();
 		locationDataSource.close();
+
 		for(Place place : places){
+			Log.d("place", place + "");
 			if(filter.contains(place.getCategory())){
 				addPlaceMarker(place);
 			}
@@ -499,6 +501,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 									Toast.makeText(context,
 											"You didn't select anything!",
 											Toast.LENGTH_SHORT).show();
+									addLocations();
 								} else {
 									mapView.getOverlays().clear();
 									mapView.invalidate();
