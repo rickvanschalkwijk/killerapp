@@ -43,7 +43,7 @@ import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
 
 import core.connection.RESTSocialService;
-import core.databasehandlers.EventDataSource;
+import core.databasehandlers.FriendshipDataSource;
 import core.databasehandlers.PlaceDataSource;
 import core.map.osmdroid.BoundedMapView;
 import core.map.osmdroid.MBTileProvider;
@@ -51,7 +51,6 @@ import core.models.Event;
 import core.models.Friendship;
 import core.models.Place;
 import core.models.User;
-import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 public class MapActivity extends FragmentActivity implements IRegisterReceiver,
@@ -78,10 +77,107 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
+<<<<<<< Updated upstream
 
 		// Create filter entries
 		initializeFilters();
+		
+=======
+		SharedPreferences settings = getSharedPreferences("LocalPrefs",
+				0);
+		String category = settings.getString("category", "");
+		if(category.equals("Family"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, true, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, true, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, true, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Seniors"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Youth"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Low budget"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Romantic"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Cultural"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Party"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Active"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Backpacker"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
+		else if(category.equals("Non-specific"))
+		{
+			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		}
 
+>>>>>>> Stashed changes
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 
@@ -120,6 +216,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
 			mapController.animateTo(centralStation);
 		}
+		addMarkers();
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		getSupportLoaderManager().initLoader(0, null, this);
@@ -343,8 +440,12 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
+		Log.d("location settigns", getBooleanFromSP("locations") + "");
 		if(getBooleanFromSP("locations")){
 			addLocations();
+			
+		}else{
+			mapView.getOverlays().clear();
 		}
 		if (friendships != null) {
 			addFriends();
@@ -427,7 +528,13 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			}
 			return true;
 		case R.id.action_sendmyposition:
-			sendLocationToFriends();
+			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+			if (!settings.getBoolean("loggedIn", false)){
+				sendLocationToFriends();
+			} else {
+				Toast.makeText(context, "You need to be logged in for this function", Toast.LENGTH_SHORT).show();
+			}
+			
 			return true;
 		case R.id.action_map_settings:
 			Intent mapSettingsIntent = new Intent(this,
@@ -485,7 +592,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 								if (nothingSelected) {
 									Toast.makeText(context,
-											"You didn't select anything!",
+											"No filters selected!",
 											Toast.LENGTH_SHORT).show();
 									addLocations();
 								} else {
@@ -624,6 +731,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
 		userId = Long.valueOf(settings.getString("userID", "0")).longValue();
 		String authToken = settings.getString("token", "letmein");
+		FriendshipDataSource friendshipDataSource = new FriendshipDataSource(context);
+		friendshipDataSource.open();
 		return new FriendLoader(getApplicationContext(), userId, authToken,
 				"APPROVED");
 	}

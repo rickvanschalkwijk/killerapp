@@ -2,7 +2,9 @@ package core.map;
 
 import com.app.killerapp.R;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,7 +24,7 @@ public class MapSettingsActivity extends Activity {
 		toggleCompanions = (ToggleButton) findViewById(R.id.companions);
 		toggleLocations = (ToggleButton) findViewById(R.id.locations);
 		setToggleButtons();
-		
+		setupActionBar();
 		
 		toggleCompanions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -100,5 +102,16 @@ public class MapSettingsActivity extends Activity {
 	     
 	     return;
 	}
+	
+	/**
+	 * Set up the {@link android.app.ActionBar}, if the API is available.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setupActionBar() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
 
 }
