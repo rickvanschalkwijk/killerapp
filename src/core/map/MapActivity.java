@@ -113,6 +113,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// this location is central station
 		if (getIntent().getSerializableExtra("event") != null) {
 			Event event = (Event) getIntent().getSerializableExtra("event");
+			addEventMarker(event);
 			mapController.animateTo(event.getLocation());
 			this.createEventOverlay(event);
 		} else if (getIntent().getSerializableExtra("place") != null) {
@@ -158,30 +159,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			if(filter.contains(place.getCategory())){
 				addPlaceMarker(place);
 			}
-		}
-	}
-	
-	private void addFilterEvents(ArrayList<String> filter) {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			if (filter.contains(event.getCategory())) {			
-				addEventMarker(event);
-			}
-		}
-	}
-
-	private void addEvents() {
-		EventDataSource eventDataSource = new EventDataSource(context);
-		eventDataSource.open();
-		List<Event> events = eventDataSource.getAllEvents();
-		eventDataSource.close();
-
-		for (Event event : events) {
-			addEventMarker(event);
 		}
 	}
 
@@ -279,6 +256,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 					}
 				}, resProxy);
 		this.mapView.getOverlays().add(currentLocationOverlay);
+		this.mapView.invalidate();
 	}
 
 	private void addPlaceMarker(final Place newPlace) {
