@@ -134,5 +134,7 @@
     <string name="title_place_list">Locations</string>
     <string name="show_place">Show Location</string>
     <string name="title_activity_map_settings">Map Settings</string>
+    <string name="title_activity_friend_pending">Pending Travel Accompanies</string>
+    <string name="pendingfriends">Pending Friends</string>
 
 </resources>

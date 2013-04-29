@@ -147,6 +147,10 @@ public class FriendActivity extends FragmentActivity implements
 			Intent intent = new Intent(this, FriendShipRequestsActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.pendingfriends:
+			Intent intentz = new Intent(this, FriendPendingActivity.class);
+			startActivity(intentz);
+			break;
 		default:
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
