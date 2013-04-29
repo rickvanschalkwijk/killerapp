@@ -232,11 +232,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 					public boolean onItemSingleTapUp(final int index,
 							final OverlayItem item) {
+
 						Toast.makeText(
 								context,
 								friend.getUsername() + " "
-										+ friend.getRefreshDate(),
-								Toast.LENGTH_SHORT).show();
+										+ friend.getRefreshDate(),Toast.LENGTH_SHORT).show();
 						return true;
 					}
 
@@ -473,7 +473,6 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public Dialog filterDialog() {
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(R.string.categories_title)
 				.setMultiChoiceItems(GetFilterNames(), GetFilterValues(),

@@ -128,6 +128,14 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		finish();
+        System.exit(0);
+	}
 
 	private void SetMessage(String titel, String message) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
