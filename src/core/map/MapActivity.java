@@ -28,6 +28,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -174,9 +175,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
-
-		String path = "/mnt/sdcard/osmdroid/";
-		File file = new File(path, "amsterdam.mbtiles");
+		String filename = "amsterdam.mbtiles";
+		String path = Environment.getExternalStorageDirectory() + java.io.File.separator;
+		File file = new File(path, filename);
 
 		MBTileProvider provider = new MBTileProvider(this, file);
 
@@ -372,6 +373,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 						return true;
 					}
 				}, resProxy);
+		
 		this.mapView.getOverlays().add(currentPlaceOverLayItem);
 	}
 
@@ -381,14 +383,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		alertDialogBuilder.setTitle(place.getName());
 		alertDialogBuilder
 				.setMessage(Html.fromHtml(place.getDescription()))
-				.setCancelable(true)
-				.setNegativeButton(R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-
-							}
-						})
+				.setCancelable(false)
 				.setPositiveButton(R.string.OK,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
