@@ -73,6 +73,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	private List<Friendship> friendships = new ArrayList<Friendship>();
 	private long userId;
 	public static boolean startUp = true;
+	private int arrayLocation = 0;
 
 	private List<FilterEntry> filterEntries = new ArrayList<MapActivity.FilterEntry>();
 
@@ -634,6 +635,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 									addLocations();
 								} else {
 									mapView.getOverlays().clear();
+									arrayLocation = 000;
 									mapView.invalidate();
 
 									ArrayList<String> selectedCategoryIds = new ArrayList<String>();
@@ -668,11 +670,11 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		private Drawable myCurrentLocationMarker = context.getResources()
 				.getDrawable(R.drawable.bluedot);
 		private ItemizedIconOverlay<OverlayItem> currentLocationOverlay;
-		private int arrayLocation = 0;
+		
 
 		@Override
 		public void onLocationChanged(Location location) {
-			if (myLocationOverlayItem == null) {
+			if (myLocationOverlayItem == null || arrayLocation == 000) {
 				currentLocation = location;
 
 				myLocationOverlayItem = new OverlayItem("Here",
