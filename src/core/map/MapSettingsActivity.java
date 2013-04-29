@@ -12,31 +12,17 @@ import android.content.SharedPreferences;
 
 public class MapSettingsActivity extends Activity {
 	
-	protected ToggleButton toggleEvents;
 	protected ToggleButton toggleCompanions;
 	protected ToggleButton toggleLocations;
-	protected ToggleButton toggleGuides;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_settings);
-		toggleEvents = (ToggleButton) findViewById(R.id.events);
 		toggleCompanions = (ToggleButton) findViewById(R.id.companions);
 		toggleLocations = (ToggleButton) findViewById(R.id.locations);
-		toggleGuides = (ToggleButton) findViewById(R.id.guides);
 		setToggleButtons();
 		
-		toggleEvents.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
-					saveBooleanInSP("events", isChecked);
-				}else{
-					saveBooleanInSP("events", isChecked);
-				}
-			}
-		});
 		
 		toggleCompanions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -55,16 +41,6 @@ public class MapSettingsActivity extends Activity {
 					saveBooleanInSP("locations", isChecked);
 				}else{
 					saveBooleanInSP("locations", isChecked);
-				}
-			}
-		});
-		toggleGuides.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
-					saveBooleanInSP("guides", isChecked);
-				}else{
-					saveBooleanInSP("guides", isChecked);
 				}
 			}
 		});
@@ -96,10 +72,8 @@ public class MapSettingsActivity extends Activity {
 	}
 	
 	public void setToggleButtons(){
-		toggleEvents.setChecked(getBooleanFromSP("events"));
 		toggleLocations.setChecked(getBooleanFromSP("locations"));
 		toggleCompanions.setChecked(getBooleanFromSP("companions"));
-		toggleGuides.setChecked(getBooleanFromSP("guides"));
 	}
 	
 	/**
