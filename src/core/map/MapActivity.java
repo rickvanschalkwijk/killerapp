@@ -120,6 +120,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			GeoPoint centralStation = new GeoPoint(52.379211, 4.899426);
 			mapController.animateTo(centralStation);
 		}
+		addMarkers();
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		getSupportLoaderManager().initLoader(0, null, this);
@@ -343,8 +344,12 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	}
 
 	public void addMarkers() {
+		Log.d("location settigns", getBooleanFromSP("locations") + "");
 		if(getBooleanFromSP("locations")){
 			addLocations();
+			
+		}else{
+			mapView.getOverlays().clear();
 		}
 		if (friendships != null) {
 			addFriends();
@@ -485,7 +490,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 								if (nothingSelected) {
 									Toast.makeText(context,
-											"You didn't select anything!",
+											"No filters selected!",
 											Toast.LENGTH_SHORT).show();
 									addLocations();
 								} else {
