@@ -142,7 +142,19 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			addPlaceMarker(place);
 		}
 	}
-
+	
+	private void addFilterLocations(ArrayList<String> filter){
+		PlaceDataSource locationDataSource = new PlaceDataSource(context);
+		locationDataSource.open();
+		List<Place> places = locationDataSource.getAllPlaces();
+		locationDataSource.close();
+		for(Place place : places){
+			if(filter.contains(place.getCategory())){
+				addPlaceMarker(place);
+			}
+		}
+	}
+	
 	private void addFilterEvents(ArrayList<String> filter) {
 		EventDataSource eventDataSource = new EventDataSource(context);
 		eventDataSource.open();
@@ -499,8 +511,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 													.add(filterEntries.get(i).eventName);
 										}
 									}
-									addFilterEvents(selectedCategoryIds);
-									addLocations();
+									addFilterLocations(selectedCategoryIds);
+									//addLocations();
 								}
 							}
 						})
