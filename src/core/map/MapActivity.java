@@ -80,12 +80,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		setupActionBar();
 
 		// Create filter entries
-		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
-		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
-		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+		initializeFilters();
 
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
@@ -130,6 +125,15 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		// Set the MapView as the root View for this Activity; done!
 		setContentView(mapView);
 		getSupportLoaderManager().initLoader(0, null, this);
+	}
+
+	private void initializeFilters() {
+		filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
+		filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+		filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+		filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
+		filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+		filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 	}
 
 	private void addLocations() {
