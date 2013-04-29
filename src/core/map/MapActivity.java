@@ -97,9 +97,9 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		}
 		else if(category.equals("Seniors"))
 		{
-			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Museams", 0, true, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, true, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
 			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
@@ -108,16 +108,16 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		{
 			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
 			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
-			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
-			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+			filterEntries.add(new FilterEntry("Transportation", 2, true, "transportation"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, true, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, true, "cafes"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, true, "nightclubs"));
 		}
 		else if(category.equals("Low budget"))
 		{
 			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
-			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
+			filterEntries.add(new FilterEntry("Transportation", 2, true, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
 			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
@@ -125,16 +125,16 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 		else if(category.equals("Romantic"))
 		{
 			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
 			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
-			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
-			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
+			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, true, "restaurants_pubs"));
+			filterEntries.add(new FilterEntry("Cafés", 4, true, "cafes"));
 			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 		}
 		else if(category.equals("Cultural"))
 		{
-			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Museams", 0, true, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
 			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
@@ -147,21 +147,21 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, true, "nightclubs"));
 		}
 		else if(category.equals("Active"))
 		{
-			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Museams", 0, true, "museams"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
 			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
-			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
+			filterEntries.add(new FilterEntry("Nightclubs", 5, true, "nightclubs"));
 		}
 		else if(category.equals("Backpacker"))
 		{
 			filterEntries.add(new FilterEntry("Museams", 0, false, "museams"));
-			filterEntries.add(new FilterEntry("Parks", 1, false, "parks"));
+			filterEntries.add(new FilterEntry("Parks", 1, true, "parks"));
 			filterEntries.add(new FilterEntry("Transportation", 2, false, "transportation"));
 			filterEntries.add(new FilterEntry("Restaurants/Pubs", 3, false, "restaurants_pubs"));
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
