@@ -302,12 +302,10 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 
 							}
 						})
-				.setPositiveButton(R.string.event_more_information,
+				.setPositiveButton(R.string.OK,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								Toast.makeText(context,
-										R.string.event_more_information,
-										Toast.LENGTH_SHORT).show();
+								
 							}
 						});
 
