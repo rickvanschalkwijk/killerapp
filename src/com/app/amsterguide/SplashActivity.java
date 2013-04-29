@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.app.killerapp.R;
@@ -36,9 +37,15 @@ public class SplashActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		try{
 		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
 		Thread thread = new Thread(databaseLoaderThread);
 		thread.start();
+		Log.d("gelukt", "HAHAHAHA");}
+		
+		catch(Exception e){
+			Log.d("gevangen", e.toString());
+		}
 		
 		if(selfReferance == null){
 			selfReferance = this;

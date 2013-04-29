@@ -28,6 +28,8 @@ public class DatabaseLoaderThread implements Runnable {
 					parser.getEventsXML(context, true);
 				} catch (DataException e) {
 					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				eventDataSource.deleteExpiredEvents();
 			} else {
@@ -35,6 +37,8 @@ public class DatabaseLoaderThread implements Runnable {
 				try {
 					parser.getEventsXML(context, false);
 				} catch (DataException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -46,12 +50,16 @@ public class DatabaseLoaderThread implements Runnable {
 					parser.getPlacesXML(context, true);
 				} catch (DataException e) {
 					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			} else {
 				XMLParser parser = new XMLParser();
 				try {
 					parser.getPlacesXML(context, false);
 				} catch (DataException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
