@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.app.killerapp.R;
@@ -28,42 +27,43 @@ import com.app.killerapp.R;
 import core.databasehandlers.DatabaseLoaderThread;
 
 public class SplashActivity extends Activity {
-	
+
 	protected int _splashTime = 1500;
 	private Thread splashThread;
 	private static SplashActivity selfReferance = null;
-	
+
 	@Override
-	public void onCreate(Bundle savedInstanceState){
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		try{
-		DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(this);
-		Thread thread = new Thread(databaseLoaderThread);
-		thread.start();
-		Log.d("gelukt", "HAHAHAHA");}
-		
-		catch(Exception e){
-			Log.d("gevangen", e.toString());
+		try {
+			DatabaseLoaderThread databaseLoaderThread = new DatabaseLoaderThread(
+					this);
+			Thread thread = new Thread(databaseLoaderThread);
+			thread.start();
 		}
-		
-		if(selfReferance == null){
+
+		catch (Exception e) {
+		}
+
+		if (selfReferance == null) {
 			selfReferance = this;
 		}
-		
-		final SplashActivity sPlashActivity  = this;
-		
-		splashThread = new Thread(){
+
+		final SplashActivity sPlashActivity = this;
+
+		splashThread = new Thread() {
 			@Override
-			public void run(){
+			public void run() {
 				try {
 					synchronized (this) {
 						wait(_splashTime);
 					}
 				} catch (InterruptedException e) {
-					
-				}finally{
-					Intent intent = new Intent(sPlashActivity, PreLoginActivity.class);
+
+				} finally {
+					Intent intent = new Intent(sPlashActivity,
+							PreLoginActivity.class);
 					startActivity(intent);
 					finish();
 				}
@@ -71,20 +71,19 @@ public class SplashActivity extends Activity {
 		};
 		splashThread.start();
 	}
-	
-	
+
 	@Override
-	public boolean onTouchEvent(MotionEvent event){
-		if(event.getAction() == MotionEvent.ACTION_DOWN){
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			synchronized (splashThread) {
-				//splashThread.notifyAll();
+				// splashThread.notifyAll();
 			}
 		}
 		return true;
 	}
-	
+
 	public static Context getContext() {
-		if (selfReferance != null) {			
+		if (selfReferance != null) {
 			return selfReferance.getApplicationContext();
 		}
 		return null;
