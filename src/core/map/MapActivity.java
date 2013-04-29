@@ -71,6 +71,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	public ArrayList<String> selectedCategoryIds;
 	private List<Friendship> friendships = new ArrayList<Friendship>();
 	private long userId;
+	public static boolean startUp = true;
 
 	private List<FilterEntry> filterEntries = new ArrayList<MapActivity.FilterEntry>();
 
@@ -78,7 +79,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
-
+		if(startUp)
+		{
 		SharedPreferences settings = getSharedPreferences("LocalPrefs",
 				0);
 		String category = settings.getString("category", "");
@@ -172,7 +174,8 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			filterEntries.add(new FilterEntry("Cafés", 4, false, "cafes"));
 			filterEntries.add(new FilterEntry("Nightclubs", 5, false, "nightclubs"));
 		}
-
+		startUp = false;
+		}
 		// Create the mapView with an MBTileProvider
 		resProxy = new DefaultResourceProxyImpl(this.getApplicationContext());
 		String filename = "amsterdam.mbtiles";
