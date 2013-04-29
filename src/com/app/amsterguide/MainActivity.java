@@ -32,6 +32,7 @@ import com.app.killerapp.R;
 
 import core.event.EventList;
 import core.map.MapActivity;
+import core.map.MapSettingsActivity;
 import core.place.PlaceList;
 
 public class MainActivity extends Activity {
@@ -83,6 +84,11 @@ public class MainActivity extends Activity {
 
 	public void openPlaceList(View view) {
 		Intent intent = new Intent(this, PlaceList.class);
+		startActivity(intent);
+	}
+	
+	public void openSettings(View view){
+		Intent intent = new Intent(this, MapSettingsActivity.class);
 		startActivity(intent);
 	}
 
