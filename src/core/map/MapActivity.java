@@ -36,7 +36,6 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.amsterguide.EventActivity;
@@ -44,7 +43,6 @@ import com.app.amsterguide.loaders.FriendLoader;
 import com.app.killerapp.R;
 
 import core.connection.RESTSocialService;
-import core.databasehandlers.EventDataSource;
 import core.databasehandlers.FriendshipDataSource;
 import core.databasehandlers.PlaceDataSource;
 import core.map.osmdroid.BoundedMapView;
@@ -53,7 +51,6 @@ import core.models.Event;
 import core.models.Friendship;
 import core.models.Place;
 import core.models.User;
-import core.place.PlaceUtil;
 
 @SuppressLint({ "NewApi", "ValidFragment" })
 public class MapActivity extends FragmentActivity implements IRegisterReceiver,
