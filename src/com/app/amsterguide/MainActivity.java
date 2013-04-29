@@ -49,11 +49,9 @@ public class MainActivity extends Activity {
 		if (!settings.getBoolean("loggedIn", false)){
 			Button companionButton = (Button) findViewById(R.id.btn_companions_open);
 			companionButton.setEnabled(false);
-		}
-			
-			
+		}		
 	}
-
+	
 	public void openMap(View view) {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
@@ -138,9 +136,17 @@ public class MainActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		
-		finish();
-        System.exit(0);
+		SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
+		if(settings.getBoolean("loggedIn", false))
+		{
+			finish();
+			System.exit(0);
+		}
+		else if((settings.getBoolean("loggedInGuest", false)))
+		{
+			Intent intent = new Intent(this, PreLoginActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	private void SetMessage(String titel, String message) {
