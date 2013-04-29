@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:onClick="openPlaceList"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_menu_events_layer"
+            android:background="@drawable/rounded_menu_locations_layer"
             android:text="@string/places_button" />
         
         <Button
