@@ -16,6 +16,7 @@
 
 package com.app.amsterguide;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,7 @@ import core.databasehandlers.DatabaseLoaderThread;
 
 public class SplashActivity extends Activity {
 
-	protected int _splashTime = 100;
+	protected int _splashTime = 500;
 	private Thread splashThread;
 	private static SplashActivity selfReferance = null;
 	final Context context = this;
@@ -88,23 +89,27 @@ public class SplashActivity extends Activity {
 		} catch (IOException e) {
 			Log.e("tag", "Failed to get asset file list.", e);
 		}
-		for (String filename : files) {
-			InputStream in = null;
-			OutputStream out = null;
-			try {
-				in = assetManager.open(filename);
-				out = new FileOutputStream(
-						Environment.getExternalStorageDirectory()
-								+ java.io.File.separator + filename);
+		File fileToCheck = new File(Environment.getExternalStorageDirectory(), "amsterdam.mbtiles");
+		if (!fileToCheck.exists()) {
 
-				copyFile(in, out);
-				in.close();
-				in = null;
-				out.flush();
-				out.close();
-				out = null;
-			} catch (IOException e) {
-				Log.e("tag", "Failed to copy asset file: " + filename, e);
+			for (String filename : files) {
+				InputStream in = null;
+				OutputStream out = null;
+				try {
+					in = assetManager.open(filename);
+					out = new FileOutputStream(
+							Environment.getExternalStorageDirectory()
+									+ java.io.File.separator + filename);
+
+					copyFile(in, out);
+					in.close();
+					in = null;
+					out.flush();
+					out.close();
+					out = null;
+				} catch (IOException e) {
+					Log.e("tag", "Failed to copy asset file: " + filename, e);
+				}
 			}
 		}
 	}
