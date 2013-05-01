@@ -567,7 +567,7 @@ public class MapActivity extends FragmentActivity implements IRegisterReceiver,
 			return true;
 		case R.id.action_sendmyposition:
 			SharedPreferences settings = getSharedPreferences("LocalPrefs", 0);
-			if (!settings.getBoolean("loggedIn", false)){
+			if (settings.getBoolean("loggedIn", false)){
 				sendLocationToFriends();
 			} else {
 				Toast.makeText(context, "You need to be logged in for this function", Toast.LENGTH_SHORT).show();
